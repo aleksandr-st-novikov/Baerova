@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{CB8E0386-75F9-4177-BB83-499CCAA806EB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebUI", "WebUI\WebUI.csproj", "{3E41F364-F0C4-4156-84DF-6B7EC48D7103}"
+	ProjectSection(ProjectDependencies) = postProject
+		{CB8E0386-75F9-4177-BB83-499CCAA806EB} = {CB8E0386-75F9-4177-BB83-499CCAA806EB}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
