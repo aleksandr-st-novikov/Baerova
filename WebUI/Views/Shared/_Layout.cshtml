@@ -30,6 +30,7 @@
                     <li>@Html.ActionLink("Наши лидеры", "Index", "Home")</li>
                     <li>@Html.ActionLink("Галерея", "Index", "Home")</li>
                     <li>@Html.ActionLink("Открыть свой магазин TianDe", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Настройки", "Index", "Settings")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -49,6 +50,10 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
+
+    
+    
 
 </body>
 </html>
