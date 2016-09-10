@@ -1,4 +1,9 @@
-﻿body {
+﻿.nav > li > a 
+{
+    padding: 5px 10px !important;
+}
+
+body {
     padding-top: 50px;
     padding-bottom: 20px;
 }

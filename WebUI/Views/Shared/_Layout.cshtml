@@ -9,12 +9,14 @@
 
 </head>
 <body style="padding:0;">
-    <div class="container">
+    <div class="container" style="margin-bottom:15px;">
         <div class="col-lg-12" style="background-color:aqua;height:100px;">
-            Блок 1
+            <span style="text-align:right;">
+                Войти
+            </span>
         </div>
     </div>
-    <div class="container">
+    @*<div class="container">
         <div class="navbar" style="margin:5px 0 5px 0;">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -35,7 +37,7 @@
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
-    </div>
+    </div>*@
     <div class="container body-content">
         @RenderBody()
     </div>
