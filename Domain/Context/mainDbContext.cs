@@ -12,5 +12,6 @@ namespace Domain.Context
     {
         public DbSet<Article> Articles { get; set; }
         public DbSet<Subscriber> Subscribers { get; set; }
+        public DbSet<AspNetUser> AspNetUsers { get; set; }
     }
 }

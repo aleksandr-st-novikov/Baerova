@@ -35,9 +35,9 @@ else
                     {
                         @Html.AntiForgeryToken()
                         @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
-                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "login-help text-danger" })
-                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", placeholder = "Имя пользователя", onload = "FocusOnInput()" })
+                        @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "login-help text-danger" })
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Пароль" })
                         @Html.ValidationMessageFor(m => m.Password, "", new { @class = "login-help text-danger" })
                         @*<div style="text-align:center;margin:10px;">
                                 <div class="checkbox">
