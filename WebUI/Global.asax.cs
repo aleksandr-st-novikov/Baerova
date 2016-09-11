@@ -7,6 +7,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using Domain.Context;
 using System.Data.Entity;
+using System.Text.RegularExpressions;
 
 namespace WebUI
 {
@@ -20,6 +21,16 @@ namespace WebUI
             //BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             Database.SetInitializer<mainDbContext>(new DbInitializer());
+        }
+
+        protected void Application_BeginRequest(object sender, EventArgs e)
+        {
+            //все буквы в адресе прописные
+            string url = Request.Url.ToString();
+            if (Request.HttpMethod == "GET" && Regex.Match(url, "(?<=^[^?]*)[A-Z]").Success)
+            {
+                Response.RedirectPermanent(url.ToLower(), true);
+            }
         }
     }
 }

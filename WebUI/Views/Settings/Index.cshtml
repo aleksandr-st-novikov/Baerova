@@ -1,64 +1,11 @@
 ﻿@{
     ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutSettings.cshtml";
 }
 
 <div class="container" style="min-height:700px;">
     <div class="row">
-        <div class="col-sm-3 col-md-3">
-            <div class="panel-group" id="accordion">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseAll">
-                                <span class="glyphicon glyphicon-folder-close">
-                                </span>Общие настройки
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="collapseAll" class="panel-collapse collapse @ViewBag.InAll">
-                        <div class="panel-body">
-                            <table class="table">
-                                <tr>
-                                    <td class="">
-                                        <span class="glyphicon glyphicon-pencil text-primary"></span><a href="http://www.jquery2dotnet.com">Константы</a>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseUsers">
-                                Пользователи
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="collapseUsers" class="panel-collapse collapse @ViewBag.InUsers">
-                        <div class="panel-body">
-                            <table class="table">
-                                <tr>
-                                    <td class = "@ViewBag.ActiveUsers">
-                                        @Html.ActionLink("Пользователи","Users")
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class = "@ViewBag.ActiveRoles">
-                                        @Html.ActionLink("Роли", "Roles")
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class = "@ViewBag.ActiveAddUser">
-                                        @Html.ActionLink("Добавить пользователя", "AddUser")
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+       
         <div class="col-sm-9 col-md-9">
         </div>
     </div>

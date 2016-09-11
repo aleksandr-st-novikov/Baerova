@@ -179,6 +179,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\SettingsViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -189,6 +190,7 @@
     <None Include="Content\bootstrap.min.css" />
     <None Include="Content\font-awesome.css" />
     <None Include="Content\font-awesome.min.css" />
+    <None Include="Content\sidemenu.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <None Include="Content\Site.css" />
@@ -231,6 +233,7 @@
     <None Include="Scripts\respond.matchmedia.addListener.min.js" />
     <None Include="Scripts\respond.min.js" />
     <None Include="Scripts\_references.js" />
+    <None Include="Scripts\site.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -266,6 +269,10 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Settings\Index.cshtml" />
+    <Content Include="Views\Shared\_SideMenu.cshtml" />
+    <Content Include="Views\Shared\_LayoutSettings.cshtml" />
+    <Content Include="Views\Settings\AddUser.cshtml" />
+    <Content Include="Views\Shared\_SideMenuSettings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

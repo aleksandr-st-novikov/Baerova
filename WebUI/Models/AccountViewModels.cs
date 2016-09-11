@@ -68,6 +68,10 @@ namespace WebUI.Models
 
     public class RegisterViewModel
     {
+        [Required(ErrorMessage ="Поле {0} является обязательным!")]
+        [Display(Name = "Имя пользователя")]
+        public string UserName { get; set; }
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]

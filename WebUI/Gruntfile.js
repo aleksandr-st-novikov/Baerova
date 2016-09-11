@@ -16,14 +16,14 @@ module.exports = function (grunt) {
             js: {
                 files:
                     {
-                        'temp/site.js': ['Scripts/bootstrap.js', 'Scripts/respond.js'],
+                        'temp/site.js': ['Scripts/bootstrap.js', 'Scripts/respond.js', 'Scripts/site.js'],
                         'temp/jquery.js': ['Scripts/jquery-?????.js', 'Scripts/jquery.validate.js', 'Scripts/jquery.validate.unobtrusive.js', 'Scripts/modernizr-?????.js']
                     }
             },
             css: {
                 files:
                     {
-                        'temp/site.css': ['Content/bootstrap.css', 'Content/font-awesome.css', 'Content/site.css']
+                        'temp/site.css': ['Content/bootstrap.css', 'Content/font-awesome.css', 'Content/site.css', 'Content/sidemenu.css']
                     }
             }
         },

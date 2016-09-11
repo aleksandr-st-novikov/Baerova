@@ -1,0 +1,54 @@
+﻿<nav class="navbar navbar-default" role="navigation">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+        <div class="brand-wrapper">
+            <!-- Hamburger -->
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Меню</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            <!-- Brand -->
+            <div class="brand-name-wrapper">
+                <a class="navbar-brand" href="/">
+                    <i class="fa fa-home" style="font-size:1.5em;" title="Домой"></i>
+                </a>
+            </div>
+    </div>
+
+    <!-- Main Menu -->
+    <div class="side-menu-container">
+        <ul class="nav navbar-nav">
+            <li class="panel panel-default" id="dropdown">
+                <a data-toggle="collapse" href="#dropdown1">
+                    <span class="fa fa-cogs" style="margin-right:5px;"></span> Общие настройки <span class="caret"></span>
+                </a>
+
+                <div id="dropdown1" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <ul class="nav navbar-nav">
+                            <li><a href="#">Настройка меню</a></li>
+                            <li><a href="#">Константы</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+            <li class="panel panel-default" id="dropdown">
+                <a data-toggle="collapse" href="#dropdown2">
+                    <span class="fa fa-users"  style="margin-right:5px;"></span> Пользователи <span class="caret"></span>
+                </a>
+
+                <div id="dropdown2" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <ul class="nav navbar-nav">
+                            <li><a href="#">Пользователи</a></li>
+                            <li><a href="#">Права</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div><!-- /.navbar-collapse -->
+</nav>
