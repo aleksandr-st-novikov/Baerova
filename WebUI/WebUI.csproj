@@ -278,6 +278,8 @@
     <Content Include="Views\Shared\_SideMenuSettings.cshtml" />
     <Content Include="Views\Settings\RoleManage.cshtml" />
     <Content Include="Views\Settings\_RoleList.cshtml" />
+    <Content Include="Views\Settings\UserManage.cshtml" />
+    <Content Include="Views\Settings\_UserList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

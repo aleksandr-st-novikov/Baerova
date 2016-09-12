@@ -10,4 +10,10 @@ namespace WebUI.Models
         public Guid Id { get; set; }
         public string Name { get; set; }
     }
+
+    public class UserView
+    {
+        public Guid Id { get; set; }
+        public string UserName { get; set; }
+    }
 }

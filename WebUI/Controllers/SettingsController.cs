@@ -76,6 +76,18 @@ namespace WebUI.Controllers
             return View();
         }
 
+        #region Пользователи
+        public ViewResult UserManage()
+        {
+            return View();
+        }
+
+        public PartialViewResult UserList()
+        {
+            return PartialView("_UserList", UserManager.Users.AsEnumerable().OrderBy(r => r.UserName)
+                .Select(r => new UserView { Id = new Guid(r.Id), UserName = r.UserName }).ToList());
+        }
+
         [AllowAnonymous]
         public ActionResult AddUser()
         {
@@ -105,6 +117,8 @@ namespace WebUI.Controllers
             return View(model);
         }
 
+        #endregion
+
         #region Роли
         public ViewResult RoleManage()
         {
@@ -128,7 +142,6 @@ namespace WebUI.Controllers
 
         public PartialViewResult RoleList()
         {
-            ApplicationDbContext context = new ApplicationDbContext();
             return PartialView("_RoleList", RoleManager.Roles.AsEnumerable().OrderBy(r => r.Name).Select(r => new RoleView { Id = new Guid(r.Id), Name = r.Name }).ToList());
         }
 
