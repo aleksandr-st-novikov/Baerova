@@ -17,7 +17,8 @@ module.exports = function (grunt) {
                 files:
                     {
                         'temp/site.js': ['Scripts/bootstrap.js', 'Scripts/respond.js', 'Scripts/site.js'],
-                        'temp/jquery.js': ['Scripts/jquery-?????.js', 'Scripts/jquery.validate.js', 'Scripts/jquery.validate.unobtrusive.js', 'Scripts/modernizr-?????.js']
+                        'temp/jquery.js': ['Scripts/jquery-?????.js', 'Scripts/jquery.validate.js', 'Scripts/jquery.validate.unobtrusive.js',
+                            'Scripts/modernizr-?????.js', 'Scripts/jquery.unobtrusive-ajax.js']
                     }
             },
             css: {

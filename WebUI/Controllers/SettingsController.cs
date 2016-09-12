@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using WebUI.Models;
+using static WebUI.Helpers.MultiButton;
+using System.Data.Entity;
 
 namespace WebUI.Controllers
 {
@@ -22,7 +24,7 @@ namespace WebUI.Controllers
         {
         }
 
-        public SettingsController(ApplicationUserManager userManager, 
+        public SettingsController(ApplicationUserManager userManager,
             ApplicationSignInManager signInManager,
             RoleManager<IdentityRole> roleManager
             )
@@ -56,7 +58,8 @@ namespace WebUI.Controllers
             }
         }
 
-        public RoleManager<IdentityRole> RoleManager {
+        public RoleManager<IdentityRole> RoleManager
+        {
             get
             {
                 return _roleManager ?? new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
@@ -102,15 +105,68 @@ namespace WebUI.Controllers
             return View(model);
         }
 
+        #region Роли
         public ViewResult RoleManage()
         {
-            //var RoleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
-            List<RoleView> model = RoleManager.Roles
-                    .OrderBy(u => u.Name)
-                    .Select(u => new RoleView { Id = new Guid(u.Id), Name = u.Name})
-                    .ToList();
-
-            return View(model);
+            return View();
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> AddRole(RoleView roleView)
+        {
+            if (Request.IsAjaxRequest())
+            {
+                await RoleManager.CreateAsync(new IdentityRole()
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Name = roleView.Name
+                });
+            }
+            return PartialView("_RoleList", RoleManager.Roles.AsEnumerable().OrderBy(r => r.Name).Select(r => new RoleView { Id = new Guid(r.Id), Name = r.Name }).ToList());
+        }
+
+        public PartialViewResult RoleList()
+        {
+            ApplicationDbContext context = new ApplicationDbContext();
+            return PartialView("_RoleList", RoleManager.Roles.AsEnumerable().OrderBy(r => r.Name).Select(r => new RoleView { Id = new Guid(r.Id), Name = r.Name }).ToList());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [MultiButton(MatchFormKey = "action", MatchFormValue = "RoleSave")]
+        public async Task<ActionResult> RoleSave()
+        {
+            if (Request.IsAjaxRequest())
+            {
+                await RoleManager.UpdateAsync(new IdentityRole()
+                {
+                    Id = Request["m.Id"].ToString(),
+                    Name = Request["m.Name"].ToString()
+                });
+            }
+            return PartialView("_RoleList", RoleManager.Roles.AsEnumerable().OrderBy(r => r.Name).Select(r => new RoleView { Id = new Guid(r.Id), Name = r.Name }).ToList());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [MultiButton(MatchFormKey = "action", MatchFormValue = "RoleDelete")]
+        public async Task<ActionResult> RoleDelete()
+        {
+            if (Request.IsAjaxRequest())
+            {
+                ApplicationDbContext context = new ApplicationDbContext();
+                String Id = Request["m.Id"].ToString();
+                IdentityRole role = await context.Roles.FirstOrDefaultAsync(r => r.Id == Id);
+                context.Roles.Remove(role);
+                await context.SaveChangesAsync();
+
+                //IdentityRole role = await RoleManager.FindByIdAsync(Request["m.Id"].ToString());
+                //await RoleManager.DeleteAsync(role);
+            }
+
+            return PartialView("_RoleList", RoleManager.Roles.AsEnumerable().OrderBy(r => r.Name).Select(r => new RoleView { Id = new Guid(r.Id), Name = r.Name }).ToList());
+        }
+        #endregion
     }
 }

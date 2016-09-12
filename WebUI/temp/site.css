@@ -8947,14 +8947,33 @@ button.close {
   clip: auto;
 }
 
+.span-title {
+    font-size: 1.5em;
+    display: block;
+    color: #777;
+    border-bottom: 2px solid #f3f3f3;
+}
+
+.container-body {
+    min-height: 700px;
+}
+
 .nav > li > a {
     padding: 5px 10px !important;
 }
 
-button,
+input, textarea, button,
 button:active,
 button:focus {
     outline: none !important;
+}
+
+/*убираем все скругления*/
+* {
+    -moz-border-radius: 0 !important;
+    -webkit-border-radius: 0 !important;
+    border-radius: 0 !important;
+    outline: 0;
 }
 
 body {

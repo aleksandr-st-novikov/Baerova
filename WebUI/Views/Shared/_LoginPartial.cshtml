@@ -1,6 +1,4 @@
 ﻿@using Microsoft.AspNet.Identity
-@using WebUI.Models
-@model LoginViewModel
 
 @if (Request.IsAuthenticated)
 {
@@ -12,19 +10,19 @@
             <li>
                 @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
             </li>
-            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+            <li><a href="javascript:document.getElementById('logoutForm').submit()">Выйти</a></li>
         </ul>
     }
 }
 else
 {
+    @model WebUI.Models.LoginViewModel
+
     <ul class="nav navbar-nav navbar-right">
         @*<li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>*@
         @*<li>@Html.ActionLink("Войти", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>*@
         <li><a href="#" data-toggle="modal" data-target="#login-modal"><i class="fa fa-sign-in"></i></a></li>
     </ul>
-
-
 
     <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
         <div class="modal-dialog">
@@ -45,7 +43,7 @@ else
                                     @Html.LabelFor(m => m.RememberMe)
                                 </div>
                             </div>*@
-                        <input type="submit" value="Войти" class="login loginmodal-submit" style="margin-top:50px;"/>
+                        <input type="submit" value="Войти" class="login loginmodal-submit" style="margin-top:50px;" />
                         @* Enable this once you have account confirmation enabled for password reset functionality
                             <p>
                                 @Html.ActionLink("Forgot your password?", "ForgotPassword")
