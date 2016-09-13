@@ -1,4 +1,10 @@
-﻿.span-title {
+﻿.error-text {
+    font-size: 0.8em;
+    display: block;
+    text-align: right;
+}
+
+.span-title {
     font-size: 1.5em;
     display: block;
     color: #777;
@@ -11,6 +17,22 @@
 
 .nav > li > a {
     padding: 5px 10px !important;
+}
+
+.label-normal {
+    font-weight: 400;
+}
+
+.label-sm {
+    font-size: 0.9em;
+}
+
+.checkbox input[type=checkbox] {
+    margin-left: 0 !important;
+}
+
+.no-padding {
+    padding: 0 !important;
 }
 
 input, textarea, button,
@@ -78,7 +100,7 @@ textarea {
         position: relative;
     }
 
-    .loginmodal-container input[type=text], input[type=password] {
+    .loginmodal-container input[type=text], .loginmodal-container input[type=password] {
         height: 44px;
         font-size: 16px;
         width: 100%;
@@ -94,7 +116,7 @@ textarea {
         -moz-box-sizing: border-box;
     }
 
-        .loginmodal-container input[type=text]:hover, input[type=password]:hover {
+        .loginmodal-container input[type=text]:hover, .loginmodal-container input[type=password]:hover {
             border: 1px solid #b9b9b9;
             border-top: 1px solid #a0a0a0;
             -moz-box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);

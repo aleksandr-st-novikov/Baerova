@@ -16,6 +16,7 @@ namespace WebUI.Controllers
 {
     public class SettingsController : Controller
     {
+        #region Инициализация
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         RoleManager<IdentityRole> _roleManager;
@@ -69,6 +70,7 @@ namespace WebUI.Controllers
                 _roleManager = value;
             }
         }
+        #endregion
 
         // GET: Settings
         public ActionResult Index()
@@ -79,13 +81,45 @@ namespace WebUI.Controllers
         #region Пользователи
         public ViewResult UserManage()
         {
+            ViewBag.allRoles = RoleManager.Roles.OrderBy(r => r.Name).ToList().Select(x => new SelectListItem()
+            {
+                Selected = false,
+                Text = x.Name,
+                Value = x.Name
+            });
             return View();
         }
 
         public PartialViewResult UserList()
         {
-            return PartialView("_UserList", UserManager.Users.AsEnumerable().OrderBy(r => r.UserName)
-                .Select(r => new UserView { Id = new Guid(r.Id), UserName = r.UserName }).ToList());
+            return PartialView("_UserList", GetUserList());
+        }
+
+        private List<UserView> GetUserList()
+        {
+            List<UserView> model = UserManager
+                            .Users.AsEnumerable()
+                            .OrderBy(r => r.UserName).
+                            Select(r => new UserView
+                            {
+                                Id = new Guid(r.Id),
+                                UserName = r.UserName,
+                                Email = r.Email,
+                                LockoutEnabled = r.LockoutEnabled,
+                                LockoutEndDateUtc = r.LockoutEndDateUtc
+                            }).ToList();
+            foreach (UserView uv in model)
+            {
+                var userRoles = UserManager.GetRoles(uv.Id.ToString());
+                uv.RolesList = RoleManager.Roles.OrderBy(r => r.Name).ToList().Select(x => new SelectListItem()
+                {
+                    Selected = userRoles.Contains(x.Name),
+                    Text = x.Name,
+                    Value = x.Name
+                });
+            }
+
+            return model;
         }
 
         [AllowAnonymous]
@@ -94,29 +128,60 @@ namespace WebUI.Controllers
             return View();
         }
 
-        //
-        // POST: /Account/Register
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> AddUser(RegisterViewModel model)
+        public async Task<ActionResult> AddUser(UserView model, params string[] selectedRole)
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                {
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                    return RedirectToAction("Index", "Settings");
-                }
-                //AddErrors(result);
-            }
+                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email, LockoutEnabled = model.LockoutEnabled };
+                await UserManager.CreateAsync(user, model.Password);
 
-            // If we got this far, something failed, redisplay form
-            return View(model);
+                var userRoles = await UserManager.GetRolesAsync(user.Id);
+                selectedRole = selectedRole ?? new string[] { };
+                await UserManager.AddToRolesAsync(user.Id, selectedRole.Except(userRoles).ToArray<string>());
+                await UserManager.RemoveFromRolesAsync(user.Id, userRoles.Except(selectedRole).ToArray<string>());
+            }
+            return PartialView("_UserList", GetUserList());
         }
 
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        [MultiButton(MatchFormKey = "action", MatchFormValue = "UserSave")]
+        public async Task<ActionResult> UserSave(UserView model, params string[] selectedRole)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await UserManager.FindByIdAsync(model.Id.ToString());
+                user.UserName = model.UserName;
+                user.Email = model.Email;
+                user.LockoutEnabled = model.LockoutEnabled;
+                user.LockoutEndDateUtc = model.LockoutEndDateUtc;
+                await UserManager.UpdateAsync(user);
+
+                var userRoles = await UserManager.GetRolesAsync(user.Id);
+                selectedRole = selectedRole ?? new string[] { };
+                await UserManager.AddToRolesAsync(user.Id, selectedRole.Except(userRoles).ToArray<string>());
+                await UserManager.RemoveFromRolesAsync(user.Id, userRoles.Except(selectedRole).ToArray<string>());
+            }
+            return PartialView("_UserList", GetUserList());
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        [MultiButton(MatchFormKey = "action", MatchFormValue = "UserDelete")]
+        public async Task<ActionResult> UserDelete(UserView model, params string[] selectedRole)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await UserManager.FindByIdAsync(model.Id.ToString());
+                await UserManager.DeleteAsync(user);
+            }
+            return PartialView("_UserList", GetUserList());
+        }
         #endregion
 
         #region Роли

@@ -1,4 +1,5 @@
-﻿
+﻿@model WebUI.Models.UserView
+
 @{
     ViewBag.Title = "Пользователи";
     Layout = "~/Views/Shared/_LayoutSettings.cshtml";
@@ -17,24 +18,97 @@
         }))
         {
             <div class="col-lg-12 no-padding" style="margin-top:20px;">
-                <div class="col-lg-6">
-                    @*@Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.Name)*@
+                <div class="col-lg-12 no-padding">
+                    <div class="col-lg-6 no-padding">
+                        <div class="col-lg-4" style="padding:7px 0 0 0;text-align:right;">
+                            @Html.LabelFor(m => m.UserName, new { @class = "label-normal label-sm" })
+                        </div>
+                        <div class="col-lg-8" style="margin-bottom:7px;">
+                            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+                            <span class="error-text">
+                                @Html.ValidationMessageFor(m => m.UserName)
+                            </span>
+                        </div>
+                        <div class="col-lg-4" style="padding:7px 0 0 0;text-align:right;">
+                            @Html.LabelFor(m => m.Email, new { @class = "label-normal label-sm" })
+                        </div>
+                        <div class="col-lg-8" style="margin-bottom:7px;">
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                            <span class="error-text">
+                                @Html.ValidationMessageFor(m => m.Email)
+                            </span>
+                        </div>
+                        <div class="col-lg-4" style="padding:7px 0 0 0;text-align:right;">
+                            @Html.LabelFor(m => m.Password, new { @class = "label-normal label-sm" })
+                        </div>
+                        <div class="col-lg-8" style="margin-bottom:7px;">
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                            <span class="error-text">
+                                @Html.ValidationMessageFor(m => m.Password)
+                            </span>
+                        </div>
+                        <div class="col-lg-4" style="padding:7px 0 0 0;text-align:right;">
+                            @Html.LabelFor(m => m.ConfirmPassword, new { @class = "label-normal label-sm" })
+                        </div>
+                        <div class="col-lg-8">
+                            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                            <span class="error-text">
+                                @Html.ValidationMessageFor(m => m.ConfirmPassword)
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="col-lg-12 no-padding" style="margin-bottom:7px;">
+                            <div class="checkbox">
+                                @Html.CheckBoxFor(m => m.LockoutEnabled)
+                                @Html.LabelFor(m => m.LockoutEnabled, new { @class = "label-normal" })
+                            </div>
+                        </div>
+                        @*<div class="col-lg-12 no-padding">
+                            <div class="col-lg-4" style="padding:7px 0 0 0;text-align:right;">
+                                @Html.LabelFor(m => m.LockoutEndDateUtc, new { @class = "label-normal label-sm" })
+                            </div>
+                            <div class="col-lg-8" style="margin-bottom:7px;">
+                                @Html.TextBoxFor(m => m.LockoutEndDateUtc, new { @class = "form-control", @type = "datetime-local" })
+                                @Html.ValidationMessageFor(m => m.LockoutEndDateUtc)
+                            </div>
+                        </div>*@
+                        <div class="col-lg-12 no-padding" style="margin-bottom:7px;">
+                            Права
+                            <div class="col-lg-12">
+                                @foreach (var item in ViewBag.allRoles)
+                            {
+                                    <div class="col-lg-6">
+                                        <div class="checkbox" style="margin:2px 0;">
+                                            <input type="checkbox" name="SelectedRole" value="@item.Value" checked="@item.Selected" id="@item.Value" />
+                                            <label for="@item.Value">
+                                                @item.Value
+                                            </label>
+                                        </div>
+                                    </div>
+                            }
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-lg-2">
+                <div class="col-lg-2" style="margin-top:15px;">
                     @Html.AntiForgeryToken()
                     <input type="submit" value="Добавить" class="btn btn-danger" />
                 </div>
-                <div class="col-lg-2">
+                <div class="col-lg-2" style="margin-top:15px;">
                     <i class="fa fa-spinner fa-pulse" id="progr" style="display:none;padding:10px;"></i>
                 </div>
             </div>
         }
-        <div class="col-lg-12">
-            <hr />
-        </div>
-        @Html.Action("UserList", "settings")
     </div>
+
+    <div class="col-lg-12">
+        <hr />
+    </div>
+    <div class="col-lg-12" style="margin-bottom:15px;">
+        Зарегистрированные пользователи
+    </div>
+    @Html.Action("UserList", "settings")
 </div>
 
 <script type="text/javascript">
@@ -42,4 +116,3 @@
         $('#form0')[0].reset();
     }
 </script>
-
