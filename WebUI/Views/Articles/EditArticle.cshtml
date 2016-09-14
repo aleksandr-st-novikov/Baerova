@@ -1,0 +1,21 @@
+﻿<script src="~/Scripts/ckeditor/ckeditor.js"></script>
+
+@{
+    ViewBag.Title = "Публикация";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<span class="span-title">Публикация</span>
+
+<div class="col-lg-12 no-padding" style="min-height:700px;">
+    <form>
+        <textarea name="editor1" id="editor1" rows="10" cols="80">
+            This is my textarea to be replaced with CKEditor.
+        </textarea>
+        <script>
+                // Replace the <textarea id="editor1"> with a CKEditor
+                // instance, using default configuration.
+            CKEDITOR.replace('editor1');
+        </script>
+    </form>
+</div>

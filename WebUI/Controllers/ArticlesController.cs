@@ -6,10 +6,15 @@ using System.Web.Mvc;
 
 namespace WebUI.Controllers
 {
-    public class ArticleController : Controller
+    public class ArticlesController : Controller
     {
         // GET: Article
         public ActionResult Index()
+        {
+            return View();
+        }
+
+        public ActionResult EditArticle(Guid Id)
         {
             return View();
         }
