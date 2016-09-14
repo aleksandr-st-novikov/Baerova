@@ -2,13 +2,13 @@
 
 <div id="UserList">
 
-    @foreach (var m in Model)
+    @foreach (WebUI.Models.UserView u in Model)
     {
-        string id = @m.Id.ToString().Replace("-", "");
+        string id = @u.Id.ToString().Replace("-", "");
 
         <div class="col-lg-12" style="border-top:1px solid #F3F3F3">
             <div class="col-lg-1" style="padding-top:5px;">
-                @if (m.LockoutEndDateUtc != null && m.LockoutEndDateUtc < DateTime.UtcNow)
+                @if (u.LockoutEndDateUtc != null && u.LockoutEndDateUtc < DateTime.UtcNow)
                 {
                     <i class="fa fa-user-times" style="color:red;"></i>
                 }
@@ -18,18 +18,18 @@
                 }
             </div>
             <div class="col-lg-4" style="padding-top:5px;">
-                @m.UserName
+                @u.UserName
             </div>
             <div class="col-lg-4" style="padding-top:5px;">
-                @m.Email
+                @u.Email
             </div>
             <div class="col-lg-1">
-                <button type="submit" id="btn@{@id}" title="Редактировать" class="btn btn-link">
+                <button type="submit" id="@{@id}" title="Редактировать" class="btn btn-link btn-edit">
                     <i class="fa fa-edit"></i>
                 </button>
             </div>
         </div>
-        <div class="col-lg-12 no-padding" id="div@{@id}" style="display:none;margin:15px 0;">
+        <div class="col-lg-12" id="div@{@id}" style="display:none;margin:5px 0;background-color:#f3f3f3;padding:10px 0;">
             @using (Ajax.BeginForm("UserSave", "admin", new AjaxOptions
             {
                 HttpMethod = "post",
@@ -38,53 +38,65 @@
                 LoadingElementId = "progr"
             }))
             {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(c => u.Id)
 
                 <div class="col-lg-12 no-padding">
                     <div class="col-lg-6 no-padding">
-                        <div class="col-lg-4" style="padding:7px 0 0 0;text-align:right;">
-                            @Html.LabelFor(c => m.UserName, new { @class = "label-normal label-sm" })
-                        </div>
-                        <div class="col-lg-8" style="margin-bottom:7px;">
-                            @Html.TextBoxFor(c => m.UserName, new { @class = "form-control" })
-                            <span class="error-text">
-                                @Html.ValidationMessageFor(c => m.UserName)
-                            </span>
-                        </div>
-                        <div class="col-lg-4" style="padding:7px 0 0 0;text-align:right;">
-                            @Html.LabelFor(c => m.Email, new { @class = "label-normal label-sm" })
-                        </div>
-                        <div class="col-lg-8" style="margin-bottom:7px;">
-                            @Html.TextBoxFor(c => m.Email, new { @class = "form-control" })
-                            <span class="error-text">
-                                @Html.ValidationMessageFor(c => m.Email)
-                            </span>
-                        </div>
-                        <div class="col-lg-12" style="margin-bottom:7px;padding-left:30px;">
-                            <div class="checkbox">
-                                @Html.CheckBoxFor(c => m.LockoutEnabled)
-                                @Html.LabelFor(c => m.LockoutEnabled, new { @class = "label-normal" })
+                        <div class="form-group">
+                            <div class="col-lg-4" style="padding:7px 0 0 0;text-align:right;">
+                                @Html.LabelFor(c => u.UserName, new { @class = "label-normal label-sm" })
                             </div>
+                            <div class="col-lg-8" style="margin-bottom:7px;">
+                                @Html.TextBoxFor(c => u.UserName, new { @class = "form-control" })
+                                <span class="error-text">
+                                    @Html.ValidationMessageFor(c => u.UserName)
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-lg-4" style="padding:7px 0 0 0;text-align:right;">
+                            @Html.LabelFor(c => u.Email, new { @class = "label-normal label-sm" })
+                        </div>
+                        <div class="col-lg-8" style="margin-bottom:7px;">
+                            @Html.TextBoxFor(c => u.Email, new { @class = "form-control" })
+                            <span class="error-text">
+                                @Html.ValidationMessageFor(c => u.Email)
+                            </span>
+                        </div>
+                        <div class="col-lg-6" style="margin-bottom:7px;padding-left:30px;">
+                            <div class="checkbox" style="margin-top:3px;">
+                                @Html.CheckBoxFor(c => u.LockoutEnabled, new { @id = "loc" + u.Id.ToString().Replace("-", "") })
+                                <label for="loc@{@id}" class="label-normal label-sm">
+                                    Разрешить блокировку
+                                </label>
+                                @*@Html.LabelFor(c => m.LockoutEnabled, new { @class = "label-normal" })*@
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <button type="submit" name="action" value="UserSave" class="btn btn-info btn-sm pull-right" title="Сохранить">
+                                Восстановить пароль
+                            </button>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="col-lg-12 no-padding">
-                                <div class="col-lg-4" style="padding:7px 0 0 0;text-align:right;">
-                                    @Html.LabelFor(c => m.LockoutEndDateUtc, new { @class = "label-normal label-sm" })
-                                </div>
-                                <div class="col-lg-8" style="margin-bottom:7px;">
-                                    @Html.TextBoxFor(c => m.LockoutEndDateUtc, new { @class = "form-control", @type = "datetime-local" })
-                                    @Html.ValidationMessageFor(c => m.LockoutEndDateUtc)
-                                </div>
+                            <div class="col-lg-4" style="padding:7px 0 0 0;text-align:right;">
+                                @Html.LabelFor(c => u.LockoutEndDateUtc, new { @class = "label-normal label-sm" })
                             </div>
+                            <div class="col-lg-8" style="margin-bottom:7px;">
+                                @Html.TextBoxFor(c => u.LockoutEndDateUtc, new { @class = "form-control", @type = "datetime-local" })
+                                @Html.ValidationMessageFor(c => u.LockoutEndDateUtc)
+                            </div>
+                        </div>
                         <div class="col-lg-12 no-padding" style="margin-bottom:7px;">
                             Права
                             <div class="col-lg-12">
-                                @foreach (var item in m.RolesList)
+                                @foreach (var item in u.RolesList)
                                 {
                                     <div class="col-lg-6">
                                         <div class="checkbox" style="margin:2px 0;">
-                                            <input type="checkbox" name="SelectedRole" value="@item.Value" checked="@item.Selected" id="@item.Value" />
-                                            <label for="@item.Value">
+                                            <input type="checkbox" name="SelectedRole" value="@item.Value" checked="@item.Selected" id="@item.Value@id" />
+                                            <label for="@item.Value@id">
                                                 @item.Value
                                             </label>
                                         </div>
@@ -94,23 +106,22 @@
                         </div>
                     </div>
                 </div>
-            <div class="col-lg-6">
-                @Html.AntiForgeryToken()
-                @Html.HiddenFor(c => m.Id)
-                <button type="submit" name="action" value="UserSave" class="btn btn-success btn-sm" title="Сохранить">
-                    Сохранить
-                </button>
-                <button type="submit" name="action" value="UserDelete" class="btn btn-link btn-sm" title="Удалить">
-                    Удалить
-                </button>
-            </div>
+                    <div class="col-lg-12">
+                        <button type="submit" name="action" value="UserDelete" class="btn btn-link btn-sm pull-right" title="Удалить">
+                            Удалить
+                        </button>
+                        <button type="submit" name="action" value="UserSave" class="btn btn-success btn-sm pull-right" title="Сохранить">
+                            Сохранить
+                        </button>
+                    </div>
             }
         </div>
-        <script>
-            $("#btn@{@id}").click(function () {
-                $('#div@{@id}').toggle('fast');
-            });
-        </script>
     }
     <div class="col-lg-12" style="border-top:1px solid #F3F3F3"></div>
 </div>
+
+<script>
+    $(".btn-edit").click(function () {
+        $('#div' + this.id).toggle('fast');
+    });
+</script>
