@@ -47,4 +47,26 @@ namespace WebUI.Models
 
         public IEnumerable<System.Web.Mvc.SelectListItem> RolesList { get; set; }
     }
+
+    public class UserEdit
+    {
+        public Guid Id { get; set; }
+
+        [Required(ErrorMessage = "Требуется поле {0}.")]
+        [Display(Name = "Имя пользователя")]
+        public string UserName { get; set; }
+
+        [Required(ErrorMessage = "Требуется поле {0}.")]
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
+        [Display(Name = "Разрешена блокировка")]
+        public bool LockoutEnabled { get; set; }
+
+        [Display(Name = "Дата разблокировки")]
+        public DateTime? LockoutEndDateUtc { get; set; }
+
+        public IEnumerable<System.Web.Mvc.SelectListItem> RolesList { get; set; }
+    }
 }

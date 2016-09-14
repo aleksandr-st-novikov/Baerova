@@ -95,12 +95,12 @@ namespace WebUI.Controllers
             return PartialView("_UserList", GetUserList());
         }
 
-        private List<UserView> GetUserList()
+        private List<UserEdit> GetUserList()
         {
-            List<UserView> model = UserManager
+            List<UserEdit> model = UserManager
                             .Users.AsEnumerable()
                             .OrderBy(r => r.UserName).
-                            Select(r => new UserView
+                            Select(r => new UserEdit
                             {
                                 Id = new Guid(r.Id),
                                 UserName = r.UserName,
@@ -108,7 +108,7 @@ namespace WebUI.Controllers
                                 LockoutEnabled = r.LockoutEnabled,
                                 LockoutEndDateUtc = r.LockoutEndDateUtc
                             }).ToList();
-            foreach (UserView uv in model)
+            foreach (UserEdit uv in model)
             {
                 var userRoles = UserManager.GetRoles(uv.Id.ToString());
                 uv.RolesList = RoleManager.Roles.OrderBy(r => r.Name).ToList().Select(x => new SelectListItem()
@@ -122,14 +122,7 @@ namespace WebUI.Controllers
             return model;
         }
 
-        [AllowAnonymous]
-        public ActionResult AddUser()
-        {
-            return View();
-        }
-
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> AddUser(UserView model, params string[] selectedRole)
         {
@@ -147,10 +140,9 @@ namespace WebUI.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         [MultiButton(MatchFormKey = "action", MatchFormValue = "UserSave")]
-        public async Task<ActionResult> UserSave(UserView model, params string[] selectedRole)
+        public async Task<ActionResult> UserSave([Bind(Prefix = "CS$<>8__locals1.u")]UserEdit model, params string[] selectedRole)
         {
             if (ModelState.IsValid)
             {
@@ -158,7 +150,6 @@ namespace WebUI.Controllers
                 user.UserName = model.UserName;
                 user.Email = model.Email;
                 user.LockoutEnabled = model.LockoutEnabled;
-                user.LockoutEndDateUtc = model.LockoutEndDateUtc;
                 await UserManager.UpdateAsync(user);
 
                 var userRoles = await UserManager.GetRolesAsync(user.Id);
@@ -170,10 +161,37 @@ namespace WebUI.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        [MultiButton(MatchFormKey = "action", MatchFormValue = "UserUnLock")]
+        public async Task<ActionResult> UserUnLock([Bind(Prefix = "CS$<>8__locals1.u")]UserEdit model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await UserManager.FindByIdAsync(model.Id.ToString());
+                user.LockoutEndDateUtc = null;
+                await UserManager.UpdateAsync(user);
+            }
+            return PartialView("_UserList", GetUserList());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [MultiButton(MatchFormKey = "action", MatchFormValue = "UserLock")]
+        public async Task<ActionResult> UserLock([Bind(Prefix = "CS$<>8__locals1.u")]UserEdit model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await UserManager.FindByIdAsync(model.Id.ToString());
+                user.LockoutEndDateUtc = DateTime.UtcNow.AddYears(100);
+                await UserManager.UpdateAsync(user);
+            }
+            return PartialView("_UserList", GetUserList());
+        }
+
+        [HttpPost]
         [ValidateAntiForgeryToken]
         [MultiButton(MatchFormKey = "action", MatchFormValue = "UserDelete")]
-        public async Task<ActionResult> UserDelete(UserView model, params string[] selectedRole)
+        public async Task<ActionResult> UserDelete([Bind(Prefix = "CS$<>8__locals1.u")]UserEdit model)
         {
             if (ModelState.IsValid)
             {

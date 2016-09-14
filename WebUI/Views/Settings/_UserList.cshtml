@@ -1,14 +1,14 @@
-﻿@model List<WebUI.Models.UserView>
+﻿@model IEnumerable<WebUI.Models.UserEdit>
 
 <div id="UserList">
 
-    @foreach (WebUI.Models.UserView u in Model)
+    @foreach (WebUI.Models.UserEdit u in Model)
     {
         string id = @u.Id.ToString().Replace("-", "");
 
         <div class="col-lg-12" style="border-top:1px solid #F3F3F3">
             <div class="col-lg-1" style="padding-top:5px;">
-                @if (u.LockoutEndDateUtc != null && u.LockoutEndDateUtc < DateTime.UtcNow)
+                @if (u.LockoutEndDateUtc != null && u.LockoutEndDateUtc > DateTime.UtcNow)
                 {
                     <i class="fa fa-user-times" style="color:red;"></i>
                 }
@@ -30,7 +30,7 @@
             </div>
         </div>
         <div class="col-lg-12" id="div@{@id}" style="display:none;margin:5px 0;background-color:#f3f3f3;padding:10px 0;">
-            @using (Ajax.BeginForm("UserSave", "admin", new AjaxOptions
+            @using (Ajax.BeginForm("UserSave", "settings", new AjaxOptions
             {
                 HttpMethod = "post",
                 UpdateTargetId = "UserList",
@@ -63,31 +63,17 @@
                                 @Html.ValidationMessageFor(c => u.Email)
                             </span>
                         </div>
-                        <div class="col-lg-6" style="margin-bottom:7px;padding-left:30px;">
+                        <div class="col-lg-12" style="margin-bottom:7px;padding-left:30px;">
                             <div class="checkbox" style="margin-top:3px;">
                                 @Html.CheckBoxFor(c => u.LockoutEnabled, new { @id = "loc" + u.Id.ToString().Replace("-", "") })
                                 <label for="loc@{@id}" class="label-normal label-sm">
-                                    Разрешить блокировку
+                                    Разрешена блокировка
                                 </label>
                                 @*@Html.LabelFor(c => m.LockoutEnabled, new { @class = "label-normal" })*@
                             </div>
                         </div>
-                        <div class="col-lg-6">
-                            <button type="submit" name="action" value="UserSave" class="btn btn-info btn-sm pull-right" title="Сохранить">
-                                Восстановить пароль
-                            </button>
-                        </div>
                     </div>
                     <div class="col-lg-6">
-                        <div class="col-lg-12 no-padding">
-                            <div class="col-lg-4" style="padding:7px 0 0 0;text-align:right;">
-                                @Html.LabelFor(c => u.LockoutEndDateUtc, new { @class = "label-normal label-sm" })
-                            </div>
-                            <div class="col-lg-8" style="margin-bottom:7px;">
-                                @Html.TextBoxFor(c => u.LockoutEndDateUtc, new { @class = "form-control", @type = "datetime-local" })
-                                @Html.ValidationMessageFor(c => u.LockoutEndDateUtc)
-                            </div>
-                        </div>
                         <div class="col-lg-12 no-padding" style="margin-bottom:7px;">
                             Права
                             <div class="col-lg-12">
@@ -106,15 +92,30 @@
                         </div>
                     </div>
                 </div>
-                    <div class="col-lg-12">
-                        <button type="submit" name="action" value="UserDelete" class="btn btn-link btn-sm pull-right" title="Удалить">
-                            Удалить
+                <div class="col-lg-12">
+                    <button type="submit" name="action" value="UserSave" class="btn btn-info btn-sm" title="Сохранить">
+                        Восстановить пароль
+                    </button>
+                    @if (u.LockoutEndDateUtc != null && u.LockoutEndDateUtc > DateTime.UtcNow)
+                    {
+                        <button type="submit" name="action" value="UserUnLock" class="btn btn-primary btn-sm" title="Сохранить">
+                            Разблокировать
                         </button>
-                        <button type="submit" name="action" value="UserSave" class="btn btn-success btn-sm pull-right" title="Сохранить">
-                            Сохранить
+                    }
+                    else
+                    {
+                        <button type="submit" name="action" value="UserLock" class="btn btn-primary btn-sm" title="Сохранить">
+                            Заблокировать
                         </button>
-                    </div>
-            }
+                    }
+                    <button type="submit" name="action" value="UserDelete" class="btn btn-link btn-sm pull-right" title="Удалить">
+                        Удалить
+                    </button>
+                    <button type="submit" name="action" value="UserSave" class="btn btn-success btn-sm pull-right" title="Сохранить">
+                        Сохранить
+                    </button>
+                </div>
+    }
         </div>
     }
     <div class="col-lg-12" style="border-top:1px solid #F3F3F3"></div>
