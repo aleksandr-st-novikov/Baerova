@@ -7,15 +7,30 @@
 
 <span class="span-title">Публикация</span>
 
-<div class="col-lg-12 no-padding" style="min-height:700px;">
-    <form>
-        <textarea name="editor1" id="editor1" rows="10" cols="80">
-            This is my textarea to be replaced with CKEditor.
-        </textarea>
-        <script>
-                // Replace the <textarea id="editor1"> with a CKEditor
-                // instance, using default configuration.
-            CKEDITOR.replace('editor1');
-        </script>
-    </form>
+<div class="col-lg-12 no-padding" style="min-height:700px;margin-top:15px;">
+
+    <h4>Заголовок</h4>
+
+    <textarea name="editor1" id="editor1" rows="10" cols="80">
+        This is my textarea to be replaced with CKEditor.
+    </textarea>
+    <script>
+        CKEDITOR.replace('editor1', {
+            language: 'ru',
+            uiColor: '#f8f8f8',
+            filebrowserUploadUrl: '/uploader/upload.php'
+        });
+    </script>
+    <br />
+    <h4>Основное содержание</h4>
+    <textarea name="editor2" id="editor2" rows="10" cols="80">
+        This is my textarea to be replaced with CKEditor.
+    </textarea>
+    <script>
+        CKEDITOR.replace('editor2', {
+            language: 'ru',
+            uiColor: '#f8f8f8',
+            height: '500'
+        });
+    </script>
 </div>
