@@ -74,7 +74,7 @@ module.exports = function (grunt) {
                     src: 'fonts/*',
                     dest: 'lib'
                 },
-                nova: {
+                kendoNova: {
                     expand: true,
                     cwd: 'content/kendo/nova',
                     src: '**',
