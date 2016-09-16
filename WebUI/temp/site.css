@@ -8968,7 +8968,7 @@ button.close {
     padding: 5px 10px !important;
 }
 
-.label-normal {
+.k-edit-label label, .k-edit-field label, .label-normal {
     font-weight: 400;
 }
 

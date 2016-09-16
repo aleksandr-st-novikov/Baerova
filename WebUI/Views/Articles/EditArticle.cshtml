@@ -1,6 +1,5 @@
-﻿<link rel="stylesheet" type="text/css" href="~/Content/kendo/kendo.common-bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="~/Content/kendo/kendo.bootstrap.min.css">
-
+﻿<link rel="stylesheet" type="text/css" href="~/lib/css/kendo.min.css">
+<script src="~/lib/js/kendo.min.js"></script>
 
 @{
     ViewBag.Title = "Публикация";
@@ -14,42 +13,76 @@
     <h4>Заголовок</h4>
     @(Html.Kendo().Editor()
       .Name("editor")
-
-      .HtmlAttributes(new { style = "width: 100%;height:440px" })
+      .HtmlAttributes(new { style = "width: 100%;height:300px" })
       .Tools(tools => tools
           .Clear()
-          .Bold().Italic().Underline().Strikethrough()
-          .JustifyLeft().JustifyCenter().JustifyRight().JustifyFull()
+          .Bold().Italic().Underline()
+          .JustifyLeft().JustifyCenter().JustifyRight()
           .InsertUnorderedList().InsertOrderedList()
           .Outdent().Indent()
           .CreateLink().Unlink()
           .InsertImage()
           .InsertFile()
-          .SubScript()
-          .SuperScript()
           .TableEditing()
           .ViewHtml()
           .Formatting()
-          .CleanFormatting()
-          .FontName()
           .FontSize()
-          .FontColor().BackColor()
-          .Print())
-//      .Resizable(resizable => resizable.Content(true).Toolbar(true))
+          .FontColor()
+          .CleanFormatting()
+          )
       .ImageBrowser(imageBrowser => imageBrowser
           .Image("~/Content/UserFiles/Images/{0}")
           .Read("Read", "ImageBrowser")
           .Create("Create", "ImageBrowser")
           .Destroy("Destroy", "ImageBrowser")
           .Upload("Upload", "ImageBrowser")
-          .Thumbnail("Thumbnail", "ImageBrowser")
-      )
-      .Value("")
-    )
+          .Thumbnail("Thumbnail", "ImageBrowser"))
+      .FileBrowser(fileBrowser => fileBrowser
+         .File("~/Content/UserFiles/Images/{0}")
+         .Read("Read", "FileBrowser")
+         .Create("Create", "FileBrowser")
+         .Destroy("Destroy", "FileBrowser")
+         .Upload("Upload", "FileBrowser"))
+     .Value("Заголовок")
+     )
 
     <br />
     <h4>Основное содержание</h4>
+    @(Html.Kendo().Editor()
+      .Name("editor2")
+      .HtmlAttributes(new { style = "width: 100%;height:600px" })
+      .Tools(tools => tools
+          .Clear()
+          .Bold().Italic().Underline()
+          .JustifyLeft().JustifyCenter().JustifyRight()
+          .InsertUnorderedList().InsertOrderedList()
+          .Outdent().Indent()
+          .CreateLink().Unlink()
+          .InsertImage()
+          .InsertFile()
+          .TableEditing()
+          .ViewHtml()
+          .Formatting()
+          .FontSize()
+          .FontColor()
+          .CleanFormatting()
+          )
+      .ImageBrowser(imageBrowser => imageBrowser
+          .Image("~/Content/UserFiles/Images/{0}")
+          .Read("Read", "ImageBrowser")
+          .Create("Create", "ImageBrowser")
+          .Destroy("Destroy", "ImageBrowser")
+          .Upload("Upload", "ImageBrowser")
+          .Thumbnail("Thumbnail", "ImageBrowser"))
+      .FileBrowser(fileBrowser => fileBrowser
+         .File("~/Content/UserFiles/Images/{0}")
+         .Read("Read", "FileBrowser")
+         .Create("Create", "FileBrowser")
+         .Destroy("Destroy", "FileBrowser")
+         .Upload("Upload", "FileBrowser"))
+     .Value("Заголовок")
+    )
 </div>
 
-<script src="~/Scripts/kendo/kendo.all.min.js"></script>
-<script src="~/Scripts/kendo/kendo.aspnetmvc.min.js"></script>
+
+

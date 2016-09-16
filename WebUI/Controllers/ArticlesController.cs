@@ -19,9 +19,5 @@ namespace WebUI.Controllers
             return View();
         }
 
-        public ActionResult ImageBrowser()
-        {
-            return View();
-        }
     }
 }

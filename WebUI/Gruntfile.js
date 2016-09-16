@@ -18,13 +18,15 @@ module.exports = function (grunt) {
                     {
                         'temp/site.js': ['Scripts/bootstrap.js', 'Scripts/respond.js', 'Scripts/site.js'],
                         'temp/jquery.js': ['Scripts/jquery-?????.js', 'Scripts/jquery.validate.js', 'Scripts/jquery.validate.unobtrusive.js',
-                            'Scripts/modernizr-?????.js', 'Scripts/jquery.unobtrusive-ajax.js']
+                            'Scripts/modernizr-?????.js', 'Scripts/jquery.unobtrusive-ajax.js'],
+                        'lib/js/kendo.min.js': ['Scripts/kendo/jquery.min.js', 'Scripts/kendo/kendo.all.min.js', 'Scripts/kendo/kendo.aspnetmvc.min.js']
                     }
             },
             css: {
                 files:
                     {
-                        'temp/site.css': ['Content/bootstrap.css', 'Content/font-awesome.css', 'Content/site.css', 'Content/sidemenu.css']
+                        'temp/site.css': ['Content/bootstrap.css', 'Content/font-awesome.css', 'Content/site.css', 'Content/sidemenu.css'],
+                        'lib/css/kendo.min.css': ['Content/kendo/kendo.common-nova.min.css', 'Content/kendo/kendo.nova.min.css']
                     }
             }
         },
@@ -71,6 +73,12 @@ module.exports = function (grunt) {
                     expand: true,
                     src: 'fonts/*',
                     dest: 'lib'
+                },
+                nova: {
+                    expand: true,
+                    cwd: 'content/kendo/nova',
+                    src: '**',
+                    dest: 'lib/css/nova/'
                 }
             }
     });
