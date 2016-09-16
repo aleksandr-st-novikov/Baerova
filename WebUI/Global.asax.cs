@@ -20,7 +20,7 @@ namespace WebUI
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             //BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            Database.SetInitializer<mainDbContext>(new DbInitializer());
+           // Database.SetInitializer<mainDbContext>(new DbInitializer());
         }
 
         protected void Application_BeginRequest(object sender, EventArgs e)

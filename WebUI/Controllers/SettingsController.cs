@@ -63,7 +63,7 @@ namespace WebUI.Controllers
         {
             get
             {
-                return _roleManager ?? new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
+                return _roleManager ?? new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new Models.ApplicationDbContext()));
             }
             private set
             {
@@ -251,7 +251,7 @@ namespace WebUI.Controllers
         {
             if (Request.IsAjaxRequest())
             {
-                ApplicationDbContext context = new ApplicationDbContext();
+                Models.ApplicationDbContext context = new Models.ApplicationDbContext();
                 String Id = Request["m.Id"].ToString();
                 IdentityRole role = await context.Roles.FirstOrDefaultAsync(r => r.Id == Id);
                 context.Roles.Remove(role);

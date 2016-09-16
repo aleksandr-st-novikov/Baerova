@@ -1,8 +1,11 @@
-﻿using System;
+﻿using Domain.Entities;
+using Domain.Context;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Threading.Tasks;
 
 namespace WebUI.Controllers
 {
@@ -19,5 +22,18 @@ namespace WebUI.Controllers
             return View();
         }
 
+        [HttpPost]
+        public async Task<ActionResult> EditArticle(Article article)
+        {
+            Guid id = Guid.Empty;
+            if (ModelState.IsValid)
+            {
+                using (EFArticleContext articleContext = new EFArticleContext())
+                {
+                    id = await articleContext.SaveArticleAsync(article);
+                }
+            }
+            return RedirectToAction("EditArticle/" + id.ToString());
+        }
     }
 }

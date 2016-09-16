@@ -10,6 +10,11 @@ namespace Domain.Context
 {
     public class mainDbContext : DbContext
     {
+        public mainDbContext()
+            : base("mainDbContext")
+        {
+        }
+
         public DbSet<Article> Articles { get; set; }
         public DbSet<Subscriber> Subscribers { get; set; }
         public DbSet<AspNetUser> AspNetUsers { get; set; }

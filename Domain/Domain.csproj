@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Context\EFArticleContext.cs" />
     <Compile Include="Context\mainDbContext.cs" />
     <Compile Include="Context\DbInitializer.cs" />
     <Compile Include="Entities\Article.cs" />
