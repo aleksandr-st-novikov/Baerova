@@ -34,5 +34,7 @@ namespace Domain.Entities
 
         [Display(Name = "Текст")]
         public String TextArticle { get; set; }
+
+        public string Link { get; set; }
     }
 }

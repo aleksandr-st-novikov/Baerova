@@ -1,0 +1,12 @@
+﻿@model Domain.Entities.Article
+
+@{
+    ViewBag.Title = "Article";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row" style="min-height:700px;">
+    <h1 class="span-title">@Model.Title</h1>
+    <br />
+    @Html.Raw(HttpUtility.HtmlDecode(Model.TextArticle))
+</div>

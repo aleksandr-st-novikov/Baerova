@@ -184,6 +184,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\MultiButton.cs" />
+    <Compile Include="Helpers\Texts.cs" />
     <Compile Include="MigrationsApplicationDbContext\201609171437533_Initial.cs" />
     <Compile Include="MigrationsApplicationDbContext\201609171437533_Initial.Designer.cs">
       <DependentUpon>201609171437533_Initial.cs</DependentUpon>
@@ -1936,6 +1937,7 @@
     <Content Include="Views\Settings\_UserList.cshtml" />
     <Content Include="Views\Articles\Index.cshtml" />
     <Content Include="Views\Articles\EditArticle.cshtml" />
+    <Content Include="Views\Articles\Article.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

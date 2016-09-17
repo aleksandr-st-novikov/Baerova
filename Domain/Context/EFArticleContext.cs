@@ -63,9 +63,15 @@ namespace Domain.Context
                 forChange.TextArticle = article.TextArticle;
                 forChange.TextMain = article.TextMain;
                 forChange.Title = article.Title;
+                forChange.Link = article.Link;
             }
             await context.SaveChangesAsync();
             return article.Id;
+        }
+
+        public async Task<Article> FindByLinkAsync(string link)
+        {
+            return await context.Articles.FirstOrDefaultAsync(a => (a.DatePublish == null || a.DatePublish <= DateTime.Now) && a.Link == link);
         }
     }
 }
