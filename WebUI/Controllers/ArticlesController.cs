@@ -17,8 +17,13 @@ namespace WebUI.Controllers
             return View();
         }
 
-        public ActionResult EditArticle(Guid Id)
+        public async Task<ActionResult> EditArticle(Guid Id)
         {
+            Article model = null;
+            using (EFArticleContext articleContext = new EFArticleContext())
+            {
+                model = await articleContext.FindByIdAsync(Id);
+            }
             return View();
         }
 

@@ -35,6 +35,10 @@ namespace Domain.Context
             disposed = true;
         }
 
+        public async Task<Article> FindByIdAsync(Guid id)
+        {
+            return await context.Articles.FindAsync(id);
+        }
 
         public IQueryable<Article> Articles
         {

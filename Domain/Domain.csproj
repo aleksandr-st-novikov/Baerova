@@ -51,7 +51,6 @@
   <ItemGroup>
     <Compile Include="Context\EFArticleContext.cs" />
     <Compile Include="Context\mainDbContext.cs" />
-    <Compile Include="Context\DbInitializer.cs" />
     <Compile Include="Entities\Article.cs" />
     <Compile Include="Entities\AspNetUser.cs" />
     <Compile Include="Entities\Subscriber.cs" />

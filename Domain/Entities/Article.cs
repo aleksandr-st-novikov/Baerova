@@ -11,7 +11,8 @@ namespace Domain.Entities
     {
         [Key]
         public Guid Id { get; set; }
-        public DateTime DateCreate { get; set; }
+
+        public DateTime? DateCreate { get; set; }
 
         [Display(Name = "Название")]
         public string Title { get; set; }
@@ -26,7 +27,7 @@ namespace Domain.Entities
         public Boolean IsVisible { get; set; }
 
         [Display(Name = "Дата публикации")]
-        public DateTime DatePublish { get; set; }
+        public DateTime? DatePublish { get; set; }
 
         [Display(Name = "Заголовок")]
         public String TextMain { get; set; }
