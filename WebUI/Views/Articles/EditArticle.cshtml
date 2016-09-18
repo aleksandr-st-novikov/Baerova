@@ -46,7 +46,7 @@
                 @Html.LabelFor(m => m.Title, new { @class = "label-normal label-sm" })
             </div>
             <div class="col-lg-10 no-padding" style="margin-bottom:7px;">
-                @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+                @Html.TextBoxFor(m => m.Title, new { @class = "form-control", maxlength = "300" })
                 <span class="error-text">
                     @Html.ValidationMessageFor(m => m.Title)
                 </span>
@@ -85,7 +85,9 @@
              .Destroy("Destroy", "FileBrowser")
              .Upload("Upload", "FileBrowser"))
         )
-        @Html.ValidationMessageFor(m => m.TextMain)
+        <span class="error-text">
+            @Html.ValidationMessageFor(m => m.TextMain)
+        </span>
 
         <div class="col-lg-12">
             <hr />
@@ -123,8 +125,10 @@
              .Destroy("Destroy", "FileBrowser")
              .Upload("Upload", "FileBrowser"))
         )
-        @Html.ValidationMessageFor(m => m.TextArticle)
-
+        <span class="error-text">
+            @Html.ValidationMessageFor(m => m.TextArticle)
+        </span>
+        
         <div class="col-lg-12">
             <hr />
         </div>
@@ -136,7 +140,7 @@
                 @Html.LabelFor(m => m.Descr, new { @class = "label-normal label-sm" })
             </div>
             <div class="col-lg-9 no-padding" style="margin-bottom:7px;">
-                @Html.TextBoxFor(m => m.Descr, new { @class = "form-control" })
+                @Html.TextBoxFor(m => m.Descr, new { @class = "form-control", maxlength = "500" })
                 <span class="error-text">
                     @Html.ValidationMessageFor(m => m.Descr)
                 </span>
@@ -145,7 +149,7 @@
                 @Html.LabelFor(m => m.PictShare, new { @class = "label-normal label-sm" })
             </div>
             <div class="col-lg-9 no-padding" style="margin-bottom:7px;">
-                @Html.TextBoxFor(m => m.PictShare, new { @class = "form-control" })
+                @Html.TextBoxFor(m => m.PictShare, new { @class = "form-control", maxlength = "250" })
                 <span class="error-text">
                     @Html.ValidationMessageFor(m => m.PictShare)
                 </span>
@@ -168,3 +172,8 @@
     }
 </div>
 
+<script>
+    $('input[maxlength]').maxlength({
+        alwaysShow: true
+    });
+</script>

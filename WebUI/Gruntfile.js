@@ -19,7 +19,8 @@ module.exports = function (grunt) {
                         'temp/site.js': ['Scripts/bootstrap.js', 'Scripts/respond.js', 'Scripts/site.js'],
                         'temp/jquery.js': ['Scripts/jquery-?????.js', 'Scripts/jquery.validate.js', 'Scripts/jquery.validate.unobtrusive.js',
                             'Scripts/modernizr-?????.js', 'Scripts/jquery.unobtrusive-ajax.js'],
-                        'lib/js/kendo.min.js': ['Scripts/kendo/jquery.min.js', 'Scripts/kendo/kendo.all.min.js', 'Scripts/kendo/kendo.aspnetmvc.min.js']
+                        'temp/kendo.js': ['Scripts/kendo/jquery.min.js', 'Scripts/jquery.validate.js', 'Scripts/jquery.validate.unobtrusive.js', 
+                            'Scripts/kendo/kendo.all.min.js', 'Scripts/kendo/kendo.aspnetmvc.min.js', 'Scripts/bootstrap-maxlength.js']
                     }
             },
             css: {
@@ -41,7 +42,8 @@ module.exports = function (grunt) {
                 files:
                     {
                         'lib/js/site.min.js': ['temp/site.js'],
-                        'lib/js/jquery.min.js': ['temp/jquery.js']
+                        'lib/js/jquery.min.js': ['temp/jquery.js'],
+                        'lib/js/kendo.min.js': ['temp/kendo.js']
                     }
             }
         },

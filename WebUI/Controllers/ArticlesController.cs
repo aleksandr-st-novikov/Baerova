@@ -50,6 +50,7 @@ namespace WebUI.Controllers
                     article.Link = Regex.Replace(Regex.Replace(Helpers.Texts.Translit(article.Title).ToLower(), @"[^\d\w]", "-").Trim('-'), @"-+", "-");
                     id = await articleContext.SaveArticleAsync(article);
                 }
+                return RedirectToAction("EditArticle/" + id.ToString());
             }
             return RedirectToAction("EditArticle/" + id.ToString());
         }
