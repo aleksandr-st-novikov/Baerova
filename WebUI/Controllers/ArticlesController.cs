@@ -16,7 +16,10 @@ namespace WebUI.Controllers
         [Authorize(Roles = "Администратор, Редактор")]
         public ActionResult Index()
         {
-            return View();
+            using (EFArticleContext articleContext = new EFArticleContext())
+            {
+                return View(articleContext.Articles.ToList());
+            }
         }
 
         [Authorize(Roles = "Администратор, Редактор")]
