@@ -14,6 +14,7 @@ using System.Data.Entity;
 
 namespace WebUI.Controllers
 {
+    [Authorize(Roles = "Администратор")]
     public class SettingsController : Controller
     {
         #region Инициализация

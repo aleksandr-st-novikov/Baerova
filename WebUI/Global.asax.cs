@@ -19,6 +19,10 @@ namespace WebUI
         {
             //все буквы в адресе прописные
             string url = Request.Url.ToString();
+
+            if (!string.IsNullOrEmpty(Request.QueryString["ReturnUrl"]))
+                System.Web.HttpContext.Current.Response.Redirect("/");
+
             if (Request.HttpMethod == "GET" && Regex.Match(url, "(?<=^[^?]*)[A-Z]").Success)
             {
                 Response.RedirectPermanent(url.ToLower(), true);

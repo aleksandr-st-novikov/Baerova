@@ -1,7 +1,7 @@
 
 Enable-Migrations -ContextTypeName:WebUI.Models.ApplicationDbContext -MigrationsDirectory:MigrationsApplicationDbContext
 
-Add-Migration -Configuration WebUI.Migrations.Configuration Initial
-Add-Migration -Configuration WebUI.MigrationsApplicationDbContext.Configuration Initial
+Add-Migration -Configuration ConfigurationMain Initial
+Add-Migration -Configuration ConfigurationMainUsers Initial
 
-Update-Database -ConfigurationTypeName ConfigurationUsers -Verbose
+Update-Database -ConfigurationTypeName ConfigurationMain -Verbose

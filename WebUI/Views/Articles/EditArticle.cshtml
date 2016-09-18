@@ -28,7 +28,7 @@
                     @Html.LabelFor(m => m.DatePublish, new { @class = "label-normal label-sm" })
                 </div>
                 <div class="col-lg-7 no-padding" style="margin-bottom:7px;">
-                    @Html.TextBox("DatePublish", Model.DatePublish != null ? ((DateTime)Model.DatePublish).ToString("yyyy-MM-ddTHH:mm") : null, new { @class = "form-control", type = "datetime-local" })
+                    @Html.TextBox("DatePublish", Model != null ? Model.DatePublish != null ? ((DateTime)Model.DatePublish).ToString("yyyy-MM-ddTHH:mm") : null : null, new { @class = "form-control", type = "datetime-local" })
                     <span class="error-text">
                         @Html.ValidationMessageFor(m => m.DatePublish)
                     </span>

@@ -194,6 +194,10 @@
     <Compile Include="Migrations\201609171431523_Initial.Designer.cs">
       <DependentUpon>201609171431523_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201609180709433_ArticleRestriction.cs" />
+    <Compile Include="Migrations\201609180709433_ArticleRestriction.Designer.cs">
+      <DependentUpon>201609180709433_ArticleRestriction.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\ConfigurationMain.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -1963,6 +1967,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201609171431523_Initial.resx">
       <DependentUpon>201609171431523_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609180709433_ArticleRestriction.resx">
+      <DependentUpon>201609180709433_ArticleRestriction.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
