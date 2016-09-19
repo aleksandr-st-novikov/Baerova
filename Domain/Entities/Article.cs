@@ -14,7 +14,7 @@ namespace Domain.Entities
 
         public DateTime? DateCreate { get; set; }
 
-        [Required(ErrorMessage = "Вы не заполнили {0}.")]
+        [Required(ErrorMessage = "Вы не заполнили поле {0}.")]
         [Display(Name = "Название")]
         [StringLength(300, ErrorMessage = "Длина должна быть от {2} до {1} символов!", MinimumLength = 2)]
         public string Title { get; set; }
@@ -31,15 +31,16 @@ namespace Domain.Entities
         [Display(Name = "Показывать статью")]
         public Boolean IsVisible { get; set; }
 
+        [Required(ErrorMessage = "Вы не заполнили поле {0}.")]
         [Display(Name = "Дата публикации")]
         public DateTime? DatePublish { get; set; }
 
-        [Required(ErrorMessage = "Вы не заполнили {0}.")]
-        [Display(Name = "Заголовок")]
+        //[Required(ErrorMessage = "Вы не заполнили {0}.")]
+        [Display(Name = "Заголовок публикации")]
         public String TextMain { get; set; }
 
-        [Required(ErrorMessage = "Вы не заполнили {0}.")]
-        [Display(Name = "Текст")]
+        [Required(ErrorMessage = "Вы не заполнили поле {0}.")]
+        [Display(Name = "Текст публикации")]
         public String TextArticle { get; set; }
 
         [StringLength(500, ErrorMessage = "Длина должна быть от {2} до {1} символов!", MinimumLength = 2)]

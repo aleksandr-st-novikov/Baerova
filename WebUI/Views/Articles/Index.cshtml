@@ -1,18 +1,28 @@
-﻿@model List<Domain.Entities.Article>
+﻿@model WebUI.Models.ArticlesView
+@using WebUI.Helpers
 
 @{
     ViewBag.Title = "Публикации";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<span class="span-title">Публикации</span>
+<div class="col-lg-6">
+    <h1 class="span-title">Публикации</h1>
+</div>
+<div class="col-lg-6">
+    <div class="pagination pull-right" style="margin-top:0;">
+        @{
+            @Html.PageLinks(Model.PagingInfo, x => Url.Action("index", new { page = x }))
+        }
+    </div>
+</div>
 
 <div class="row" style="min-height:700px;">
     <div class="col-lg-12" style="margin-bottom:20px;">
         <a href="/articles/editarticle/00000000-0000-0000-0000-000000000000" class="btn btn-danger">Добавить</a>
     </div>
 
-    @foreach (Domain.Entities.Article a in Model)
+    @foreach (Domain.Entities.Article a in Model.Articles)
     {
         <div class="col-lg-12">
             <div class="col-lg-12" style="border-top: 1px solid #f3f3f3;padding:7px 15px;">
@@ -32,6 +42,10 @@
                     {
                         @a.DatePublish
                     }
+                    else
+                    {
+                        @a.DateCreate
+                    }
                 </div>
                 <div class="col-lg-2" style="text-align:right;">
                     <a title="Редактировать" class="btn btn-link btn-sm" href="/articles/editarticle/@{@a.Id}" target="_blank">
@@ -44,5 +58,12 @@
             </div>
         </div>
     }
+</div>
+<div class="col-lg-offset-6 col-lg-6">
+    <div class="pagination pull-right" style="margin-top:0;">
+        @{
+            @Html.PageLinks(Model.PagingInfo, x => Url.Action("index", new { page = x }))
+        }
+    </div>
 </div>
 

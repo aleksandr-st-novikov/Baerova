@@ -184,6 +184,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\MultiButton.cs" />
+    <Compile Include="Helpers\Paging.cs" />
     <Compile Include="Helpers\Texts.cs" />
     <Compile Include="MigrationsApplicationDbContext\201609171437533_Initial.cs" />
     <Compile Include="MigrationsApplicationDbContext\201609171437533_Initial.Designer.cs">
@@ -200,8 +201,10 @@
     </Compile>
     <Compile Include="Migrations\ConfigurationMain.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\ArticlesViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\PagingInfo.cs" />
     <Compile Include="Models\SettingsViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />

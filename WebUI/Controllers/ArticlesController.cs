@@ -8,17 +8,31 @@ using System.Web.Mvc;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using System.Web.UI;
+using WebUI.Models;
 
 namespace WebUI.Controllers
 {
     public class ArticlesController : Controller
     {
+        public int PageSize = 20;
+
         [Authorize(Roles = "Администратор, Редактор")]
-        public ActionResult Index()
+        public ActionResult Index(int page = 1)
         {
+            page = page <= 0 ? 1 : page;
             using (EFArticleContext articleContext = new EFArticleContext())
             {
-                return View(articleContext.Articles.ToList());
+                ArticlesView model = new ArticlesView
+                {
+                    Articles = articleContext.Articles.OrderBy(a => a.DateCreate).Skip((page - 1) * PageSize).Take(PageSize).ToList(),
+                    PagingInfo = new PagingInfo
+                    {
+                        CurrentPage = page,
+                        ItemPerPage = PageSize,
+                        TotalItems = articleContext.Articles.Count()
+                    }
+                };
+                return View(model);
             }
         }
 
@@ -34,6 +48,12 @@ namespace WebUI.Controllers
             {
                 model.TextArticle = Server.HtmlDecode(model.TextArticle);
                 model.TextMain = Server.HtmlDecode(model.TextMain);
+            }
+            else
+            {
+                model = new Domain.Entities.Article();
+                model.IsVisible = true;
+                model.DatePublish = DateTime.Now;
             }
             return View(model);
         }
