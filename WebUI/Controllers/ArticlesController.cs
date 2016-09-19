@@ -75,6 +75,18 @@ namespace WebUI.Controllers
             return RedirectToAction("EditArticle/" + id.ToString());
         }
 
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //[Authorize(Roles = "Администратор, Редактор")]
+        //public async Task<ActionResult> DeleteArticle(Guid Id)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        await repositoryArticle.DeleteArticleAsync(Id);
+        //    }
+        //    return RedirectToAction("ManageArticle");
+        //}
+
         [AllowAnonymous]
         [OutputCache(Duration = 600, VaryByParam = "none", Location = OutputCacheLocation.Downstream)]
         public async Task<ActionResult> Article(String link)
