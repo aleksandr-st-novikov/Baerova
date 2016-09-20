@@ -11,6 +11,7 @@ namespace WebUI.Migrations
         public ConfigurationMain()
         {
             AutomaticMigrationsEnabled = true;
+            //AutomaticMigrationDataLossAllowed = true;
         }
 
         protected override void Seed(Domain.Context.mainDbContext context)

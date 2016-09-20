@@ -51,10 +51,12 @@
   <ItemGroup>
     <Compile Include="Context\EFArticleContext.cs" />
     <Compile Include="Context\EFCountViewContext.cs" />
+    <Compile Include="Context\EFPartnerContext.cs" />
     <Compile Include="Context\mainDbContext.cs" />
     <Compile Include="Entities\Article.cs" />
     <Compile Include="Entities\AspNetUser.cs" />
     <Compile Include="Entities\CountView.cs" />
+    <Compile Include="Entities\Partner.cs" />
     <Compile Include="Entities\Subscriber.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

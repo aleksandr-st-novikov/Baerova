@@ -14,7 +14,7 @@ namespace WebUI.Controllers
 {
     public class ArticlesController : Controller
     {
-        public int PageSize = 3;
+        public int PageSize = 20;
 
         [Authorize(Roles = "Администратор, Редактор")]
         public ActionResult Index(int page = 1)

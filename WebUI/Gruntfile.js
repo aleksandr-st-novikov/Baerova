@@ -18,15 +18,15 @@ module.exports = function (grunt) {
                     {
                         'temp/site.js': ['Scripts/bootstrap.js', 'Scripts/respond.js', 'Scripts/site.js'],
                         'temp/jquery.js': ['Scripts/jquery-?????.js', 'Scripts/jquery.validate.js', 'Scripts/jquery.validate.unobtrusive.js',
-                            'Scripts/modernizr-?????.js', 'Scripts/jquery.unobtrusive-ajax.js'],
-                        'temp/kendo.js': ['Scripts/kendo/jquery.min.js', 'Scripts/jquery.validate.js', 'Scripts/jquery.validate.unobtrusive.js', 
-                            'Scripts/kendo/kendo.all.min.js', 'Scripts/kendo/kendo.aspnetmvc.min.js', 'Scripts/bootstrap-maxlength.js']
+                            'Scripts/modernizr-?????.js', 'Scripts/jquery.unobtrusive-ajax.js', 'Scripts/bootstrap-maxlength.js', 'Scripts/bootstrap-datepicker.js'],
+                        'lib/js/kendo.all.min.js': ['Scripts/kendo/jquery.min.js', 'Scripts/kendo/kendo.all.min.js', 'Scripts/kendo/kendo.aspnetmvc.min.js'],
+                        'temp/kendo.js': ['Scripts/jquery.validate.js', 'Scripts/jquery.validate.unobtrusive.js', 'Scripts/bootstrap-maxlength.js']
                     }
             },
             css: {
                 files:
                     {
-                        'temp/site.css': ['Content/bootstrap.css', 'Content/font-awesome.css', 'Content/site.css', 'Content/sidemenu.css'],
+                        'temp/site.css': ['Content/bootstrap.css', 'Content/font-awesome.css', 'Content/site.css', 'Content/sidemenu.css', 'Content/datepicker.css'],
                         'lib/css/kendo.min.css': ['Content/kendo/kendo.common-nova.min.css', 'Content/kendo/kendo.nova.min.css']
                     }
             }
@@ -38,6 +38,11 @@ module.exports = function (grunt) {
         //    }
         //},
         uglify: {
+            options: {
+                compress: true,
+                mangle: true,
+                sourceMap: true
+            },
             js: {
                 files:
                     {
@@ -47,16 +52,12 @@ module.exports = function (grunt) {
                     }
             }
         },
-        //watch: {
-        //    files: ["Scripts/*.js"],
-        //    tasks: ["all"]
-        //},
         cssmin: {
             css: {
                 files:
-                    {
-                        'lib/css/site.min.css': 'temp/site.css'
-                    }
+            {
+                'lib/css/site.min.css': 'temp/site.css'
+            }
             }
         },
         //imagemin: {

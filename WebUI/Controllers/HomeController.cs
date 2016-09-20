@@ -26,5 +26,10 @@ namespace WebUI.Controllers
 
             return View();
         }
+
+        public ActionResult Register()
+        {
+            return View();
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿@model Domain.Entities.Article
 
 <link rel="stylesheet" type="text/css" href="~/lib/css/kendo.min.css">
+<script src="~/lib/js/kendo.all.min.js"></script>
 <script src="~/lib/js/kendo.min.js"></script>
 
 @{
@@ -176,7 +177,8 @@
     $('input[maxlength]').maxlength({
         alwaysShow: true
     });
-    $(function () {
-        $("form").kendoValidator();
-    });
+    //$(function () {
+    //    $("form").kendoValidator();
+    //});
 </script>
+

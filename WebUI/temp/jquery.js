@@ -13627,3 +13627,978 @@ window.Modernizr = (function( window, document, undefined ) {
         });
     });
 }(jQuery));
+(function ($) {
+  'use strict';
+  /**
+   * We need an event when the elements are destroyed
+   * because if an input is removed, we have to remove the
+   * maxlength object associated (if any).
+   * From:
+   * http://stackoverflow.com/questions/2200494/jquery-trigger-event-when-an-element-is-removed-from-the-dom
+   */
+  if (!$.event.special.destroyed) {
+    $.event.special.destroyed = {
+      remove: function (o) {
+        if (o.handler) {
+          o.handler();
+        }
+      }
+    };
+  }
+
+
+  $.fn.extend({
+    maxlength: function (options, callback) {
+      var documentBody = $('body'),
+        defaults = {
+          showOnReady: false, // true to always show when indicator is ready
+          alwaysShow: false, // if true the indicator it's always shown.
+          threshold: 10, // Represents how many chars left are needed to show up the counter
+          warningClass: 'label label-success',
+          limitReachedClass: 'label label-important label-danger',
+          separator: ' / ',
+          preText: '',
+          postText: '',
+          showMaxLength: true,
+          placement: 'bottom',
+          message: null, // an alternative way to provide the message text
+          showCharsTyped: true, // show the number of characters typed and not the number of characters remaining
+          validate: false, // if the browser doesn't support the maxlength attribute, attempt to type more than
+          // the indicated chars, will be prevented.
+          utf8: false, // counts using bytesize rather than length. eg: '£' is counted as 2 characters.
+          appendToParent: false, // append the indicator to the input field's parent instead of body
+          twoCharLinebreak: true,  // count linebreak as 2 characters to match IE/Chrome textarea validation. As well as DB storage.
+          customMaxAttribute: null,  // null = use maxlength attribute and browser functionality, string = use specified attribute instead.
+          allowOverMax: false
+          // Form submit validation is handled on your own.  when maxlength has been exceeded 'overmax' class added to element
+        };
+
+      if ($.isFunction(options) && !callback) {
+        callback = options;
+        options = {};
+      }
+      options = $.extend(defaults, options);
+
+      /**
+      * Return the length of the specified input in UTF8 encoding.
+      *
+      * @param input
+      * @return {number}
+      */
+      function utf8Length(string) {
+        var utf8length = 0;
+        for (var n = 0; n < string.length; n++) {
+          var c = string.charCodeAt(n);
+          if (c < 128) {
+            utf8length++;
+          }
+          else if ((c > 127) && (c < 2048)) {
+            utf8length = utf8length + 2;
+          }
+          else {
+            utf8length = utf8length + 3;
+          }
+        }
+        return utf8length;
+      }
+
+      /**
+      * Return the length of the specified input.
+      *
+      * @param input
+      * @return {number}
+      */
+      function inputLength(input) {
+        var text = input.val();
+
+        if (options.twoCharLinebreak) {
+          // Count all line breaks as 2 characters
+          text = text.replace(/\r(?!\n)|\n(?!\r)/g, '\r\n');
+        } else {
+          // Remove all double-character (\r\n) linebreaks, so they're counted only once.
+          text = text.replace(new RegExp('\r?\n', 'g'), '\n');
+        }
+
+        var currentLength = 0;
+
+        if (options.utf8) {
+          currentLength = utf8Length(text);
+        } else {
+          currentLength = text.length;
+        }
+        return currentLength;
+      }
+
+      /**
+      * Truncate the text of the specified input.
+      *
+      * @param input
+      * @param limit
+      */
+      function truncateChars(input, maxlength) {
+        var text = input.val();
+        var newlines = 0;
+
+        if (options.twoCharLinebreak) {
+          text = text.replace(/\r(?!\n)|\n(?!\r)/g, '\r\n');
+
+          if (text.substr(text.length - 1) === '\n' && text.length % 2 === 1) {
+            newlines = 1;
+          }
+        }
+
+        input.val(text.substr(0, maxlength - newlines));
+      }
+
+      /**
+       * Return true if the indicator should be showing up.
+       *
+       * @param input
+       * @param thereshold
+       * @param maxlength
+       * @return {number}
+       */
+      function charsLeftThreshold(input, thereshold, maxlength) {
+        var output = true;
+        if (!options.alwaysShow && (maxlength - inputLength(input) > thereshold)) {
+          output = false;
+        }
+        return output;
+      }
+
+      /**
+       * Returns how many chars are left to complete the fill up of the form.
+       *
+       * @param input
+       * @param maxlength
+       * @return {number}
+       */
+      function remainingChars(input, maxlength) {
+        var length = maxlength - inputLength(input);
+        return length;
+      }
+
+      /**
+       * When called displays the indicator.
+       *
+       * @param indicator
+       */
+      function showRemaining(currentInput, indicator) {
+        indicator.css({
+          display: 'block'
+        });
+        currentInput.trigger('maxlength.shown');
+      }
+
+      /**
+       * When called shows the indicator.
+       *
+       * @param indicator
+       */
+      function hideRemaining(currentInput, indicator) {
+
+        if (options.alwaysShow) {
+          return;
+        }
+
+        indicator.css({
+          display: 'none'
+        });
+        currentInput.trigger('maxlength.hidden');
+      }
+
+      /**
+      * This function updates the value in the indicator
+      *
+      * @param maxLengthThisInput
+      * @param typedChars
+      * @return String
+      */
+      function updateMaxLengthHTML(currentInputText, maxLengthThisInput, typedChars) {
+        var output = '';
+        if (options.message) {
+          if (typeof options.message === 'function') {
+            output = options.message(currentInputText, maxLengthThisInput);
+          } else {
+            output = options.message.replace('%charsTyped%', typedChars)
+              .replace('%charsRemaining%', maxLengthThisInput - typedChars)
+              .replace('%charsTotal%', maxLengthThisInput);
+          }
+        } else {
+          if (options.preText) {
+            output += options.preText;
+          }
+          if (!options.showCharsTyped) {
+            output += maxLengthThisInput - typedChars;
+          }
+          else {
+            output += typedChars;
+          }
+          if (options.showMaxLength) {
+            output += options.separator + maxLengthThisInput;
+          }
+          if (options.postText) {
+            output += options.postText;
+          }
+        }
+        return output;
+      }
+
+      /**
+       * This function updates the value of the counter in the indicator.
+       * Wants as parameters: the number of remaining chars, the element currently managed,
+       * the maxLength for the current input and the indicator generated for it.
+       *
+       * @param remaining
+       * @param currentInput
+       * @param maxLengthCurrentInput
+       * @param maxLengthIndicator
+       */
+      function manageRemainingVisibility(remaining, currentInput, maxLengthCurrentInput, maxLengthIndicator) {
+        if (maxLengthIndicator) {
+          maxLengthIndicator.html(updateMaxLengthHTML(currentInput.val(), maxLengthCurrentInput, (maxLengthCurrentInput - remaining)));
+
+          if (remaining > 0) {
+            if (charsLeftThreshold(currentInput, options.threshold, maxLengthCurrentInput)) {
+              showRemaining(currentInput, maxLengthIndicator.removeClass(options.limitReachedClass).addClass(options.warningClass));
+            } else {
+              hideRemaining(currentInput, maxLengthIndicator);
+            }
+          } else {
+            showRemaining(currentInput, maxLengthIndicator.removeClass(options.warningClass).addClass(options.limitReachedClass));
+          }
+        }
+
+        if (options.customMaxAttribute) {
+          // class to use for form validation on custom maxlength attribute
+          if (remaining < 0) {
+            currentInput.addClass('overmax');
+          } else {
+            currentInput.removeClass('overmax');
+          }
+        }
+      }
+
+      /**
+       * This function returns an object containing all the
+       * informations about the position of the current input
+       *
+       * @param currentInput
+       * @return object {bottom height left right top width}
+       *
+       */
+      function getPosition(currentInput) {
+        var el = currentInput[0];
+        return $.extend({}, (typeof el.getBoundingClientRect === 'function') ? el.getBoundingClientRect() : {
+          width: el.offsetWidth,
+          height: el.offsetHeight
+        }, currentInput.offset());
+      }
+
+      /**
+       * This function places the maxLengthIndicator based on placement config object.
+       *
+       * @param {object} placement
+       * @param {$} maxLengthIndicator
+       * @return null
+       *
+       */
+      function placeWithCSS(placement, maxLengthIndicator) {
+        if (!placement || !maxLengthIndicator){
+          return;
+        }
+
+        var POSITION_KEYS = [
+          'top',
+          'bottom',
+          'left',
+          'right',
+          'position'
+        ];
+
+        var cssPos = {};
+
+        // filter css properties to position
+        $.each(POSITION_KEYS, function (i, key) {
+          var val = options.placement[key];
+          if (typeof val !== 'undefined'){
+            cssPos[key] = val;
+          }
+        });
+
+        maxLengthIndicator.css(cssPos);
+
+        return;
+      }
+
+
+      /**
+       * This function places the maxLengthIndicator at the
+       * top / bottom / left / right of the currentInput
+       *
+       * @param currentInput
+       * @param maxLengthIndicator
+       * @return null
+       *
+       */
+      function place(currentInput, maxLengthIndicator) {
+        var pos = getPosition(currentInput);
+
+        // Supports custom placement handler
+        if ($.type(options.placement) === 'function'){
+          options.placement(currentInput, maxLengthIndicator, pos);
+          return;
+        }
+
+        // Supports custom placement via css positional properties
+        if ($.isPlainObject(options.placement)){
+          placeWithCSS(options.placement, maxLengthIndicator);
+          return;
+        }
+
+        var inputOuter = currentInput.outerWidth(),
+          outerWidth = maxLengthIndicator.outerWidth(),
+          actualWidth = maxLengthIndicator.width(),
+          actualHeight = maxLengthIndicator.height();
+
+        // get the right position if the indicator is appended to the input's parent
+        if (options.appendToParent) {
+          pos.top -= currentInput.parent().offset().top;
+          pos.left -= currentInput.parent().offset().left;
+        }
+
+        switch (options.placement) {
+          case 'bottom':
+            maxLengthIndicator.css({ top: pos.top + pos.height, left: pos.left + pos.width / 2 - actualWidth / 2 });
+            break;
+          case 'top':
+            maxLengthIndicator.css({ top: pos.top - actualHeight, left: pos.left + pos.width / 2 - actualWidth / 2 });
+            break;
+          case 'left':
+            maxLengthIndicator.css({ top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left - actualWidth });
+            break;
+          case 'right':
+            maxLengthIndicator.css({ top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left + pos.width });
+            break;
+          case 'bottom-right':
+            maxLengthIndicator.css({ top: pos.top + pos.height, left: pos.left + pos.width });
+            break;
+          case 'top-right':
+            maxLengthIndicator.css({ top: pos.top - actualHeight, left: pos.left + inputOuter });
+            break;
+          case 'top-left':
+            maxLengthIndicator.css({ top: pos.top - actualHeight, left: pos.left - outerWidth });
+            break;
+          case 'bottom-left':
+            maxLengthIndicator.css({ top: pos.top + currentInput.outerHeight(), left: pos.left - outerWidth });
+            break;
+          case 'centered-right':
+            maxLengthIndicator.css({ top: pos.top + (actualHeight / 2), left: pos.left + inputOuter - outerWidth - 3 });
+            break;
+
+            // Some more options for placements
+          case 'bottom-right-inside':
+            maxLengthIndicator.css({ top: pos.top + pos.height, left: pos.left + pos.width - outerWidth });
+            break;
+          case 'top-right-inside':
+            maxLengthIndicator.css({ top: pos.top - actualHeight, left: pos.left + inputOuter - outerWidth });
+            break;
+          case 'top-left-inside':
+            maxLengthIndicator.css({ top: pos.top - actualHeight, left: pos.left });
+            break;
+          case 'bottom-left-inside':
+            maxLengthIndicator.css({ top: pos.top + currentInput.outerHeight(), left: pos.left });
+            break;
+        }
+      }
+
+      /**
+       * This function returns true if the indicator position needs to
+       * be recalculated when the currentInput changes
+       *
+       * @return {boolean}
+       *
+       */
+      function isPlacementMutable() {
+        return options.placement === 'bottom-right-inside' || options.placement === 'top-right-inside' || typeof options.placement === 'function' || (options.message && typeof options.message === 'function');
+      }
+
+      /**
+       * This function retrieves the maximum length of currentInput
+       *
+       * @param currentInput
+       * @return {number}
+       *
+       */
+      function getMaxLength(currentInput) {
+        var max = currentInput.attr('maxlength') || options.customMaxAttribute;
+
+        if (options.customMaxAttribute && !options.allowOverMax) {
+          var custom = currentInput.attr(options.customMaxAttribute);
+          if (!max || custom < max) {
+            max = custom;
+          }
+        }
+
+        if (!max) {
+          max = currentInput.attr('size');
+        }
+        return max;
+      }
+
+      return this.each(function () {
+
+        var currentInput = $(this),
+          maxLengthCurrentInput,
+          maxLengthIndicator;
+
+        $(window).resize(function () {
+          if (maxLengthIndicator) {
+            place(currentInput, maxLengthIndicator);
+          }
+        });
+
+        function firstInit() {
+          var maxlengthContent = updateMaxLengthHTML(currentInput.val(), maxLengthCurrentInput, '0');
+          maxLengthCurrentInput = getMaxLength(currentInput);
+
+          if (!maxLengthIndicator) {
+            maxLengthIndicator = $('<span class="bootstrap-maxlength"></span>').css({
+              display: 'none',
+              position: 'absolute',
+              whiteSpace: 'nowrap',
+              zIndex: 1099
+            }).html(maxlengthContent);
+          }
+
+          // We need to detect resizes if we are dealing with a textarea:
+          if (currentInput.is('textarea')) {
+            currentInput.data('maxlenghtsizex', currentInput.outerWidth());
+            currentInput.data('maxlenghtsizey', currentInput.outerHeight());
+
+            currentInput.mouseup(function () {
+              if (currentInput.outerWidth() !== currentInput.data('maxlenghtsizex') || currentInput.outerHeight() !== currentInput.data('maxlenghtsizey')) {
+                place(currentInput, maxLengthIndicator);
+              }
+
+              currentInput.data('maxlenghtsizex', currentInput.outerWidth());
+              currentInput.data('maxlenghtsizey', currentInput.outerHeight());
+            });
+          }
+
+          if (options.appendToParent) {
+            currentInput.parent().append(maxLengthIndicator);
+            currentInput.parent().css('position', 'relative');
+          } else {
+            documentBody.append(maxLengthIndicator);
+          }
+
+          var remaining = remainingChars(currentInput, getMaxLength(currentInput));
+          manageRemainingVisibility(remaining, currentInput, maxLengthCurrentInput, maxLengthIndicator);
+          place(currentInput, maxLengthIndicator);
+        }
+
+        if (options.showOnReady) {
+          currentInput.ready(function () {
+            firstInit();
+          });
+        } else {
+          currentInput.focus(function () {
+            firstInit();
+          });
+        }
+
+        currentInput.on('maxlength.reposition', function () {
+          place(currentInput, maxLengthIndicator);
+        });
+
+
+        currentInput.on('destroyed', function () {
+          if (maxLengthIndicator) {
+            maxLengthIndicator.remove();
+          }
+        });
+
+        currentInput.on('blur', function () {
+          if (maxLengthIndicator && !options.showOnReady) {
+            maxLengthIndicator.remove();
+          }
+        });
+
+        currentInput.on('input', function () {
+          var maxlength = getMaxLength(currentInput),
+            remaining = remainingChars(currentInput, maxlength),
+            output = true;
+
+          if (options.validate && remaining < 0) {
+            truncateChars(currentInput, maxlength);
+            output = false;
+          } else {
+            manageRemainingVisibility(remaining, currentInput, maxLengthCurrentInput, maxLengthIndicator);
+          }
+
+          if (isPlacementMutable()) {
+            place(currentInput, maxLengthIndicator);
+          }
+
+          return output;
+        });
+      });
+    }
+  });
+}(jQuery));
+!function( $ ) {
+	
+	// Picker object
+	
+	var Datepicker = function(element, options){
+		this.element = $(element);
+		this.format = DPGlobal.parseFormat(options.format||this.element.data('date-format')||'mm/dd/yyyy');
+		this.picker = $(DPGlobal.template)
+							.appendTo('body')
+							.on({
+								click: $.proxy(this.click, this)//,
+								//mousedown: $.proxy(this.mousedown, this)
+							});
+		this.isInput = this.element.is('input');
+		this.component = this.element.is('.date') ? this.element.find('.add-on') : false;
+		
+		if (this.isInput) {
+			this.element.on({
+				focus: $.proxy(this.show, this),
+				//blur: $.proxy(this.hide, this),
+				keyup: $.proxy(this.update, this)
+			});
+		} else {
+			if (this.component){
+				this.component.on('click', $.proxy(this.show, this));
+			} else {
+				this.element.on('click', $.proxy(this.show, this));
+			}
+		}
+	
+		this.minViewMode = options.minViewMode||this.element.data('date-minviewmode')||0;
+		if (typeof this.minViewMode === 'string') {
+			switch (this.minViewMode) {
+				case 'months':
+					this.minViewMode = 1;
+					break;
+				case 'years':
+					this.minViewMode = 2;
+					break;
+				default:
+					this.minViewMode = 0;
+					break;
+			}
+		}
+		this.viewMode = options.viewMode||this.element.data('date-viewmode')||0;
+		if (typeof this.viewMode === 'string') {
+			switch (this.viewMode) {
+				case 'months':
+					this.viewMode = 1;
+					break;
+				case 'years':
+					this.viewMode = 2;
+					break;
+				default:
+					this.viewMode = 0;
+					break;
+			}
+		}
+		this.startViewMode = this.viewMode;
+		this.weekStart = options.weekStart||this.element.data('date-weekstart')||0;
+		this.weekEnd = this.weekStart === 0 ? 6 : this.weekStart - 1;
+		this.onRender = options.onRender;
+		this.fillDow();
+		this.fillMonths();
+		this.update();
+		this.showMode();
+	};
+	
+	Datepicker.prototype = {
+		constructor: Datepicker,
+		
+		show: function(e) {
+			this.picker.show();
+			this.height = this.component ? this.component.outerHeight() : this.element.outerHeight();
+			this.place();
+			$(window).on('resize', $.proxy(this.place, this));
+			if (e ) {
+				e.stopPropagation();
+				e.preventDefault();
+			}
+			if (!this.isInput) {
+			}
+			var that = this;
+			$(document).on('mousedown', function(ev){
+				if ($(ev.target).closest('.datepicker').length == 0) {
+					that.hide();
+				}
+			});
+			this.element.trigger({
+				type: 'show',
+				date: this.date
+			});
+		},
+		
+		hide: function(){
+			this.picker.hide();
+			$(window).off('resize', this.place);
+			this.viewMode = this.startViewMode;
+			this.showMode();
+			if (!this.isInput) {
+				$(document).off('mousedown', this.hide);
+			}
+			//this.set();
+			this.element.trigger({
+				type: 'hide',
+				date: this.date
+			});
+		},
+		
+		set: function() {
+			var formated = DPGlobal.formatDate(this.date, this.format);
+			if (!this.isInput) {
+				if (this.component){
+					this.element.find('input').prop('value', formated);
+				}
+				this.element.data('date', formated);
+			} else {
+				this.element.prop('value', formated);
+			}
+		},
+		
+		setValue: function(newDate) {
+			if (typeof newDate === 'string') {
+				this.date = DPGlobal.parseDate(newDate, this.format);
+			} else {
+				this.date = new Date(newDate);
+			}
+			this.set();
+			this.viewDate = new Date(this.date.getFullYear(), this.date.getMonth(), 1, 0, 0, 0, 0);
+			this.fill();
+		},
+		
+		place: function(){
+			var offset = this.component ? this.component.offset() : this.element.offset();
+			this.picker.css({
+				top: offset.top + this.height,
+				left: offset.left
+			});
+		},
+		
+		update: function(newDate){
+			this.date = DPGlobal.parseDate(
+				typeof newDate === 'string' ? newDate : (this.isInput ? this.element.prop('value') : this.element.data('date')),
+				this.format
+			);
+			this.viewDate = new Date(this.date.getFullYear(), this.date.getMonth(), 1, 0, 0, 0, 0);
+			this.fill();
+		},
+		
+		fillDow: function(){
+			var dowCnt = this.weekStart;
+			var html = '<tr>';
+			while (dowCnt < this.weekStart + 7) {
+				html += '<th class="dow">'+DPGlobal.dates.daysMin[(dowCnt++)%7]+'</th>';
+			}
+			html += '</tr>';
+			this.picker.find('.datepicker-days thead').append(html);
+		},
+		
+		fillMonths: function(){
+			var html = '';
+			var i = 0
+			while (i < 12) {
+				html += '<span class="month">'+DPGlobal.dates.monthsShort[i++]+'</span>';
+			}
+			this.picker.find('.datepicker-months td').append(html);
+		},
+		
+		fill: function() {
+			var d = new Date(this.viewDate),
+				year = d.getFullYear(),
+				month = d.getMonth(),
+				currentDate = this.date.valueOf();
+			this.picker.find('.datepicker-days th:eq(1)')
+						.text(DPGlobal.dates.months[month]+' '+year);
+			var prevMonth = new Date(year, month-1, 28,0,0,0,0),
+				day = DPGlobal.getDaysInMonth(prevMonth.getFullYear(), prevMonth.getMonth());
+			prevMonth.setDate(day);
+			prevMonth.setDate(day - (prevMonth.getDay() - this.weekStart + 7)%7);
+			var nextMonth = new Date(prevMonth);
+			nextMonth.setDate(nextMonth.getDate() + 42);
+			nextMonth = nextMonth.valueOf();
+			var html = [];
+			var clsName,
+				prevY,
+				prevM;
+			while(prevMonth.valueOf() < nextMonth) {
+				if (prevMonth.getDay() === this.weekStart) {
+					html.push('<tr>');
+				}
+				clsName = this.onRender(prevMonth);
+				prevY = prevMonth.getFullYear();
+				prevM = prevMonth.getMonth();
+				if ((prevM < month &&  prevY === year) ||  prevY < year) {
+					clsName += ' old';
+				} else if ((prevM > month && prevY === year) || prevY > year) {
+					clsName += ' new';
+				}
+				if (prevMonth.valueOf() === currentDate) {
+					clsName += ' active';
+				}
+				html.push('<td class="day '+clsName+'">'+prevMonth.getDate() + '</td>');
+				if (prevMonth.getDay() === this.weekEnd) {
+					html.push('</tr>');
+				}
+				prevMonth.setDate(prevMonth.getDate()+1);
+			}
+			this.picker.find('.datepicker-days tbody').empty().append(html.join(''));
+			var currentYear = this.date.getFullYear();
+			
+			var months = this.picker.find('.datepicker-months')
+						.find('th:eq(1)')
+							.text(year)
+							.end()
+						.find('span').removeClass('active');
+			if (currentYear === year) {
+				months.eq(this.date.getMonth()).addClass('active');
+			}
+			
+			html = '';
+			year = parseInt(year/10, 10) * 10;
+			var yearCont = this.picker.find('.datepicker-years')
+								.find('th:eq(1)')
+									.text(year + '-' + (year + 9))
+									.end()
+								.find('td');
+			year -= 1;
+			for (var i = -1; i < 11; i++) {
+				html += '<span class="year'+(i === -1 || i === 10 ? ' old' : '')+(currentYear === year ? ' active' : '')+'">'+year+'</span>';
+				year += 1;
+			}
+			yearCont.html(html);
+		},
+		
+		click: function(e) {
+			e.stopPropagation();
+			e.preventDefault();
+			var target = $(e.target).closest('span, td, th');
+			if (target.length === 1) {
+				switch(target[0].nodeName.toLowerCase()) {
+					case 'th':
+						switch(target[0].className) {
+							case 'switch':
+								this.showMode(1);
+								break;
+							case 'prev':
+							case 'next':
+								this.viewDate['set'+DPGlobal.modes[this.viewMode].navFnc].call(
+									this.viewDate,
+									this.viewDate['get'+DPGlobal.modes[this.viewMode].navFnc].call(this.viewDate) + 
+									DPGlobal.modes[this.viewMode].navStep * (target[0].className === 'prev' ? -1 : 1)
+								);
+								this.fill();
+								this.set();
+								break;
+						}
+						break;
+					case 'span':
+						if (target.is('.month')) {
+							var month = target.parent().find('span').index(target);
+							this.viewDate.setMonth(month);
+						} else {
+							var year = parseInt(target.text(), 10)||0;
+							this.viewDate.setFullYear(year);
+						}
+						if (this.viewMode !== 0) {
+							this.date = new Date(this.viewDate);
+							this.element.trigger({
+								type: 'changeDate',
+								date: this.date,
+								viewMode: DPGlobal.modes[this.viewMode].clsName
+							});
+						}
+						this.showMode(-1);
+						this.fill();
+						this.set();
+						break;
+					case 'td':
+						if (target.is('.day') && !target.is('.disabled')){
+							var day = parseInt(target.text(), 10)||1;
+							var month = this.viewDate.getMonth();
+							if (target.is('.old')) {
+								month -= 1;
+							} else if (target.is('.new')) {
+								month += 1;
+							}
+							var year = this.viewDate.getFullYear();
+							this.date = new Date(year, month, day,0,0,0,0);
+							this.viewDate = new Date(year, month, Math.min(28, day),0,0,0,0);
+							this.fill();
+							this.set();
+							this.element.trigger({
+								type: 'changeDate',
+								date: this.date,
+								viewMode: DPGlobal.modes[this.viewMode].clsName
+							});
+						}
+						break;
+				}
+			}
+		},
+		
+		mousedown: function(e){
+			e.stopPropagation();
+			e.preventDefault();
+		},
+		
+		showMode: function(dir) {
+			if (dir) {
+				this.viewMode = Math.max(this.minViewMode, Math.min(2, this.viewMode + dir));
+			}
+			this.picker.find('>div').hide().filter('.datepicker-'+DPGlobal.modes[this.viewMode].clsName).show();
+		}
+	};
+	
+	$.fn.datepicker = function ( option, val ) {
+		return this.each(function () {
+			var $this = $(this),
+				data = $this.data('datepicker'),
+				options = typeof option === 'object' && option;
+			if (!data) {
+				$this.data('datepicker', (data = new Datepicker(this, $.extend({}, $.fn.datepicker.defaults,options))));
+			}
+			if (typeof option === 'string') data[option](val);
+		});
+	};
+
+	$.fn.datepicker.defaults = {
+		onRender: function(date) {
+			return '';
+		}
+	};
+	$.fn.datepicker.Constructor = Datepicker;
+	
+	var DPGlobal = {
+		modes: [
+			{
+				clsName: 'days',
+				navFnc: 'Month',
+				navStep: 1
+			},
+			{
+				clsName: 'months',
+				navFnc: 'FullYear',
+				navStep: 1
+			},
+			{
+				clsName: 'years',
+				navFnc: 'FullYear',
+				navStep: 10
+		}],
+		dates:{
+			days: ["�����������", "�����������", "�������", "�����", "�������", "�������", "�������", "�����������"],
+			daysShort: ["��", "��", "��", "��", "��", "��", "��", "��"],
+			daysMin: ["��", "��", "��", "��", "��", "��", "��", "��"],
+			months: ["������", "�������", "����", "������", "���", "����", "����", "������", "��������", "�������", "������", "�������"],
+			monthsShort: ["���", "���", "���", "���", "���", "���", "���", "���", "���", "���", "���", "���"]
+		},
+		isLeapYear: function (year) {
+			return (((year % 4 === 0) && (year % 100 !== 0)) || (year % 400 === 0))
+		},
+		getDaysInMonth: function (year, month) {
+			return [31, (DPGlobal.isLeapYear(year) ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][month]
+		},
+		parseFormat: function(format){
+			var separator = format.match(/[.\/\-\s].*?/),
+				parts = format.split(/\W+/);
+			if (!separator || !parts || parts.length === 0){
+				throw new Error("Invalid date format.");
+			}
+			return {separator: separator, parts: parts};
+		},
+		parseDate: function(date, format) {
+			var parts = date.split(format.separator),
+				date = new Date(),
+				val;
+			date.setHours(0);
+			date.setMinutes(0);
+			date.setSeconds(0);
+			date.setMilliseconds(0);
+			if (parts.length === format.parts.length) {
+				var year = date.getFullYear(), day = date.getDate(), month = date.getMonth();
+				for (var i=0, cnt = format.parts.length; i < cnt; i++) {
+					val = parseInt(parts[i], 10)||1;
+					switch(format.parts[i]) {
+						case 'dd':
+						case 'd':
+							day = val;
+							date.setDate(val);
+							break;
+						case 'mm':
+						case 'm':
+							month = val - 1;
+							date.setMonth(val - 1);
+							break;
+						case 'yy':
+							year = 2000 + val;
+							date.setFullYear(2000 + val);
+							break;
+						case 'yyyy':
+							year = val;
+							date.setFullYear(val);
+							break;
+					}
+				}
+				date = new Date(year, month, day, 0 ,0 ,0);
+			}
+			return date;
+		},
+		formatDate: function(date, format){
+			var val = {
+				d: date.getDate(),
+				m: date.getMonth() + 1,
+				yy: date.getFullYear().toString().substring(2),
+				yyyy: date.getFullYear()
+			};
+			val.dd = (val.d < 10 ? '0' : '') + val.d;
+			val.mm = (val.m < 10 ? '0' : '') + val.m;
+			var date = [];
+			for (var i=0, cnt = format.parts.length; i < cnt; i++) {
+				date.push(val[format.parts[i]]);
+			}
+			return date.join(format.separator);
+		},
+		headTemplate: '<thead>'+
+							'<tr>'+
+								'<th class="prev">&lsaquo;</th>'+
+								'<th colspan="5" class="switch"></th>'+
+								'<th class="next">&rsaquo;</th>'+
+							'</tr>'+
+						'</thead>',
+		contTemplate: '<tbody><tr><td colspan="7"></td></tr></tbody>'
+	};
+	DPGlobal.template = '<div class="datepicker dropdown-menu">'+
+							'<div class="datepicker-days">'+
+								'<table class=" table-condensed">'+
+									DPGlobal.headTemplate+
+									'<tbody></tbody>'+
+								'</table>'+
+							'</div>'+
+							'<div class="datepicker-months">'+
+								'<table class="table-condensed">'+
+									DPGlobal.headTemplate+
+									DPGlobal.contTemplate+
+								'</table>'+
+							'</div>'+
+							'<div class="datepicker-years">'+
+								'<table class="table-condensed">'+
+									DPGlobal.headTemplate+
+									DPGlobal.contTemplate+
+								'</table>'+
+							'</div>'+
+						'</div>';
+
+}( window.jQuery );

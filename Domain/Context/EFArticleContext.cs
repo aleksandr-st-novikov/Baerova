@@ -64,6 +64,7 @@ namespace Domain.Context
                 forChange.TextMain = article.TextMain;
                 forChange.Title = article.Title;
                 forChange.Link = article.Link;
+                forChange.DateCreate = DateTime.Now;
             }
             await context.SaveChangesAsync();
             return article.Id;
