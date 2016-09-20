@@ -73,5 +73,15 @@ namespace Domain.Context
         {
             return await context.Articles.FirstOrDefaultAsync(a => (a.DatePublish == null || a.DatePublish <= DateTime.Now) && a.Link == link);
         }
+
+        public async Task DeleteArticleAsync(Guid id)
+        {
+            Article forDelele = await context.Articles.FindAsync(id);
+            if (forDelele != null)
+            {
+                context.Articles.Remove(forDelele);
+                await context.SaveChangesAsync();
+            }
+        }
     }
 }

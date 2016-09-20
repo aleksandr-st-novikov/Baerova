@@ -14,26 +14,12 @@ namespace WebUI.Controllers
 {
     public class ArticlesController : Controller
     {
-        public int PageSize = 20;
+        public int PageSize = 3;
 
         [Authorize(Roles = "Администратор, Редактор")]
         public ActionResult Index(int page = 1)
         {
-            page = page <= 0 ? 1 : page;
-            using (EFArticleContext articleContext = new EFArticleContext())
-            {
-                ArticlesView model = new ArticlesView
-                {
-                    Articles = articleContext.Articles.OrderBy(a => a.DateCreate).Skip((page - 1) * PageSize).Take(PageSize).ToList(),
-                    PagingInfo = new PagingInfo
-                    {
-                        CurrentPage = page,
-                        ItemPerPage = PageSize,
-                        TotalItems = articleContext.Articles.Count()
-                    }
-                };
-                return View(model);
-            }
+            return View(GetListArticlesModel(page));
         }
 
         [Authorize(Roles = "Администратор, Редактор")]
@@ -75,17 +61,20 @@ namespace WebUI.Controllers
             return RedirectToAction("EditArticle/" + id.ToString());
         }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //[Authorize(Roles = "Администратор, Редактор")]
-        //public async Task<ActionResult> DeleteArticle(Guid Id)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        await repositoryArticle.DeleteArticleAsync(Id);
-        //    }
-        //    return RedirectToAction("ManageArticle");
-        //}
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Администратор, Редактор")]
+        public async Task<ActionResult> DeleteArticle(Guid ArticleId, int page = 1)
+        {
+            if (ModelState.IsValid && Request.IsAjaxRequest())
+            {
+                using (EFArticleContext articleContext = new EFArticleContext())
+                {
+                    await articleContext.DeleteArticleAsync(ArticleId);
+                }
+            }
+            return PartialView("_ListArticle", GetListArticlesModel(page).Articles);
+        }
 
         [AllowAnonymous]
         [OutputCache(Duration = 600, VaryByParam = "none", Location = OutputCacheLocation.Downstream)]
@@ -112,6 +101,33 @@ namespace WebUI.Controllers
                 }
             }
             return View(model);
+        }
+
+        [Authorize(Roles = "Администратор,Менеджер")]
+        public PartialViewResult ListArticle(int page = 1)
+        {
+            return PartialView("_ListArticle", GetListArticlesModel(page).Articles);
+        }
+
+        private ArticlesView GetListArticlesModel(int page)
+        {
+            using (EFArticleContext articleContext = new EFArticleContext())
+            {
+                int tp = (Int32)Math.Ceiling((decimal)articleContext.Articles.Count() / PageSize);
+                page = page < 0 ? 1 : page > tp ? tp : page;
+
+                ArticlesView model = new ArticlesView
+                {
+                    Articles = articleContext.Articles.OrderByDescending(a => a.DateCreate).Skip((page - 1) * PageSize).Take(PageSize).ToList(),
+                    PagingInfo = new PagingInfo
+                    {
+                        CurrentPage = page,
+                        ItemPerPage = PageSize,
+                        TotalItems = articleContext.Articles.Count()
+                    }
+                };
+                return model;
+            }
         }
     }
 }

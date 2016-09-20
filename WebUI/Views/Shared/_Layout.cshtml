@@ -6,6 +6,11 @@
     <title>@ViewBag.Title</title>
     <link rel="stylesheet" type="text/css" href="~/lib/css/site.min.css">
     
+    @if (!@Request.Url.AbsoluteUri.Contains("editarticle"))
+    {
+        <script src="~/lib/js/jquery.min.js"></script>
+    }
+
 </head>
 <body style="padding:0;">
     <div class="container" style="margin-bottom:15px;">
@@ -47,10 +52,7 @@
         </footer>
     </div>
 
-    @if (!@Request.Url.AbsoluteUri.Contains("editarticle"))
-    {
-        <script src="~/lib/js/jquery.min.js"></script>
-    }
+    
     <script src="~/lib/js/site.min.js"></script>
 </body>
 </html>

@@ -8947,6 +8947,10 @@ button.close {
   clip: auto;
 }
 
+.btn-w{
+    padding:2px 10px;
+}
+
 .error-text {
     font-size: 0.8em;
     display: block;

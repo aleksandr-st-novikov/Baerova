@@ -1,0 +1,101 @@
+﻿@model List<Domain.Entities.Article>
+
+<div id="ListArticle">
+    @foreach (Domain.Entities.Article a in Model)
+    {
+        <div class="col-lg-12">
+            <div class="col-lg-12" style="border-top: 1px solid #f3f3f3;padding:7px 15px;">
+                <div class="col-lg-9" style="padding-top:5px;">
+                    @if (a.IsVisible == true)
+                {
+                        <i class="fa fa-check" style="margin-right:15px;"></i>
+                    }
+                    else
+                    {
+                        <i class="fa fa-close" style="margin-right:15px;"></i>
+                    }
+                    @Html.ActionLink(a.Title, "article", new { a.Link }, new { target = "_blank" })
+                </div>
+                <div class="col-lg-1" style="padding-top:0px;font-size:0.8em;">
+                    @if (a.DatePublish != null)
+                {
+                        @a.DatePublish
+                    }
+                    else
+                    {
+                        @a.DateCreate
+                    }
+                </div>
+                <div class="col-lg-2" style="text-align:right;">
+                    <a title="Редактировать" class="btn btn-link btn-w" href="/articles/editarticle/@{@a.Id}" target="_blank">
+                        <i class="fa fa-edit"></i>
+                    </a>
+                    <button class="btn btn-link btn-w btn-del" title="Удалить" data-toggle="modal" data-target="#mDelete" data-id="@a.Id">
+                        <i class="fa fa-trash"></i>
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="modal fade" id="mDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Закрыть</span></button>
+                <h4 class="modal-title" id="myModalLabel">Необходимо подверждение</h4>
+            </div>
+            <div class="modal-body">
+                Удалить публикацию?
+            </div>
+            <div class="modal-footer">
+                @using (Ajax.BeginForm("DeleteArticle", "Articles", new AjaxOptions
+                {
+                    HttpMethod = "post",
+                    OnComplete = "onComplete",
+                    OnSuccess = "onSuccess",
+                    InsertionMode = System.Web.Mvc.Ajax.InsertionMode.Replace
+                }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.Hidden("ArticleId")
+                    <button type="submit" class="btn btn-danger btn-sm">Удалить</button>
+                    <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Закрыть</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+            @{
+                string pg = String.Empty;
+                if (ViewContext.RouteData.Values["page"] != null)
+                {
+                if (!String.IsNullOrEmpty(ViewContext.RouteData.Values["page"].ToString()))
+                    {
+                        pg = "/" + ViewContext.RouteData.Values["page"].ToString();
+                    }
+                }
+            }
+
+    function onComplete() {
+        $.ajax({
+            url: '/Articles/ListArticle@{@pg}',
+            cache: false,
+            success: function (html) {
+                $("#ListArticle").html(html);
+            }
+        });
+    }
+
+    function onSuccess() {
+        $('#mDelete').modal('hide');
+    }
+
+    $('.btn-del').click(function () {
+        $('#ArticleId').val($(this).data('id'));
+    });
+</script>

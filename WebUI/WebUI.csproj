@@ -1945,6 +1945,7 @@
     <Content Include="Views\Articles\Index.cshtml" />
     <Content Include="Views\Articles\EditArticle.cshtml" />
     <Content Include="Views\Articles\Article.cshtml" />
+    <Content Include="Views\Articles\_ListArticle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

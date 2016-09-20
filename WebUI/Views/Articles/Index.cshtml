@@ -19,68 +19,15 @@
 
 <div class="row" style="min-height:700px;">
     <div class="col-lg-12" style="margin-bottom:20px;">
-        <a href="/articles/editarticle/00000000-0000-0000-0000-000000000000" class="btn btn-danger">Добавить</a>
+        <a href="/articles/editarticle/00000000-0000-0000-0000-000000000000" class="btn btn-danger btn-sm">Добавить</a>
     </div>
-
-    @foreach (Domain.Entities.Article a in Model.Articles)
-    {
-        <div class="col-lg-12">
-            <div class="col-lg-12" style="border-top: 1px solid #f3f3f3;padding:7px 15px;">
-                <div class="col-lg-9" style="padding-top:5px;">
-                    @if (a.IsVisible == true)
-                    {
-                        <i class="fa fa-check" style="margin-right:15px;"></i>
-                    }
-                    else
-                    {
-                        <i class="fa fa-close" style="margin-right:15px;"></i>
-                    }
-                    @Html.ActionLink(a.Title, "article", new { a.Link }, new { target = "_blank"})
-                </div>
-                <div class="col-lg-1" style="padding-top:0px;font-size:0.8em;">
-                    @if (a.DatePublish != null)
-                    {
-                        @a.DatePublish
-                    }
-                    else
-                    {
-                        @a.DateCreate
-                    }
-                </div>
-                <div class="col-lg-2" style="text-align:right;">
-                    <a title="Редактировать" class="btn btn-link btn-sm" href="/articles/editarticle/@{@a.Id}" target="_blank">
-                        <i class="fa fa-edit"></i>
-                    </a>
-                    <button class="btn btn-link btn-sm" title="Удалить" data-toggle="modal" data-target="#mDelete" data-id="@a.Id">
-                        <i class="fa fa-trash"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-    }
+    @Html.Action("ListArticle", "Articles")
 </div>
+
 <div class="col-lg-offset-6 col-lg-6">
     <div class="pagination pull-right" style="margin-top:0;">
         @{
             @Html.PageLinks(Model.PagingInfo, x => Url.Action("index", new { page = x }))
         }
-    </div>
-</div>
-
-<div class="modal fade" id="mDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Закрыть</span></button>
-                <h4 class="modal-title" id="myModalLabel">Необходимо подверждение</h4>
-            </div>
-            <div class="modal-body">
-                Удалить публикацию?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger btn-sm">Удалить</button>
-                <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Закрыть</button>
-            </div>
-        </div>
     </div>
 </div>

@@ -20,6 +20,12 @@ namespace WebUI
                 new { page = @"\d+" }
             );
 
+            routes.MapRoute(null,
+                "articles/listarticle/{page}",
+                new { controller = "Articles", action = "listarticle", page = UrlParameter.Optional },
+                new { page = @"\d+" }
+            );
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
