@@ -27,6 +27,7 @@ namespace Domain.Entities
 
         [Required(ErrorMessage = "Вы не заполнили поле {0}.")]
         [Display(Name = "Дата рождения")]
+        //[DataType(DataType.DateTime, ErrorMessage = "Введенное значение должно быть датой.")]
         public DateTime? DOB { get; set; }
 
         [Display(Name = "Email")]

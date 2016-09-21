@@ -1,4 +1,7 @@
-﻿@model Domain.Entities.Partner
+﻿<link rel="stylesheet" type="text/css" href="~/lib/css/bootstrap-datepicker.min.css">
+<script src="~/lib/js/bootstrap-datepicker.min.js"></script>
+
+@model Domain.Entities.Partner
 
 @{
     ViewBag.Title = "Регистрация в компанию";
@@ -10,8 +13,18 @@
 <div class="col-lg-12" style="min-height:700px;">
     <div class="col-lg-7">
         <h4>Мы поможем Вам зарегистрироваться</h4>
-        @using (Html.BeginForm("Register", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        @using (Ajax.BeginForm("Register", "Home", new AjaxOptions
         {
+            HttpMethod = "post",
+            OnSuccess = "OnSuccess",
+            OnFailure = "OnFailure",
+            InsertionMode = System.Web.Mvc.Ajax.InsertionMode.Replace,
+            LoadingElementId = "progr"
+        },
+        new { @id = "PartnerForm" }))
+        {
+            @Html.AntiForgeryToken()
+
             <div class="col-lg-3" style="padding:7px 10px;text-align:right;">
                 @Html.LabelFor(m => m.Name, new { @class = "label-normal label-sm" })
             </div>
@@ -61,7 +74,10 @@
                 @Html.LabelFor(m => m.DOB, new { @class = "label-normal label-sm" })
             </div>
             <div class="col-lg-5 no-padding" style="margin-bottom:20px;">
-                @Html.TextBoxFor(m => m.DOB, new { @class = "form-control" })
+                <div class="input-group date">
+                    @Html.TextBoxFor(m => m.DOB, new { @class = "form-control" })
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                </div>
                 <span class="error-text">
                     @Html.ValidationMessageFor(m => m.DOB)
                 </span>
@@ -70,8 +86,25 @@
                 <button class="btn btn-success pull-right" type="submit">
                     Отправить
                 </button>
+                <div class="col-lg-2 pull-right">
+                    <i class="fa fa-spinner fa-pulse" id="progr" style="display:none;padding:10px;"></i>
+                </div>
             </div>
         }
+        <div class="col-lg-12 no-padding" style="margin-top:30px;">
+            <div class="alert alert-info alert-dismissible fade hide" role="alert" id="messsage-success" style="text-align:center;">
+                <button type="button" class="close" aria-label="Close" onclick="MSClose()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                Заявка на регистрацию успешно отправлена!<br/>В ближайшее время мы с Вами свяжемся.
+            </div>
+            <div class="alert alert-danger alert-dismissible fade hide" role="alert" id="message-error">
+                <button type="button" class="close" aria-label="Close" onclick="MEClose()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                Ошибка при сохранении! Попробуйте еще раз.
+            </div>
+        </div>
     </div>
     <div class="col-lg-5">
         <h4>Вы сами регистрируетесь</h4>
@@ -82,5 +115,25 @@
     $('input[maxlength]').maxlength({
         threshold: 20
     });
-    $('#DOB').datepicker();
+    $('.input-group.date').datepicker({
+        format: "dd.mm.yyyy",
+        clearBtn: true,
+        language: "ru"
+    });
+    jQuery(function ($) {
+        $("#DOB").mask("99.99.9999", { placeholder: " " });
+    });
+    function OnSuccess() {
+        $('#PartnerForm')[0].reset();
+        $('#messsage-success').removeClass('hide').addClass('in');
+    }
+    function OnFailure() {
+        $('#messsage-error').removeClass('hide').addClass('in');
+    }
+    function MSClose() {
+        $('#messsage-success').removeClass('in').addClass('hide');
+    }
+    function MEClose() {
+        $('#messsage-error').removeClass('in').addClass('hide');
+    }
 </script>

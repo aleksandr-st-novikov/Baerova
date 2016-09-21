@@ -22,7 +22,7 @@ namespace WebUI.Migrations
                     })
                 .PrimaryKey(t => t.Id);
             
-            AlterColumn("dbo.Articles", "DatePublish", c => c.DateTime(nullable: false));
+            AlterColumn("dbo.Articles", "DatePublish", c => c.DateTime(nullable: true));
             AlterColumn("dbo.Articles", "TextMain", c => c.String());
         }
         
