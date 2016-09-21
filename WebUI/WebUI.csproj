@@ -206,6 +206,7 @@
     <Compile Include="Migrations\ConfigurationMain.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ArticlesViewModel.cs" />
+    <Compile Include="Models\HomeViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PagingInfo.cs" />
@@ -2036,6 +2037,7 @@
     <Content Include="Views\Articles\Article.cshtml" />
     <Content Include="Views\Articles\_ListArticle.cshtml" />
     <Content Include="Views\Home\Register.cshtml" />
+    <Content Include="Views\Home\ManagePartners.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

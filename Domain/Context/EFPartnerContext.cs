@@ -34,7 +34,12 @@ namespace Domain.Context
             disposed = true;
         }
 
-        public async Task SavePartnetAsync(Partner partner)
+        public IQueryable<Partner> Partners
+        {
+            get { return context.Partners.AsNoTracking(); }
+        }
+
+        public async Task SavePartnerAsync(Partner partner)
         {
             Partner forChange = await context.Partners.FindAsync(partner.Id);
             if (forChange == null)
