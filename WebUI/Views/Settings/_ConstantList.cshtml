@@ -1,13 +1,13 @@
-﻿@model List<WebUI.Models.RoleView>
+﻿@model List<Domain.Entities.Constant>
 
-<div id="RoleList">
+<div id="ConstantList">
 
     @foreach (var m in Model)
     {
-        using (Ajax.BeginForm("RoleSave", "settings", new AjaxOptions
+        using (Ajax.BeginForm("ConstantSave", "settings", new AjaxOptions
         {
             HttpMethod = "post",
-            UpdateTargetId = "RoleList",
+            UpdateTargetId = "ConstantList",
             InsertionMode = System.Web.Mvc.Ajax.InsertionMode.ReplaceWith,
             LoadingElementId = "progr"
         }))
@@ -22,10 +22,10 @@
                 <div class="col-lg-2">
                     @Html.AntiForgeryToken()
                     @Html.HiddenFor(con => m.Id)
-                    <button type="submit" name="action" value="RoleSave" class="btn btn-success" title="Сохранить">
+                    <button type="submit" name="action" value="ConstantSave" class="btn btn-success" title="Сохранить">
                         <i class="fa fa-save"></i>
                     </button>
-                    <button type="submit" name="action" value="RoleDelete" class="btn btn-link" title="Удалить">
+                    <button type="submit" name="action" value="ConstantDelete" class="btn btn-link" title="Удалить">
                         <i class="fa fa-trash-o"></i>
                     </button>
                 </div>
@@ -33,3 +33,4 @@
         }
     }
 </div>
+

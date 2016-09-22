@@ -185,6 +185,7 @@
     </Compile>
     <Compile Include="Helpers\MultiButton.cs" />
     <Compile Include="Helpers\Paging.cs" />
+    <Compile Include="Helpers\Services.cs" />
     <Compile Include="Helpers\Texts.cs" />
     <Compile Include="MigrationsApplicationDbContext\201609171437533_Initial.cs" />
     <Compile Include="MigrationsApplicationDbContext\201609171437533_Initial.Designer.cs">
@@ -2038,6 +2039,8 @@
     <Content Include="Views\Articles\_ListArticle.cshtml" />
     <Content Include="Views\Home\Register.cshtml" />
     <Content Include="Views\Home\ManagePartners.cshtml" />
+    <Content Include="Views\Settings\_ConstantList.cshtml" />
+    <Content Include="Views\Settings\Constants.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

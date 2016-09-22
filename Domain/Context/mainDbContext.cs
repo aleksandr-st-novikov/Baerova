@@ -19,6 +19,7 @@ namespace Domain.Context
         public DbSet<Subscriber> Subscribers { get; set; }
         public DbSet<CountView> CountViews { get; set; }
         public DbSet<Partner> Partners { get; set; }
+        public DbSet<Constant> Constants { get; set; }
         //public DbSet<AspNetUser> AspNetUsers { get; set; }
     }
 }

@@ -11,6 +11,7 @@ using System.Web.Mvc;
 using WebUI.Models;
 using static WebUI.Helpers.MultiButton;
 using System.Data.Entity;
+using Domain.Entities;
 
 namespace WebUI.Controllers
 {
@@ -263,6 +264,65 @@ namespace WebUI.Controllers
             }
 
             return PartialView("_RoleList", RoleManager.Roles.AsEnumerable().OrderBy(r => r.Name).Select(r => new RoleView { Id = new Guid(r.Id), Name = r.Name }).ToList());
+        }
+        #endregion
+
+        #region Константы
+        public ViewResult Constants()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ConstantAdd(Constant constant)
+        {
+            using (EFConstantContext constantContext = new EFConstantContext())
+            {
+                if (ModelState.IsValid && Request.IsAjaxRequest())
+                {
+                    await constantContext.SaveConstantAsync(constant);
+                }
+                return PartialView("_ConstantList", await constantContext.Constants.OrderBy(c => c.Name).ToListAsync());
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [MultiButton(MatchFormKey = "action", MatchFormValue = "ConstantSave")]
+        public async Task<ActionResult> ConstantSave([Bind(Prefix = "m")]Constant constant)
+        {
+            using (EFConstantContext constantContext = new EFConstantContext())
+            {
+                if (ModelState.IsValid && Request.IsAjaxRequest())
+                {
+                    await constantContext.SaveConstantAsync(constant);
+                }
+                return PartialView("_ConstantList", await constantContext.Constants.OrderBy(c => c.Name).ToListAsync());
+            }
+        }
+
+        public PartialViewResult ConstantList()
+        {
+            using (EFConstantContext constantContext = new EFConstantContext())
+            {
+                return PartialView("_ConstantList", constantContext.Constants.OrderBy(c => c.Name).ToList());
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [MultiButton(MatchFormKey = "action", MatchFormValue = "ConstantDelete")]
+        public async Task<ActionResult> ConstantDelete([Bind(Prefix = "m")]Guid Id)
+        {
+            using (EFConstantContext constantContext = new EFConstantContext())
+            {
+                if (ModelState.IsValid && Request.IsAjaxRequest())
+                {
+                    await constantContext.DeleteConstantAsync(Id);
+                }
+                return PartialView("_ConstantList", await constantContext.Constants.OrderBy(c => c.Name).ToListAsync());
+            }
         }
         #endregion
     }
