@@ -322,5 +322,61 @@ namespace WebUI.Controllers
             }
         }
         #endregion
+
+        #region Настройки главного меню
+        public ViewResult MenuSetManage()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task MenuSetAdd(MenuSet menuSet)
+        {
+            using (EFMenuSetContext menuSetContext = new EFMenuSetContext())
+            {
+                if (ModelState.IsValid && Request.IsAjaxRequest())
+                {
+                    await menuSetContext.SaveMenuSetAsync(menuSet);
+                }
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [MultiButton(MatchFormKey = "action", MatchFormValue = "MenuSetSave")]
+        public async Task MenuSetSave([Bind(Prefix = "l")]MenuSet menuSet)
+        {
+            using (EFMenuSetContext menuSetContext = new EFMenuSetContext())
+            {
+                if (ModelState.IsValid && Request.IsAjaxRequest())
+                {
+                    await menuSetContext.SaveMenuSetAsync(menuSet);
+                }
+            }
+        }
+
+        public PartialViewResult MenuSetList()
+        {
+            using (EFMenuSetContext menuSetContext = new EFMenuSetContext())
+            {
+                return PartialView("_MenuSetList", menuSetContext.MenuSets.ToList());
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [MultiButton(MatchFormKey = "action", MatchFormValue = "MenuSetDelete")]
+        public async Task MenuSetDelete([Bind(Prefix = "l")]MenuSet menuSet)
+        {
+            using (EFMenuSetContext menuSetContext = new EFMenuSetContext())
+            {
+                if (Request.IsAjaxRequest())
+                {
+                    await menuSetContext.DeleteMenuSetAsync(menuSet.Id);
+                }
+            }
+        }
+        #endregion
     }
 }

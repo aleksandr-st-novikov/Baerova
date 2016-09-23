@@ -9,11 +9,11 @@ namespace Domain.Entities
 {
     public enum Groups
     {
-        main,
-        distr,
-        buss,
-        info,
-        pred
+        Главная,
+        Дистрибьюторам_TianDe,
+        Бизнес_с_TianDe,
+        Информация,
+        Предпринимателям
     }
 
     public class MenuSet
@@ -29,6 +29,7 @@ namespace Domain.Entities
 
         [Display(Name = "№ п/п")]
         [Required(ErrorMessage = "Вы не заполнили поле {0}.")]
+        [Range(1,5, ErrorMessage = "от {1} до {2}")]
         public int Order { get; set; }
 
         [Display(Name = "Название")]
@@ -41,4 +42,5 @@ namespace Domain.Entities
         [Required(ErrorMessage = "Вы не заполнили поле {0}.")]
         public string Link { get; set; }
     }
+   
 }

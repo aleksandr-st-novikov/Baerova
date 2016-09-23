@@ -10,12 +10,12 @@
     @using (Ajax.BeginForm("constantadd", "settings", new AjaxOptions
     {
         HttpMethod = "post",
-        OnSuccess = "OnSuccess",
-        //UpdateTargetId = "ConstantList",
-        OnComplete = "onCompleteUpdate",
+        OnSuccess = "OnSuccess('FormAddConstant')",
+        OnComplete = "onCompleteUpdate('Settings','ConstantList')",
         InsertionMode = System.Web.Mvc.Ajax.InsertionMode.Replace,
         LoadingElementId = "progr"
-    }))
+    },
+    new { id = "FormAddConstant"}))
     {
         <div class="col-lg-12 no-padding" style="margin-top:20px;">
             <div class="col-lg-4">
@@ -42,9 +42,3 @@
     </div>
     @Html.Action("ConstantList", "settings")
 </div>
-
-<script type="text/javascript">
-    function OnSuccess() {
-        $('#form0')[0].reset();
-    }
-</script>

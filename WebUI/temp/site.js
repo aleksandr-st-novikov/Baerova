@@ -2614,15 +2614,20 @@ $(function () {
     });
 });
 
-//Обновление констант
-function onCompleteUpdate() {
+//Обновление результата
+function onCompleteUpdate(controller, action) {
     $.ajax({
-        url: '/settings/ConstantList',
+        url: '/' + controller + '/' + action,
         cache: false,
         success: function (html) {
-            $("#ConstantList").html(html);
+            $('#' + action).html(html);
         }
     });
+};
+
+//очистка формы
+function OnSuccess(idForm) {
+    $('#' + idForm)[0].reset();
 };
 !function(factory) {
     "function" == typeof define && define.amd ? define([ "jquery" ], factory) : factory("object" == typeof exports ? require("jquery") : jQuery);

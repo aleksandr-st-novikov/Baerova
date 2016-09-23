@@ -19,13 +19,18 @@
     });
 });
 
-//Обновление констант
-function onCompleteUpdate() {
+//Обновление результата
+function onCompleteUpdate(controller, action) {
     $.ajax({
-        url: '/settings/ConstantList',
+        url: '/' + controller + '/' + action,
         cache: false,
         success: function (html) {
-            $("#ConstantList").html(html);
+            $('#' + action).html(html);
         }
     });
+};
+
+//очистка формы
+function OnSuccess(idForm) {
+    $('#' + idForm)[0].reset();
 };

@@ -1,0 +1,53 @@
+﻿@model List<Domain.Entities.MenuSet>
+
+<div id="MenuSetList">
+
+    @foreach (var g in Model.OrderBy(d => d.Group).GroupBy(d => d.Group))
+    {
+        <div class="col-lg-12" style="padding:7px 7px;background-color:#f3f3f3;margin:10px;">
+            @g.Select(ff => ff.Group).FirstOrDefault().ToString().Replace("_", " ")
+        </div>
+        foreach (var l in g.OrderBy(s => s.Order))
+        {
+            using (Ajax.BeginForm("MenuSetSave", "settings", new AjaxOptions
+            {
+                HttpMethod = "post",
+                OnComplete = "onCompleteUpdate('settings','MenuSetList')",
+                InsertionMode = System.Web.Mvc.Ajax.InsertionMode.ReplaceWith,
+                LoadingElementId = "progr"
+            }))
+            {
+                <div class="col-lg-12 no-padding" style="font-size:0.9em;">
+                    <div class="col-lg-3" style="padding-top:3px;">
+                        @Html.ValueFor(con => l.Name)
+                        @Html.HiddenFor(con => l.Name)
+                    </div>
+                    <div class="col-lg-6 no-padding">
+                        <div class="col-lg-3">
+                            @Html.TextBoxFor(con => l.Order, new { @class = "form-control", type = "number", min = "1", max = "5" })
+                            @Html.ValidationMessageFor(con => l.Order)
+                        </div>
+                        <div class="col-lg-9">
+                            <div class="form-group">
+                                @Html.TextBoxFor(con => l.Link, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(con => l.Link)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-1" style="padding-top:7px;">
+                        @Html.CheckBoxFor(con => l.IsActive)
+                    </div>
+                    <div class="col-lg-2">
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(con => l.Id)
+                        <button type="submit" name="action" value="MenuSetSave" class="btn btn-success" title="Сохранить">
+                            <i class="fa fa-save"></i>
+                        </button>
+                        <i class="fa fa-spinner fa-pulse" id="progr" style="display:none;padding:10px;"></i>
+                    </div>
+
+                </div>
+            }
+        }
+    }
+</div>

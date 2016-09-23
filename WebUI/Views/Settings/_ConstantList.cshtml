@@ -1,5 +1,5 @@
 ﻿@model List<Domain.Entities.Constant>
-@{ 
+@{
     List<string> consts = new List<string>
     {
         "Главная: количество публикаций"
@@ -21,7 +21,7 @@
         using (Ajax.BeginForm("ConstantSave", "settings", new AjaxOptions
         {
             HttpMethod = "post",
-            OnComplete = "onCompleteUpdate",
+            OnComplete = "onCompleteUpdate('Settings','ConstantList')",
             InsertionMode = System.Web.Mvc.Ajax.InsertionMode.ReplaceWith,
             LoadingElementId = "progr"
         }))

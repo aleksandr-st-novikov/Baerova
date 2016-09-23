@@ -1,0 +1,10 @@
+﻿
+@{
+    ViewBag.Title = "Настройка главного меню";
+    Layout = "~/Views/Shared/_LayoutSettings.cshtml";
+}
+
+<h1 class="span-title">Настройка главного меню</h1>
+<div class="row" style="min-height:700px;">
+    @Html.Action("MenuSetList", "settings")
+</div>

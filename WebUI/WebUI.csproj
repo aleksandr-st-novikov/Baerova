@@ -2041,6 +2041,8 @@
     <Content Include="Views\Home\ManagePartners.cshtml" />
     <Content Include="Views\Settings\_ConstantList.cshtml" />
     <Content Include="Views\Settings\Constants.cshtml" />
+    <Content Include="Views\Settings\MenuSetManage.cshtml" />
+    <Content Include="Views\Settings\_MenuSetList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

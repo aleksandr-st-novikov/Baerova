@@ -11,11 +11,11 @@
         @using (Ajax.BeginForm("adduser", "settings", new AjaxOptions
         {
             HttpMethod = "post",
-            OnSuccess = "OnSuccess",
+            OnSuccess = "OnSuccess('FormUserAdd')",
             UpdateTargetId = "UserList",
             InsertionMode = System.Web.Mvc.Ajax.InsertionMode.Replace,
             LoadingElementId = "progr"
-        }))
+        }, new { id = "FormUserAdd"} ))
         {
             <div class="col-lg-12 no-padding" style="margin-top:20px;">
                 <div class="col-lg-12 no-padding">
@@ -110,9 +110,3 @@
     </div>
     @Html.Action("UserList", "settings")
 </div>
-
-<script type="text/javascript">
-    function OnSuccess() {
-        $('#form0')[0].reset();
-    }
-</script>

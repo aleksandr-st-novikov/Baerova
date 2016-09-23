@@ -20,6 +20,7 @@ namespace Domain.Context
         public DbSet<CountView> CountViews { get; set; }
         public DbSet<Partner> Partners { get; set; }
         public DbSet<Constant> Constants { get; set; }
+        public DbSet<MenuSet> MenuSets { get; set; }
         //public DbSet<AspNetUser> AspNetUsers { get; set; }
     }
 }

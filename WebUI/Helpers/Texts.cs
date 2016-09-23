@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 
 namespace WebUI.Helpers
@@ -20,5 +21,12 @@ namespace WebUI.Helpers
             }
             return str;
         }
+
+        public static string ToFriendlyCase(string EnumString)
+        {
+            //return Regex.Replace(EnumString, "(?!^)([A-Z])", " $1");
+            return Regex.Replace(EnumString, "(?!^)([А-Я])", " $1");
+        }
     }
+
 }
