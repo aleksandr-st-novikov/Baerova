@@ -21,8 +21,18 @@ namespace WebUI.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult Register()
+        public PartialViewResult SideMenu()
         {
+            using (EFMenuSetContext menuSetContext = new EFMenuSetContext())
+            {
+                return PartialView("_SideMenu", menuSetContext.MenuSets.ToList());
+            }
+        }
+
+        [AllowAnonymous]
+        public ViewResult Register()
+        {
+            Session["regActive"] = "active";
             return View();
         }
 

@@ -77,7 +77,7 @@ namespace WebUI.Controllers
         }
 
         [AllowAnonymous]
-        [OutputCache(Duration = 600, VaryByParam = "none", Location = OutputCacheLocation.Downstream)]
+        //[OutputCache(Duration = 600, VaryByParam = "none", Location = OutputCacheLocation.Downstream)]
         public async Task<ActionResult> Article(String link)
         {
             Article model = null;
@@ -99,6 +99,14 @@ namespace WebUI.Controllers
                     }
                     ViewBag.CountView = await countViewContext.GetCountViewAsync(model.Id, Domain.Entities.ViewType.Article);
                 }
+                Session["Link"] = "/articles/article/" + model.Link;
+
+                using (EFMenuSetContext menuSetContext = new EFMenuSetContext())
+                {
+
+                    Session["Group"] = await menuSetContext.GetGroupByLinkAsync("/articles/article/" + model.Link);
+                }
+                Session["regActive"] = null;
             }
             return View(model);
         }

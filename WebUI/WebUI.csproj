@@ -2025,7 +2025,7 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Settings\Index.cshtml" />
-    <Content Include="Views\Shared\_SideMenu.cshtml" />
+    <Content Include="Views\Home\_SideMenu.cshtml" />
     <Content Include="Views\Shared\_LayoutSettings.cshtml" />
     <Content Include="Views\Settings\AddUser.cshtml" />
     <Content Include="Views\Shared\_SideMenuSettings.cshtml" />

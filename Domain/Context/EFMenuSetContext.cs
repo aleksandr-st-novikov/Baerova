@@ -1,6 +1,7 @@
 ﻿using Domain.Entities;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -82,6 +83,12 @@ namespace Domain.Context
                 context.MenuSets.Remove(forDelete);
             }
             await context.SaveChangesAsync();
+        }
+
+        public async Task<string> GetGroupByLinkAsync(string v)
+        {
+            MenuSet ms = await context.MenuSets.FirstOrDefaultAsync(m => m.Link == v);
+            return ms == null ? null : ms.Group.ToString();
         }
     }
 }
