@@ -58,6 +58,7 @@
     <Compile Include="Entities\AspNetUser.cs" />
     <Compile Include="Entities\Constant.cs" />
     <Compile Include="Entities\CountView.cs" />
+    <Compile Include="Entities\MenuSet.cs" />
     <Compile Include="Entities\Partner.cs" />
     <Compile Include="Entities\Subscriber.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

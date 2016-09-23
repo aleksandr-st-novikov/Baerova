@@ -275,7 +275,7 @@ namespace WebUI.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ConstantAdd(Constant constant)
+        public async Task ConstantAdd(Constant constant)
         {
             using (EFConstantContext constantContext = new EFConstantContext())
             {
@@ -283,14 +283,13 @@ namespace WebUI.Controllers
                 {
                     await constantContext.SaveConstantAsync(constant);
                 }
-                return PartialView("_ConstantList", await constantContext.Constants.OrderBy(c => c.Name).ToListAsync());
             }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         [MultiButton(MatchFormKey = "action", MatchFormValue = "ConstantSave")]
-        public async Task<ActionResult> ConstantSave([Bind(Prefix = "m")]Constant constant)
+        public async Task ConstantSave([Bind(Prefix = "m")]Constant constant)
         {
             using (EFConstantContext constantContext = new EFConstantContext())
             {
@@ -298,7 +297,6 @@ namespace WebUI.Controllers
                 {
                     await constantContext.SaveConstantAsync(constant);
                 }
-                return PartialView("_ConstantList", await constantContext.Constants.OrderBy(c => c.Name).ToListAsync());
             }
         }
 
@@ -313,15 +311,14 @@ namespace WebUI.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [MultiButton(MatchFormKey = "action", MatchFormValue = "ConstantDelete")]
-        public async Task<ActionResult> ConstantDelete([Bind(Prefix = "m")]Guid Id)
+        public async Task ConstantDelete([Bind(Prefix = "m")]Constant constant)
         {
             using (EFConstantContext constantContext = new EFConstantContext())
             {
-                if (ModelState.IsValid && Request.IsAjaxRequest())
+                if (Request.IsAjaxRequest())
                 {
-                    await constantContext.DeleteConstantAsync(Id);
+                    await constantContext.DeleteConstantAsync(constant.Id);
                 }
-                return PartialView("_ConstantList", await constantContext.Constants.OrderBy(c => c.Name).ToListAsync());
             }
         }
         #endregion

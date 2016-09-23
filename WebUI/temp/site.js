@@ -2611,9 +2611,19 @@ $(function () {
 
         /// uncomment code for absolute positioning tweek see top comment in css
         //$('.absolute-wrapper').removeClass('slide-in');
-
     });
 });
+
+//Обновление констант
+function onCompleteUpdate() {
+    $.ajax({
+        url: '/settings/ConstantList',
+        cache: false,
+        success: function (html) {
+            $("#ConstantList").html(html);
+        }
+    });
+};
 !function(factory) {
     "function" == typeof define && define.amd ? define([ "jquery" ], factory) : factory("object" == typeof exports ? require("jquery") : jQuery);
 }(function($) {

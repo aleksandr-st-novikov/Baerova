@@ -9,8 +9,13 @@ namespace Domain.Entities
         public Guid Id { get; set; }
 
         [Display(Name = "Название")]
-        [StringLength(250, ErrorMessage = "Длина должна быть от {2} до {1} символов!", MinimumLength = 2)]
+        [StringLength(250, ErrorMessage = "Длина должна быть от {2} до {1} символов!", MinimumLength = 1)]
         [Required(ErrorMessage = "Вы не заполнили поле {0}.")]
         public string Name { get; set; }
+
+        [Display(Name = "Значание")]
+        [StringLength(250, ErrorMessage = "Длина должна быть от {2} до {1} символов!", MinimumLength = 1)]
+        [Required(ErrorMessage = "Вы не заполнили поле {0}.")]
+        public string Value { get; set; }
     }
 }
