@@ -54,6 +54,7 @@
     <Compile Include="Context\EFCountViewContext.cs" />
     <Compile Include="Context\EFMenuSetContext.cs" />
     <Compile Include="Context\EFPartnerContext.cs" />
+    <Compile Include="Context\EFSubscriberContext.cs" />
     <Compile Include="Context\mainDbContext.cs" />
     <Compile Include="Entities\Article.cs" />
     <Compile Include="Entities\AspNetUser.cs" />

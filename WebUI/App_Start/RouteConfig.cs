@@ -20,15 +20,15 @@ namespace WebUI
                 new { page = @"\d+" }
             );
 
-            routes.MapRoute(null,
-                "articles/listarticle/{page}",
-                new { controller = "Articles", action = "listarticle", page = UrlParameter.Optional },
-                new { page = @"\d+" }
-            );
+            //routes.MapRoute(null,
+            //    "articles/listarticle/{page}",
+            //    new { controller = "Articles", action = "listarticle", page = UrlParameter.Optional },
+            //    new { page = @"\d+" }
+            //);
 
             routes.MapRoute(null,
-                "home/managepartners/{page}",
-                new { controller = "home", action = "managepartners", page = UrlParameter.Optional },
+                "{controller}/{action}/{page}",
+                new { controller = "home,articles", action = "managepartners,listarticle,subscribers", page = UrlParameter.Optional },
                 new { page = @"\d+" }
             );
 

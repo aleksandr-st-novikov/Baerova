@@ -2625,6 +2625,16 @@ function onCompleteUpdate(controller, action) {
     });
 };
 
+function onCompleteUpdatePage(controller, action, page) {
+    $.ajax({
+        url: '/' + controller + '/' + action + '/' + page,
+        cache: false,
+        success: function (html) {
+            $('#' + action).html(html);
+        }
+    });
+}
+
 //очистка формы
 function OnSuccess(idForm) {
     $('#' + idForm)[0].reset();

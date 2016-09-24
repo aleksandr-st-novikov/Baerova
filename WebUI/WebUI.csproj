@@ -2043,6 +2043,10 @@
     <Content Include="Views\Settings\Constants.cshtml" />
     <Content Include="Views\Settings\MenuSetManage.cshtml" />
     <Content Include="Views\Settings\_MenuSetList.cshtml" />
+    <Content Include="Views\Home\_Subscriber.cshtml" />
+    <Content Include="Views\Home\_Contacts.cshtml" />
+    <Content Include="Views\Home\ManageSubscribers.cshtml" />
+    <Content Include="Views\Home\_SubscribersList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

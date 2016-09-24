@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
@@ -13,8 +9,13 @@ namespace Domain.Entities
         public Guid Id { get; set; }
 
         [Display(Name = "Email")]
-        [EmailAddress(ErrorMessage = "Поле {0} не содержит допустимый адрес e-mail.")]
+        [EmailAddress(ErrorMessage = "Некорректный адрес E-Mail.")]
         [StringLength(100)]
+        [Required(ErrorMessage = "Вы не указали адрес E-Mail.")]
         public string EMail { get; set; }
+
+        public DateTime DateCreate { get; set; }
+
+        public Boolean IsActive { get; set; }
     }
 }

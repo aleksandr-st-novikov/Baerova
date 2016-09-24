@@ -8,4 +8,10 @@ namespace WebUI.Models
         public List<Partner> Partners { get; set; }
         public PagingInfo PagingInfo { get; set; }
     }
+
+    public class SubscribersView
+    {
+        public List<Subscriber> Subscribers { get; set; }
+        public PagingInfo PagingInfo { get; set; }
+    }
 }

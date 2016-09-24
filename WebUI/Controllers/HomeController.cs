@@ -7,6 +7,7 @@ using Domain.Context;
 using Domain.Entities;
 using System.Threading.Tasks;
 using WebUI.Models;
+using static WebUI.Helpers.MultiButton;
 
 namespace WebUI.Controllers
 {
@@ -73,5 +74,90 @@ namespace WebUI.Controllers
             }
             
         }
+
+        #region Подписчики
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [AllowAnonymous]
+        public async Task AddSubscriber(Subscriber subscriber)
+        {
+            if (ModelState.IsValid && Request.IsAjaxRequest())
+            {
+                using (EFSubscriberContext subscriberContext = new EFSubscriberContext())
+                {
+                    await subscriberContext.SaveSubscriberAsync(subscriber);
+                }
+            }
+        }
+
+        public ActionResult Subscriber()
+        {
+            return PartialView("_Subscriber");
+        }
+
+        [Authorize(Roles = "Администратор")]
+        public ActionResult ManageSubscribers(int page = 1)
+        {
+            return View(GetListSubscribersModel(page));
+        }
+
+        [Authorize(Roles = "Администратор")]
+        public PartialViewResult SubscribersList(int page = 1)
+        {
+            return PartialView("_SubscribersList", GetListSubscribersModel(page).Subscribers);
+        }
+
+        private SubscribersView GetListSubscribersModel(int page)
+        {
+            using (EFSubscriberContext subscriberContext = new EFSubscriberContext())
+            {
+                int tp = (Int32)Math.Ceiling((decimal)subscriberContext.Subscribers.Count() / PageSize);
+                page = page < 0 ? 1 : page > tp ? tp : page;
+
+                SubscribersView model = new SubscribersView
+                {
+                    Subscribers = subscriberContext.Subscribers.OrderByDescending(a => a.DateCreate).Skip((page - 1) * PageSize).Take(PageSize).ToList(),
+                    PagingInfo = new PagingInfo
+                    {
+                        CurrentPage = page,
+                        ItemPerPage = PageSize,
+                        TotalItems = subscriberContext.Subscribers.Count()
+                    }
+                };
+                return model;
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Администратор")]
+        [MultiButton(MatchFormKey = "action", MatchFormValue = "SubscriberSave")]
+        public async Task SubscriberSave([Bind(Prefix = "m")]Subscriber subscriber)
+        {
+            if (ModelState.IsValid && Request.IsAjaxRequest())
+            {
+                using (EFSubscriberContext subscriberContext = new EFSubscriberContext())
+                {
+                    await subscriberContext.SaveSubscriberAsync(subscriber);
+                }
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Администратор")]
+        [MultiButton(MatchFormKey = "action", MatchFormValue = "SubscriberDelete")]
+        public async Task SubscriberDelete([Bind(Prefix = "m")]Subscriber subscriber)
+        {
+            using (EFSubscriberContext subscriberContext = new EFSubscriberContext())
+            {
+                if (Request.IsAjaxRequest())
+                {
+                    await subscriberContext.DeleteSubscriberAsync(subscriber.Id);
+                }
+            }
+        }
+        #endregion
+
     }
 }

@@ -31,7 +31,7 @@ namespace Domain.Entities
         public DateTime? DOB { get; set; }
 
         [Display(Name = "Email")]
-        [EmailAddress(ErrorMessage = "Поле {0} не содержит допустимый адрес e-mail.")]
+        [EmailAddress(ErrorMessage = "Некорректный адрес e-mail.")]
         [StringLength(100)]
         public string EMail { get; set; }
 

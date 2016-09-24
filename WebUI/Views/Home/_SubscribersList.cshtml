@@ -1,0 +1,72 @@
+﻿@model List<Domain.Entities.Subscriber>
+
+<div id="SubscribersList">
+    @{
+        string page = String.Empty;
+        if (ViewContext.RouteData.Values["page"] != null)
+        {
+            page = ViewContext.RouteData.Values["page"].ToString();
+        }
+        else
+        {
+            page = "1";
+        }
+    }
+    <div class="col-lg-12 no-padding" style="font-size:0.9em;margin:15px 0;">
+        <div class="col-lg-12 no-padding">
+            <div class="col-lg-2">
+                <strong>Дата подписки</strong>
+            </div>
+            <div class="col-lg-6">
+                <strong>Адрес E-Mail</strong>
+            </div>
+            <div class="col-lg-2">
+                <strong>Активный</strong>
+            </div>
+            <div class="col-lg-2">
+                <i class="fa fa-spinner fa-pulse" id="progr" style="display:none;margin-left:12px;"></i>
+            </div>
+        </div>
+        <div class="col-lg-12 no-padding">
+            <hr style="margin:5px 0;" />
+        </div>
+
+        @foreach (var m in Model)
+            {
+                using (Ajax.BeginForm("Subscribers", "Home", new AjaxOptions
+                {
+                    HttpMethod = "post",
+                    OnComplete = "onCompleteUpdatePage('Home','SubscribersList','" + page + "')",
+                    InsertionMode = System.Web.Mvc.Ajax.InsertionMode.ReplaceWith,
+                    LoadingElementId = "progr"
+                }))
+                {
+                <div class="col-lg-12 no-padding">
+                    <div class="col-lg-2">
+                        @Html.ValueFor(con => m.DateCreate)
+                    </div>
+                    <div class="col-lg-6">
+                        @Html.TextBoxFor(con => m.EMail, new { @class = "form-control", maxlength = "250" })
+                        @Html.ValidationMessageFor(con => m.EMail)
+                    </div>
+                    <div class="col-lg-2" style="padding-top:6px;">
+                        @Html.CheckBoxFor(con => m.IsActive)
+                    </div>
+                    <div class="col-lg-2">
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(con => m.Id)
+                        <button type="submit" name="action" value="SubscriberSave" class="btn btn-success" title="Сохранить">
+                            <i class="fa fa-save"></i>
+                        </button>
+                        <button type="submit" name="action" value="SubscriberDelete" class="btn btn-link" title="Удалить">
+                            <i class="fa fa-trash-o"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-lg-12 no-padding">
+                    <hr style="margin:5px 0;"/>
+                </div>
+            }
+        }
+    </div>
+</div>
