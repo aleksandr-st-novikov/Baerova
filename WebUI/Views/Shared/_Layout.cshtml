@@ -12,8 +12,8 @@
     }
 
 </head>
-<body style="padding:0;">
-    <div class="container" style="margin-bottom:15px;">
+<body style="padding:0;background-color:#fefefe;">
+    <div class="container">
         <div class="col-lg-12" style="background-color:#e5e5e5;height:100px;text-align:right;">
             @if (User.IsInRole("Администратор"))
             {
@@ -39,7 +39,7 @@
         </div>
     </div>
     <div class="container body-content">
-        <div class="row">
+        <div class="row" style="background-color:#FFF;padding-top:15px;">
             <div class="side-menu">
                 @Html.Action("SideMenu","Home")
             </div>
@@ -51,7 +51,6 @@
         </div>
     </div>
     <div class="container">
-        <hr />
         <footer style="height:200px;background-color:#999;">
             Блок 5
             @*<p>&copy; @DateTime.Now.Year</p>*@
