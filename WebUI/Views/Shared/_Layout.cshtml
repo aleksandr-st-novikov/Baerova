@@ -14,22 +14,22 @@
 </head>
 <body style="padding:0;">
     <div class="container" style="margin-bottom:15px;">
-        <div class="col-lg-12" style="background-color:#e5e5e5;height:100px;">
+        <div class="col-lg-12" style="background-color:#e5e5e5;height:100px;text-align:right;">
             @if (User.IsInRole("Администратор"))
             {
-                <a class="btn btn-link" href="/home/managepartners">
-                    <i class="fa fa-users"></i>
-                </a>
-                <a class="btn btn-link" href="/settings/menusetmanage">
+                <a class="btn btn-link" href="/settings/menusetmanage" title="Настройки">
                     <i class="fa fa-cogs"></i>
                 </a>
-                <a class="btn btn-link" href="/home/ManageSubscribers/1">
+                <a class="btn btn-link" href="/home/managepartners" title="Заявки на регистрацию">
+                    <i class="fa fa-users"></i>
+                </a>
+                <a class="btn btn-link" href="/home/ManageSubscribers/1" title="Управление подписчиками">
                     <i class="fa fa-envelope"></i>
                 </a>
             }
             @if (User.IsInRole("Администратор") || User.IsInRole("Редактор"))
             {
-                <a class="btn btn-link" href="/articles">
+                <a class="btn btn-link" href="/articles" title="Управление публикациями">
                     <i class="fa fa-file-text-o"></i>
                 </a>
             }
