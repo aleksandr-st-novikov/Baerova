@@ -14,6 +14,28 @@ namespace WebUI.Controllers
     public class HomeController : Controller
     {
         private int PageSize = 20;
+        private EFConstantContext _constantContext;
+
+        public HomeController()
+        {
+        }
+
+        public HomeController(EFConstantContext constantContext)
+        {
+            ConstantContext = constantContext;
+        }
+
+        public EFConstantContext ConstantContext
+        {
+            get
+            {
+                return _constantContext ?? new EFConstantContext();
+            }
+            private set
+            {
+                _constantContext = value;
+            }
+        }
 
         [AllowAnonymous]
         public ActionResult Index()
@@ -27,6 +49,7 @@ namespace WebUI.Controllers
         [AllowAnonymous]
         public PartialViewResult SideMenu()
         {
+            Session["AlwaysIn"] = ConstantContext.GetConstant("Главная: меню развернуто") == "1" ? "in" : String.Empty;
             using (EFMenuSetContext menuSetContext = new EFMenuSetContext())
             {
                 return PartialView("_SideMenu", menuSetContext.MenuSets.ToList());

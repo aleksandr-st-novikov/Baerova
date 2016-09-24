@@ -83,7 +83,7 @@
                     @{ 
                         string classIn = Group == g.Select(ff => ff.Group).FirstOrDefault().ToString() ? "in" : String.Empty;
                     }
-                    <div id="@{@g.Select(ff => ff.Group).FirstOrDefault()}" class="panel-collapse collapse @{@classIn}">
+                    <div id="@{@g.Select(ff => ff.Group).FirstOrDefault()}" class="panel-collapse collapse @{@classIn} @{@Session["AlwaysIn"]}">
                         <div class="panel-body">
                             <ul class="nav navbar-nav">
                                 @foreach (var l in g.Where(s => s.IsActive == true).OrderBy(s => s.Order))

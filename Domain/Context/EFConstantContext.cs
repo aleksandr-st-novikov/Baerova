@@ -89,5 +89,11 @@ namespace Domain.Context
             Constant constant = await context.Constants.Where(c => c.Name == name).FirstOrDefaultAsync();
             return constant == null ? null : constant.Value;
         }
+
+        public string GetConstant(string name)
+        {
+            Constant constant = context.Constants.Where(c => c.Name == name).FirstOrDefault();
+            return constant == null ? null : constant.Value;
+        }
     }
 }
