@@ -6,7 +6,7 @@
     <title>@ViewBag.Title</title>
     <link rel="stylesheet" type="text/css" href="~/lib/css/site.min.css">
     
-    @if (!@Request.Url.AbsoluteUri.ToLower().Contains("editarticle"))
+    @if (!@Request.Url.AbsoluteUri.Contains("editarticle"))
     {
         <script src="~/lib/js/jquery.min.js"></script>
     }
@@ -20,7 +20,7 @@
                 <a class="btn btn-link" href="/home/managepartners">
                     <i class="fa fa-users"></i>
                 </a>
-                <a class="btn btn-link" href="/settings">
+                <a class="btn btn-link" href="/settings/menusetmanage">
                     <i class="fa fa-cogs"></i>
                 </a>
             }
@@ -41,7 +41,7 @@
                 @Html.Action("SideMenu","Home")
             </div>
             <div class="container-fluid">
-                <div class="side-body">
+                <div class="side-body" style="min-height:750px;">
                     @RenderBody()
                 </div>
             </div>

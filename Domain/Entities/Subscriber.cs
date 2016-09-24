@@ -11,6 +11,10 @@ namespace Domain.Entities
     {
         [Key]
         public Guid Id { get; set; }
+
+        [Display(Name = "Email")]
+        [EmailAddress(ErrorMessage = "Поле {0} не содержит допустимый адрес e-mail.")]
+        [StringLength(100)]
         public string EMail { get; set; }
     }
 }

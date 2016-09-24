@@ -8,32 +8,21 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="col-lg-12" style="min-height:700px;">
+<div class="col-lg-12">
     <h1 class="span-title">Регистрация в компанию</h1>
 
     <div class="col-lg-7">
         <h4>Мы поможем Вам зарегистрироваться</h4>
-        @using (Ajax.BeginForm("Register", "Home", new AjaxOptions
+        @using (Ajax.BeginForm("Register", new { controller = "Home" }, new AjaxOptions
         {
             HttpMethod = "post",
-            OnSuccess = "OnSuccess",
+            OnSuccess = "OnSuccessPartner",
             OnFailure = "OnFailure",
-            InsertionMode = System.Web.Mvc.Ajax.InsertionMode.Replace,
+            //InsertionMode = System.Web.Mvc.Ajax.InsertionMode.Replace,
             LoadingElementId = "progr"
-        },
-        new { @id = "PartnerForm" }))
+        }, new { @Id = "PartnerForm" }))
         {
             @Html.AntiForgeryToken()
-
-            <div class="col-lg-3" style="padding:7px 10px;text-align:right;">
-                @Html.LabelFor(m => m.Name, new { @class = "label-normal label-sm" })
-            </div>
-            <div class="col-lg-9 no-padding" style="margin-bottom:10px;">
-                @Html.TextBoxFor(m => m.Name, new { @class = "form-control", maxlength = "100" })
-                <span class="error-text">
-                    @Html.ValidationMessageFor(m => m.Name)
-                </span>
-            </div>
             <div class="col-lg-3" style="padding:7px 10px;text-align:right;">
                 @Html.LabelFor(m => m.Surname, new { @class = "label-normal label-sm" })
             </div>
@@ -41,6 +30,15 @@
                 @Html.TextBoxFor(m => m.Surname, new { @class = "form-control", maxlength = "150" })
                 <span class="error-text">
                     @Html.ValidationMessageFor(m => m.Surname)
+                </span>
+            </div>
+            <div class="col-lg-3" style="padding:7px 10px;text-align:right;">
+                @Html.LabelFor(m => m.Name, new { @class = "label-normal label-sm" })
+            </div>
+            <div class="col-lg-9 no-padding" style="margin-bottom:10px;">
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control", maxlength = "100" })
+                <span class="error-text">
+                    @Html.ValidationMessageFor(m => m.Name)
                 </span>
             </div>
             <div class="col-lg-3" style="padding:7px 10px;text-align:right;">
@@ -121,7 +119,7 @@
     jQuery(function ($) {
         $("#DOB").mask("99.99.9999", { placeholder: " " });
     });
-    function OnSuccess() {
+    function OnSuccessPartner() {
         $('#PartnerForm')[0].reset();
         $('#messsage-success').removeClass('hide').addClass('in');
     }

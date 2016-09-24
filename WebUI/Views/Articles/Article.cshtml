@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="col-lg-12" style="min-height:700px;">
+<div class="col-lg-12">
     <h1 class="span-title">@Model.Title</h1>
     <br />
     @Html.Raw(HttpUtility.HtmlDecode(Model.TextArticle))

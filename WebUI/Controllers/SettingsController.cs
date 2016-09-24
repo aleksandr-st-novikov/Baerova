@@ -77,6 +77,7 @@ namespace WebUI.Controllers
         // GET: Settings
         public ActionResult Index()
         {
+            IsActiveMenu("", "");
             return View();
         }
 

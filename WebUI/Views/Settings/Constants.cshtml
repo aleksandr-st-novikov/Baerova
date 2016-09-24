@@ -7,7 +7,7 @@
 
 <h1 class="span-title">Константы</h1>
 <div class="row" style="min-height:700px;">
-    @using (Ajax.BeginForm("constantadd", "settings", new AjaxOptions
+    @using (Ajax.BeginForm("constantadd", new { controller = "settings" }, new AjaxOptions
     {
         HttpMethod = "post",
         OnSuccess = "OnSuccess('FormAddConstant')",

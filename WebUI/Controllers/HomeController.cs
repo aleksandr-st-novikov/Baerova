@@ -17,6 +17,9 @@ namespace WebUI.Controllers
         [AllowAnonymous]
         public ActionResult Index()
         {
+            Session["regActive"] = null;
+            Session["Link"] = null;
+            Session["Group"] = null;
             return View();
         }
 
