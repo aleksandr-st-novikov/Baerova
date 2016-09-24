@@ -80,9 +80,40 @@ namespace WebUI.Controllers
             return View();
         }
 
+        private void IsActiveMenu(string Menu, string subMenu)
+        {
+            List<string> allSubMenu = new List<string>
+            {
+                "sMenu",
+                "sConst",
+                "sUser",
+                "sRole"
+            };
+            allSubMenu.Remove(subMenu);
+            foreach(string s in allSubMenu)
+            {
+                Session[s] = null;
+            }
+            Session[subMenu] = "active";
+
+            List<string> allMenu = new List<string>
+            {
+                "sAll",
+                "sUsers"
+            };
+            allMenu.Remove(Menu);
+            foreach (string s in allMenu)
+            {
+                Session[s] = null;
+            }
+            Session[Menu] = "in";
+        }
+
         #region Пользователи
         public ViewResult UserManage()
         {
+            IsActiveMenu("sUsers", "sUser");
+
             ViewBag.allRoles = RoleManager.Roles.OrderBy(r => r.Name).ToList().Select(x => new SelectListItem()
             {
                 Selected = false,
@@ -207,6 +238,7 @@ namespace WebUI.Controllers
         #region Роли
         public ViewResult RoleManage()
         {
+            IsActiveMenu("sUsers", "sRole");
             return View();
         }
 
@@ -270,6 +302,7 @@ namespace WebUI.Controllers
         #region Константы
         public ViewResult Constants()
         {
+            IsActiveMenu("sAll", "sConst");
             return View();
         }
 
@@ -326,6 +359,7 @@ namespace WebUI.Controllers
         #region Настройки главного меню
         public ViewResult MenuSetManage()
         {
+            IsActiveMenu("sAll", "sMenu");
             return View();
         }
 

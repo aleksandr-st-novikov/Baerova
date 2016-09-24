@@ -24,7 +24,7 @@
                             @Html.LabelFor(m => m.UserName, new { @class = "label-normal label-sm" })
                         </div>
                         <div class="col-lg-8" style="margin-bottom:7px;">
-                            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+                            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", maxlength = "256" })
                             <span class="error-text">
                                 @Html.ValidationMessageFor(m => m.UserName)
                             </span>
@@ -33,7 +33,7 @@
                             @Html.LabelFor(m => m.Email, new { @class = "label-normal label-sm" })
                         </div>
                         <div class="col-lg-8" style="margin-bottom:7px;">
-                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", maxlength = "256" })
                             <span class="error-text">
                                 @Html.ValidationMessageFor(m => m.Email)
                             </span>
@@ -42,7 +42,7 @@
                             @Html.LabelFor(m => m.Password, new { @class = "label-normal label-sm" })
                         </div>
                         <div class="col-lg-8" style="margin-bottom:7px;">
-                            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", maxlength = "256" })
                             <span class="error-text">
                                 @Html.ValidationMessageFor(m => m.Password)
                             </span>
@@ -51,7 +51,7 @@
                             @Html.LabelFor(m => m.ConfirmPassword, new { @class = "label-normal label-sm" })
                         </div>
                         <div class="col-lg-8">
-                            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", maxlength = "256" })
                             <span class="error-text">
                                 @Html.ValidationMessageFor(m => m.ConfirmPassword)
                             </span>

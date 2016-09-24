@@ -27,13 +27,13 @@
                     <span class="fa fa-cogs" style="margin-right:5px;"></span> Общие настройки <span class="caret"></span>
                 </a>
 
-                <div id="dropdown1" class="panel-collapse collapse">
+                <div id="dropdown1" class="panel-collapse collapse @{@Session["sAll"]}">
                     <div class="panel-body">
                         <ul class="nav navbar-nav">
-                            <li>
+                            <li class="@{@Session["sMenu"]}">
                                 @Html.ActionLink("Настройка меню", "menusetmanage")
                             </li>
-                            <li>
+                            <li class="@{@Session["sConst"]}">
                                 @Html.ActionLink("Константы", "constants")
                             </li>
                         </ul>
@@ -45,11 +45,11 @@
                     <span class="fa fa-users"  style="margin-right:5px;"></span> Пользователи <span class="caret"></span>
                 </a>
 
-                <div id="dropdown2" class="panel-collapse collapse">
+                <div id="dropdown2" class="panel-collapse collapse @{@Session["sUsers"]}">
                     <div class="panel-body">
                         <ul class="nav navbar-nav">
-                            <li>@Html.ActionLink("Пользователи", "UserManage")</li>
-                            <li>@Html.ActionLink("Права","RoleManage")</li>
+                            <li class="@{@Session["sUser"]}">@Html.ActionLink("Пользователи", "UserManage")</li>
+                            <li class="@{@Session["sRole"]}">@Html.ActionLink("Права","RoleManage")</li>
                         </ul>
                     </div>
                 </div>

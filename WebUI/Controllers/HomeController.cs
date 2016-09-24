@@ -33,6 +33,7 @@ namespace WebUI.Controllers
         public ViewResult Register()
         {
             Session["regActive"] = "active";
+            Session["Link"] = null;
             return View();
         }
 

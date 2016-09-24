@@ -34,3 +34,8 @@ function onCompleteUpdate(controller, action) {
 function OnSuccess(idForm) {
     $('#' + idForm)[0].reset();
 };
+
+//включаем показ ограничения
+$('input[maxlength]').maxlength({
+    threshold: 20
+});

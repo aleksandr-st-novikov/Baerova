@@ -43,30 +43,45 @@
     <div class="side-menu-container">
         <ul class="nav navbar-nav">
 
-            <li class="@{@Session["regActive"]}"><a href="/home/register"><span class="fa fa-diamond"></span> Регистрация в компанию</a></li>
+            @{ 
+                if (Session["Link"] != null)
+                {
+                    Session["regActive"] = null;
+                }
+                if (Session["regActive"] != null)
+                {
+                    Session["Link"] = null;
+                    Session["Group"] = null;
+                }
+                string Link = Session["Link"] == null ? null : Session["Link"].ToString();
+                string regActive = Session["regActive"] == null ? null : Session["regActive"].ToString();
+                string Group = Session["Group"] == null ? null : Session["Group"].ToString();
+            }
+
+            <li class="@{@regActive}"><a href="/home/register">Регистрация в компанию</a></li>
             @{
                 string active = String.Empty;
                 var ok = Model.Where(m => m.Name == "О компании").FirstOrDefault();
                 if (ok != null)
                 {
-                    if (Session["Link"] != null && Session["Link"].ToString() == ok.Link)
+                    if (Link == ok.Link)
                     {
                         active = "active";
                     }
                 }
             }
             <li class="@{@active}">
-                <a href="@{@Model.Where(m => m.Name == "О компании").FirstOrDefault().Link}"><span class="fa fa-diamond"></span> О компании</a>
+                <a href="@{@Model.Where(m => m.Name == "О компании").FirstOrDefault().Link}">О компании</a>
             </li>
 
             @foreach (var g in Model.Where(d => d.Group != Domain.Entities.Groups.Главная).OrderBy(d => d.Group).GroupBy(d => d.Group))
             {
                 <li class="panel panel-default" id="dropdown">
                     <a data-toggle="collapse" href="#@{@g.Select(ff => ff.Group).FirstOrDefault()}">
-                        <span class="fa fa-diamond"></span> @g.Select(ff => ff.Group).FirstOrDefault().ToString().Replace("_", " ") <span class="caret"></span>
+                        @g.Select(ff => ff.Group).FirstOrDefault().ToString().Replace("_", " ") <span class="caret"></span>
                     </a>
                     @{ 
-                        string classIn = Session["Group"].ToString() == g.Select(ff => ff.Group).FirstOrDefault().ToString() ? "in" : String.Empty;
+                        string classIn = Group == g.Select(ff => ff.Group).FirstOrDefault().ToString() ? "in" : String.Empty;
                     }
                     <div id="@{@g.Select(ff => ff.Group).FirstOrDefault()}" class="panel-collapse collapse @{@classIn}">
                         <div class="panel-body">
@@ -74,7 +89,7 @@
                                 @foreach (var l in g.Where(s => s.IsActive == true).OrderBy(s => s.Order))
                                 {
                                     active = String.Empty;
-                                    if (Session["Link"].ToString() == l.Link)
+                                    if (Link == l.Link)
                                     {
                                         active = "active";
                                     }

@@ -2629,6 +2629,11 @@ function onCompleteUpdate(controller, action) {
 function OnSuccess(idForm) {
     $('#' + idForm)[0].reset();
 };
+
+//включаем показ ограничения
+$('input[maxlength]').maxlength({
+    threshold: 20
+});
 !function(factory) {
     "function" == typeof define && define.amd ? define([ "jquery" ], factory) : factory("object" == typeof exports ? require("jquery") : jQuery);
 }(function($) {

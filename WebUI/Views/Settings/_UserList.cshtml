@@ -48,7 +48,7 @@
                                 @Html.LabelFor(c => u.UserName, new { @class = "label-normal label-sm" })
                             </div>
                             <div class="col-lg-8" style="margin-bottom:7px;">
-                                @Html.TextBoxFor(c => u.UserName, new { @class = "form-control" })
+                                @Html.TextBoxFor(c => u.UserName, new { @class = "form-control", maxlength = "256" })
                                 <span class="error-text">
                                     @Html.ValidationMessageFor(c => u.UserName)
                                 </span>
@@ -58,7 +58,7 @@
                             @Html.LabelFor(c => u.Email, new { @class = "label-normal label-sm" })
                         </div>
                         <div class="col-lg-8" style="margin-bottom:7px;">
-                            @Html.TextBoxFor(c => u.Email, new { @class = "form-control" })
+                            @Html.TextBoxFor(c => u.Email, new { @class = "form-control", maxlength = "256" })
                             <span class="error-text">
                                 @Html.ValidationMessageFor(c => u.Email)
                             </span>

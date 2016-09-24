@@ -106,7 +106,6 @@ namespace WebUI.Controllers
 
                     Session["Group"] = await menuSetContext.GetGroupByLinkAsync("/articles/article/" + model.Link);
                 }
-                Session["regActive"] = null;
             }
             return View(model);
         }
