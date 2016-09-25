@@ -139,7 +139,8 @@ namespace WebUI.Controllers
 
                 SubscribersView model = new SubscribersView
                 {
-                    Subscribers = subscriberContext.Subscribers.OrderByDescending(a => a.DateCreate).Skip((page - 1) * PageSize).Take(PageSize).ToList(),
+                    Subscribers = subscriberContext.Subscribers.Count() == 0 ? subscriberContext.Subscribers.ToList() : 
+                        subscriberContext.Subscribers.OrderByDescending(a => a.DateCreate).Skip((page - 1) * PageSize).Take(PageSize).ToList(),
                     PagingInfo = new PagingInfo
                     {
                         CurrentPage = page,
