@@ -14,4 +14,10 @@ namespace WebUI.Models
         public List<Subscriber> Subscribers { get; set; }
         public PagingInfo PagingInfo { get; set; }
     }
+
+    public class MainArticleView
+    {
+        public Article article { get; set; }
+        public string CountView { get; set; }
+    }
 }

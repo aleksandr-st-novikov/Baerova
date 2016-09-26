@@ -255,8 +255,8 @@
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\sidemenu.css" />
     <Content Include="Content\Site.css" />
-    <Content Include="Content\UserFiles\Images\f3c06771-57a5-46b9-a821-b92daec8c963.jpg" />
-    <Content Include="Content\UserFiles\Images\secondarytile.png" />
+    <Content Include="Content\UserFiles\Images\Main\catalog.jpg" />
+    <Content Include="Content\UserFiles\Images\Main\logsR.png" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Gruntfile.js" />
@@ -356,10 +356,12 @@
     <Content Include="Views\Shared\_Header.cshtml" />
     <Content Include="Views\Home\_MainArticles.cshtml" />
     <Content Include="Views\Home\_OneArticle.cshtml" />
+    <Content Include="Views\Home\_Catalog.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Pictures\" />
+    <Folder Include="Content\UserFiles\Images\Publishing\" />
     <Folder Include="Views\FileBrowser\" />
     <Folder Include="Views\Globalization\" />
     <Folder Include="Views\ImageBrowser\" />

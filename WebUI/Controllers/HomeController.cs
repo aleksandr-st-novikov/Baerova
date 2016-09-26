@@ -69,7 +69,7 @@ namespace WebUI.Controllers
         [AllowAnonymous]
         public async Task Register(Partner partner)
         {
-            if(ModelState.IsValid && Request.IsAjaxRequest())
+            if (ModelState.IsValid && Request.IsAjaxRequest())
             {
                 using (EFPartnerContext partnerContext = new EFPartnerContext())
                 {
@@ -95,7 +95,7 @@ namespace WebUI.Controllers
                 };
                 return View(model);
             }
-            
+
         }
 
         #region Подписчики
@@ -139,7 +139,7 @@ namespace WebUI.Controllers
 
                 SubscribersView model = new SubscribersView
                 {
-                    Subscribers = subscriberContext.Subscribers.Count() == 0 ? subscriberContext.Subscribers.ToList() : 
+                    Subscribers = subscriberContext.Subscribers.Count() == 0 ? subscriberContext.Subscribers.ToList() :
                         subscriberContext.Subscribers.OrderByDescending(a => a.DateCreate).Skip((page - 1) * PageSize).Take(PageSize).ToList(),
                     PagingInfo = new PagingInfo
                     {
@@ -186,8 +186,15 @@ namespace WebUI.Controllers
         public ActionResult MainArticles(int pageArticle = 1)
         {
             using (EFArticleContext articleContext = new EFArticleContext())
+            using (EFCountViewContext countViewContext = new EFCountViewContext())
             {
-                return PartialView("_MainArticles", articleContext.GetMainArticles(pageArticle));
+                List<Article> articles = articleContext.GetMainArticles(pageArticle);
+                List<MainArticleView> model = new List<MainArticleView>();
+                foreach(Article a in articles)
+                {
+                    model.Add(new MainArticleView { article = a, CountView = countViewContext.GetCountView(a.Id, Domain.Entities.ViewType.Article) });
+                }
+                return PartialView("_MainArticles", model);
             }
         }
     }

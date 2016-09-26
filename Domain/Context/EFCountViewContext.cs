@@ -40,7 +40,7 @@ namespace Domain.Context
             CountView cv = await context.CountViews.FirstOrDefaultAsync(c => c.ViewId == viewId && c.ViewType == viewType);
             if(cv != null)
             {
-                cv.ViewCount = cv.ViewCount == null ? 1 :cv.ViewCount++;
+                cv.ViewCount = cv.ViewCount == null ? 1 : cv.ViewCount + 1;
             }
             else
             {
@@ -56,10 +56,16 @@ namespace Domain.Context
             await context.SaveChangesAsync();
         }
 
-        public async Task<dynamic> GetCountViewAsync(Guid viewId, ViewType viewType)
+        public async Task<string> GetCountViewAsync(Guid viewId, ViewType viewType)
         {
             var res = await context.CountViews.FirstOrDefaultAsync(c => c.ViewId == viewId && c.ViewType == viewType);
-            return res == null ? null : res.ViewCount;
+            return res == null ? null : Math.Round((Decimal)res.ViewCount).ToString();
+        }
+
+        public string GetCountView(Guid viewId, ViewType viewType)
+        {
+            var res = context.CountViews.FirstOrDefault(c => c.ViewId == viewId && c.ViewType == viewType);
+            return res == null ? null : Math.Round((Decimal)res.ViewCount).ToString();
         }
     }
 }

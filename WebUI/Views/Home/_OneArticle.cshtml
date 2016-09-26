@@ -1,4 +1,18 @@
-﻿@model Domain.Entities.Article
+﻿@model WebUI.Models.MainArticleView
+@{
+    string datePublish = Model.article.DatePublish != null ? ((DateTime)Model.article.DatePublish).ToString("dd.MM.yyyy hh:mm") : ((DateTime)Model.article.DateCreate).ToString("dd.MM.yyyy hh:mm");
+    string views = Model.CountView == null ? null : ", просмотров " + Model.CountView;
+}
 
-<span class="span-title">@Model.Title</span>
-@Html.Raw(HttpUtility.HtmlDecode(Model.TextMain))
+<div class="title-main-article">
+    @Html.ActionLink(Model.article.Title, "article", "articles", new { Model.article.Link }, new { target = "_blank"})
+</div>
+<div class="col-lg-12 no-padding">
+    <div class="col-lg-5 pull-right date-main-article">
+        @datePublish@views
+    </div>
+</div>
+@Html.Raw(HttpUtility.HtmlDecode(Model.article.TextMain))
+<div class="col-lg-12" style="text-align:right;">
+    @Html.ActionLink("Читать полностью", "article", "articles", new { Model.article.Link }, new { target = "_blank", @class = "btn-main-article" })
+</div>

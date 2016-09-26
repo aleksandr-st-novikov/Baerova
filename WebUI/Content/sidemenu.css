@@ -59,7 +59,8 @@
     .side-menu .navbar-nav .active a {
         background-color: transparent;
         margin-right: -1px;
-        border-right: 5px solid #f5f5f5;
+        border-right: 5px solid #005aa5;
+        opacity: 0.6;
     }
 
     .side-menu .navbar-nav li {

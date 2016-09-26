@@ -1,5 +1,31 @@
-﻿.btn-w{
-    padding:2px 10px;
+﻿.title-main-article a {
+    color: #FF5200 !important;
+    background-color: #f5f5f5;
+    border-bottom:2px solid #FF5200;
+    display: block;
+    margin: 0 -15px;
+    padding: 10px 10px 8px 10px;
+    font-size: 1.3em;
+    font-weight: 500;
+    text-decoration: none !important;
+}
+
+.date-main-article {
+    text-align: center;
+    background-color: #f3f3f3;
+    margin-bottom: 15px;
+}
+
+.btn-main-article {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: #f3f3f3;
+    text-decoration: none !important;
+    font-size: 0.9em;
+}
+
+.btn-w {
+    padding: 2px 10px;
 }
 
 .error-text {
@@ -13,7 +39,7 @@
     display: block;
     color: #777;
     border-bottom: 2px solid #f3f3f3;
-    margin-bottom:10px;
+    margin-bottom: 10px;
 }
 
 .container-body {
