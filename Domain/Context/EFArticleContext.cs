@@ -84,5 +84,29 @@ namespace Domain.Context
                 await context.SaveChangesAsync();
             }
         }
+
+        public async Task<List<Article>> GetMainArticlesAsync(int pageArticle)
+        {
+            Constant constant = await context.Constants.Where(c => c.Name == "Главная: количество публикаций").FirstOrDefaultAsync();
+            int PageSize = constant == null ? 3 : Int32.Parse(constant.Value.ToString());
+            return await context.Articles
+                    .Where(a => a.IsVisible == true && !String.IsNullOrEmpty(a.TextMain) && a.DatePublish <= DateTime.Now)
+                    .OrderByDescending(a => a.DatePublish)
+                    .Skip((pageArticle - 1) * PageSize)
+                    .Take(PageSize)
+                    .ToListAsync();
+        }
+
+        public List<Article> GetMainArticles(int pageArticle)
+        {
+            Constant constant = context.Constants.Where(c => c.Name == "Главная: количество публикаций").FirstOrDefault();
+            int PageSize = constant == null ? 3 : Int32.Parse(constant.Value.ToString());
+            return context.Articles
+                    .Where(a => a.IsVisible == true && !String.IsNullOrEmpty(a.TextMain) && a.DatePublish <= DateTime.Now)
+                    .OrderByDescending(a => a.DatePublish)
+                    .Skip((pageArticle - 1) * PageSize)
+                    .Take(PageSize)
+                    .ToList();
+        }
     }
 }

@@ -8,10 +8,13 @@
 }
 
 <div id="ConstantList">
+    @if(consts.Except(Model.Select(m => m.Name)).Count() > 0)
+    {
+        @Html.Raw("Добавить константы:< br />");
+    }
     @foreach (string c in consts.Except(Model.Select(m => m.Name)))
     {
         <div class="col-lg-12" style="margin-bottom:15px;font-size:0.9em;">
-            Добавить константы:<br />
             <span style="margin-left:20px;">@c</span>
             <br />
         </div>

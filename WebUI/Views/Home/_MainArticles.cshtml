@@ -1,0 +1,8 @@
+﻿@model List<Domain.Entities.Article>
+
+@foreach (var a in Model)
+{
+    <div class="col-lg-12" style="margin-bottom:20px;background-color:#fbfbfb;">
+        @Html.Partial("_OneArticle", a)
+    </div>
+}

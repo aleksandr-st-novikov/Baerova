@@ -1,0 +1,4 @@
+﻿@model Domain.Entities.Article
+
+<span class="span-title">@Model.Title</span>
+@Html.Raw(HttpUtility.HtmlDecode(Model.TextMain))

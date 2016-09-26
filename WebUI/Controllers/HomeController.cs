@@ -183,5 +183,12 @@ namespace WebUI.Controllers
         }
         #endregion
 
+        public ActionResult MainArticles(int pageArticle = 1)
+        {
+            using (EFArticleContext articleContext = new EFArticleContext())
+            {
+                return PartialView("_MainArticles", articleContext.GetMainArticles(pageArticle));
+            }
+        }
     }
 }
