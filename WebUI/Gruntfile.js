@@ -62,16 +62,16 @@ module.exports = function (grunt) {
             }
             }
         },
-        //imagemin: {
-        //    all: {
-        //        files: [{
-        //            expand: true,
-        //            cwd: 'content/pictures',
-        //            src: ['*.{png,jpg,gif}'],
-        //            dest: 'content/pictures'
-        //        }]
-        //    }
-        //},
+        imagemin: {
+            all: {
+                files: [{
+                    expand: true,
+                    cwd: 'content/userfiles/images',
+                    src: ['*.{png,jpg,gif}'],
+                    dest: 'content/userfiles/images'
+                }]
+            }
+        },
         copy:
             {
                 fonts: {
@@ -94,9 +94,9 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-copy');
-    //grunt.loadNpmTasks('grunt-contrib-imagemin');
+    grunt.loadNpmTasks('grunt-contrib-imagemin');
     //grunt.loadNpmTasks('grunt-contrib-watch');
 
     //grunt.registerTask("all", ['clean', 'concat', 'uglify', 'cssmin', 'imagemin']);
-    grunt.registerTask("all", ['clean', 'concat', 'uglify', 'cssmin', 'copy']);
+    grunt.registerTask("all", ['clean', 'concat', 'uglify', 'cssmin', 'imagemin', 'copy']);
 };

@@ -108,5 +108,10 @@ namespace Domain.Context
                     .Take(PageSize)
                     .ToList();
         }
+
+        public int GetArticlesCount()
+        {
+            return context.Articles.Where(a => a.IsVisible == true && !String.IsNullOrEmpty(a.TextMain) && a.DatePublish <= DateTime.Now).Count();
+        }
     }
 }
