@@ -2,6 +2,8 @@
 using System.Web.Mvc;
 using System.Web.Routing;
 using System.Text.RegularExpressions;
+using Hangfire;
+using WebUI.Helpers.Hangfire;
 
 namespace WebUI
 {
@@ -13,6 +15,14 @@ namespace WebUI
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             //BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            GlobalConfiguration.Configuration.UseSqlServerStorage("mainDbContext");
+            HangfireBootstrapper.Instance.Start();
+        }
+
+        protected void Application_End(object sender, EventArgs e)
+        {
+            HangfireBootstrapper.Instance.Stop();
         }
 
         protected void Application_BeginRequest(object sender, EventArgs e)
