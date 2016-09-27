@@ -1,0 +1,67 @@
+﻿@{
+    ViewBag.Title = "Добавить задание";
+    Layout = "~/Views/Shared/_LayoutSettings.cshtml";
+}
+
+<div class="container-body">
+    <h2 class="span-title">Добавить задание</h2>
+
+    @using (Ajax.BeginForm("addschedule", new { controller = "settings" }, new AjaxOptions
+    {
+        HttpMethod = "post",
+        OnSuccess = "OnSuccessSchedule",
+        OnFailure = "OnFailure",
+        LoadingElementId = "progr"
+    }, new { id = "FormScheduleAdd" }))
+    {
+        <div class="col-lg-12 no-padding" style="margin-top:20px;">
+            <div class="col-lg-2" style="padding:7px 0 0 0;text-align:right;">
+                <label class="label-normal label-sm" for="Time">Время</label>
+            </div>
+            <div class="col-lg-2">
+                @Html.TextBox("Time", "09:00", new { @class = "form-control" })
+            </div>
+            <div class="col-lg-2">
+                @Html.AntiForgeryToken()
+                <input type="submit" value="Добавить" class="btn btn-danger" />
+            </div>
+            <div class="col-lg-2">
+                <i class="fa fa-spinner fa-pulse" id="progr" style="display:none;padding:10px;"></i>
+            </div>
+        </div>
+    }
+
+    <div class="col-lg-10 no-padding" style="margin-top:30px;">
+        <div class="alert alert-info alert-dismissible fade hide" role="alert" id="messsage-success">
+            <button type="button" class="close" aria-label="Close" onclick="MSClose()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            Задание успешно добавлено!<br />Для просмотра или удаления времени выполнения перейдите на страницу <a href="/settings/jobs" target="_blank">HangFire</a>.
+        </div>
+        <div class="alert alert-danger alert-dismissible fade hide" role="alert" id="message-error">
+            <button type="button" class="close" aria-label="Close" onclick="MEClose()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            Ошибка при сохранении! Попробуйте еще раз.
+        </div>
+    </div>
+</div>
+
+<script>
+    jQuery(function ($) {
+        $("#Time").mask("99:99", { placeholder: " " });
+    });
+    function OnSuccessSchedule() {
+        $('#FormScheduleAdd')[0].reset();
+        $('#messsage-success').removeClass('hide').addClass('in');
+    }
+    function OnFailure() {
+        $('#messsage-error').removeClass('hide').addClass('in');
+    }
+    function MSClose() {
+        $('#messsage-success').removeClass('in').addClass('hide');
+    }
+    function MEClose() {
+        $('#messsage-error').removeClass('in').addClass('hide');
+    }
+</script>

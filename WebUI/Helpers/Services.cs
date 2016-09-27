@@ -6,7 +6,8 @@ namespace WebUI.Helpers
 {
     public class Services
     {
-        public static void SendMessage(string subject, string message, string messageTo, string attachmentFile = "")
+        //public static void SendMessage(string subject, string message, string messageTo, string attachmentFile = "")
+        public static void SendMessage(string subject, string message, string messageTo)
         {
             SmtpClient Smtp = new SmtpClient("smtp.yandex.ru", 25);
             Smtp.Credentials = new NetworkCredential("noreply@e-tiande.by", "Djkmdjc60");
@@ -14,6 +15,7 @@ namespace WebUI.Helpers
             using (MailMessage Message = new MailMessage())
             {
                 Message.From = new MailAddress("noreply@e-tiande.by", "e-TianDe");
+                //Message.From = new MailAddress("test@bobruysk.korona.by", "TestAddress");
 
                 string[] listTo = messageTo.Split(',');
                 foreach (string lt in listTo)
@@ -27,18 +29,18 @@ namespace WebUI.Helpers
                 Message.IsBodyHtml = true;
                 Message.Body = message;
 
-                string[] listAtt = attachmentFile.Split(',');
-                foreach (string a in listAtt)
-                {
-                    if (a != "")
-                    {
-                        Attachment attach = new Attachment(a, MediaTypeNames.Application.Octet);
-                        Message.Attachments.Add(attach);
-                    }
-                }
+                //string[] listAtt = attachmentFile.Split(',');
+                //foreach (string a in listAtt)
+                //{
+                //    if (a != "")
+                //    {
+                //        Attachment attach = new Attachment(a, MediaTypeNames.Application.Octet);
+                //        Message.Attachments.Add(attach);
+                //    }
+                //}
 
                 //Message.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
-                Smtp.SendAsync(Message, null);
+                Smtp.Send(Message);
             }
         }
     }

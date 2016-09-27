@@ -54,7 +54,24 @@
                     </div>
                 </div>
             </li>
-            <li><a href="/settings/jobs"><span class="fa fa-envelope-square" style="margin-right:5px;"></span> HangFire</a></li>
+            <li class="panel panel-default" id="dropdown">
+                <a data-toggle="collapse" href="#dropdown3">
+                    <span class="fa fa-envelope-o" style="margin-right:5px;"></span> Настройка рассылки <span class="caret"></span>
+                </a>
+
+                <div id="dropdown3" class="panel-collapse collapse @{@Session["sSchedule"]}">
+                    <div class="panel-body">
+                        <ul class="nav navbar-nav">
+                            <li class="@{@Session["sScheduleCreate"]}">
+                                @Html.ActionLink("Добавить задание", "addschedule")
+                            </li>
+                            <li>
+                                <a href="/settings/jobs">HangFire</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
         </ul>
     </div><!-- /.navbar-collapse -->
 </nav>

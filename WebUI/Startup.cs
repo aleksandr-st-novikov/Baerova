@@ -2,6 +2,7 @@
 using Owin;
 using Hangfire;
 using WebUI.Helpers.Hangfire;
+using WebUI.Helpers;
 
 [assembly: OwinStartupAttribute(typeof(WebUI.Startup))]
 namespace WebUI
@@ -17,6 +18,8 @@ namespace WebUI
                 Authorization = new[] { new HangFireAuthorizationFilter() },
                 AppPath = "/settings/menusetmanage"
             });
+
+            //RecurringJob.AddOrUpdate("task-id1", () => Services.SendMessage("test","text","novikov.it@bobruysk.korona.by"), "39 15 * * *");
         }
     }
 }

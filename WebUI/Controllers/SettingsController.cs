@@ -12,6 +12,8 @@ using WebUI.Models;
 using static WebUI.Helpers.MultiButton;
 using System.Data.Entity;
 using Domain.Entities;
+using WebUI.Helpers;
+using Hangfire;
 
 namespace WebUI.Controllers
 {
@@ -88,7 +90,8 @@ namespace WebUI.Controllers
                 "sMenu",
                 "sConst",
                 "sUser",
-                "sRole"
+                "sRole",
+                "sScheduleCreate"
             };
             allSubMenu.Remove(subMenu);
             foreach(string s in allSubMenu)
@@ -100,7 +103,8 @@ namespace WebUI.Controllers
             List<string> allMenu = new List<string>
             {
                 "sAll",
-                "sUsers"
+                "sUsers",
+                "sSchedule"
             };
             allMenu.Remove(Menu);
             foreach (string s in allMenu)
@@ -413,5 +417,23 @@ namespace WebUI.Controllers
             }
         }
         #endregion
+
+        public ViewResult AddSchedule()
+        {
+            IsActiveMenu("sSchedule", "sScheduleCreate");
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public void AddSchedule(string Time)
+        {
+            if (!String.IsNullOrEmpty(Time))
+            {
+                string[] time = Time.Split(':');
+                RecurringJob.AddOrUpdate("Рассылка новостей", () => Services.SendMessage("test", "text", "aleksandr.st.novikov@gmail.com"), time[1] + " " + time[0] + " * * *", TimeZoneInfo.Local);
+                BackgroundJob.Schedule(() => Services.SendMessage(Guid.NewGuid().ToString(), "text", "aleksandr.st.novikov@gmail.com"), TimeSpan.FromMinutes(50));
+            }
+        }
     }
 }

@@ -372,6 +372,7 @@
     <Content Include="Views\Home\_MainArticles.cshtml" />
     <Content Include="Views\Home\_OneArticle.cshtml" />
     <Content Include="Views\Home\_Catalog.cshtml" />
+    <Content Include="Views\Settings\AddSchedule.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
