@@ -3,14 +3,15 @@
     List<string> consts = new List<string>
     {
         "Главная: количество публикаций",
-        "Главная: меню развернуто"
+        "Главная: меню развернуто",
+        "Рассылки: настройки почтового ящика"
     };
 }
 
 <div id="ConstantList">
     @if(consts.Except(Model.Select(m => m.Name)).Count() > 0)
     {
-        @Html.Raw("Добавить константы:< br />");
+        @Html.Raw("Добавить константы:");
     }
     @foreach (string c in consts.Except(Model.Select(m => m.Name)))
     {
@@ -30,6 +31,12 @@
             LoadingElementId = "progr"
         }))
         {
+            if (@m.Name == "Рассылки: настройки почтового ящика")
+            {
+                <div class="col-lg-12" style="font-size:0.9em;">
+                    Формат записи: [e-mail];[имя отправителя];[пароль];[сервер];[порт];[ssl (1/0)]. Без [ ] и пробелов.
+                </div>
+            }
             <div class="col-lg-12 no-padding">
                 <div class="col-lg-4">
                     <div class="form-group">
@@ -53,6 +60,7 @@
                         <i class="fa fa-trash-o"></i>
                     </button>
                 </div>
+               
             </div>
         }
     }

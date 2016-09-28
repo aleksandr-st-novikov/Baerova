@@ -8,3 +8,15 @@
 <div class="col-lg-12" style="min-height:700px;">
     @Html.Action("MenuSetList", "settings")
 </div>
+
+@*<div class="col-lg-12">
+    @using (Ajax.BeginForm("send", new { controller = "settings" }, new AjaxOptions
+    {
+        HttpMethod = "post",
+        LoadingElementId = "progr"
+    }, new { id = "Send" }))
+    {
+        <input type="submit" value="Отправить" class="btn btn-danger" />
+        <i class="fa fa-spinner fa-pulse" id="progr" style="display:none;padding:10px;"></i>
+    }
+</div>*@

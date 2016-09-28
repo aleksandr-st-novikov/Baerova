@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Net.Mail;
 using System.Net.Mime;
 
@@ -6,16 +7,17 @@ namespace WebUI.Helpers
 {
     public class Services
     {
-        //public static void SendMessage(string subject, string message, string messageTo, string attachmentFile = "")
-        public static void SendMessage(string subject, string message, string messageTo)
+        public static void SendMessage(string[] _param, string subject, string message, string messageTo)
         {
-            SmtpClient Smtp = new SmtpClient("smtp.yandex.ru", 25);
-            Smtp.Credentials = new NetworkCredential("noreply@e-tiande.by", "Djkmdjc60");
-            Smtp.EnableSsl = true;
+            //SmtpClient Smtp = new SmtpClient("smtp.yandex.ru", 25);
+            //SmtpClient Smtp = new SmtpClient("smtp.gmail.com", 587);
+            SmtpClient Smtp = new SmtpClient(_param[3], Int32.Parse(_param[4]));
+            //Smtp.Credentials = new NetworkCredential("aleksandr.st.novikov@gmail.com", "Hf,jnf_0035");
+            Smtp.Credentials = new NetworkCredential(_param[0], _param[2]);
+            Smtp.EnableSsl = _param[5] == "1" ? true : false;
             using (MailMessage Message = new MailMessage())
             {
-                Message.From = new MailAddress("noreply@e-tiande.by", "e-TianDe");
-                //Message.From = new MailAddress("test@bobruysk.korona.by", "TestAddress");
+                Message.From = new MailAddress(_param[0], _param[1]);
 
                 string[] listTo = messageTo.Split(',');
                 foreach (string lt in listTo)
@@ -23,23 +25,10 @@ namespace WebUI.Helpers
                     Message.To.Add(new MailAddress(lt.Trim()));
                 }
 
-                //Message.To.Add(new MailAddress("aleksandr1.st.novikov@gmail.com"));
-
                 Message.Subject = subject;
                 Message.IsBodyHtml = true;
                 Message.Body = message;
-
-                //string[] listAtt = attachmentFile.Split(',');
-                //foreach (string a in listAtt)
-                //{
-                //    if (a != "")
-                //    {
-                //        Attachment attach = new Attachment(a, MediaTypeNames.Application.Octet);
-                //        Message.Attachments.Add(attach);
-                //    }
-                //}
-
-                //Message.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
+                
                 Smtp.Send(Message);
             }
         }

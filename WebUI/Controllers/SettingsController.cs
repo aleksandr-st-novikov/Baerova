@@ -24,6 +24,7 @@ namespace WebUI.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         RoleManager<IdentityRole> _roleManager;
+        private EFConstantContext _constantContext;
 
         public SettingsController()
         {
@@ -31,12 +32,26 @@ namespace WebUI.Controllers
 
         public SettingsController(ApplicationUserManager userManager,
             ApplicationSignInManager signInManager,
-            RoleManager<IdentityRole> roleManager
+            RoleManager<IdentityRole> roleManager,
+            EFConstantContext constantContext
             )
         {
             UserManager = userManager;
             SignInManager = signInManager;
             RoleManager = roleManager;
+            ConstantContext = constantContext;
+        }
+
+        public EFConstantContext ConstantContext
+        {
+            get
+            {
+                return _constantContext ?? new EFConstantContext();
+            }
+            private set
+            {
+                _constantContext = value;
+            }
         }
 
         public ApplicationSignInManager SignInManager
@@ -94,7 +109,7 @@ namespace WebUI.Controllers
                 "sScheduleCreate"
             };
             allSubMenu.Remove(subMenu);
-            foreach(string s in allSubMenu)
+            foreach (string s in allSubMenu)
             {
                 Session[s] = null;
             }
@@ -428,12 +443,29 @@ namespace WebUI.Controllers
         [ValidateAntiForgeryToken]
         public void AddSchedule(string Time)
         {
-            if (!String.IsNullOrEmpty(Time))
+            if (!String.IsNullOrEmpty(Time) && !String.IsNullOrEmpty(ConstantContext.GetConstant("Рассылки: настройки почтового ящика")))
             {
                 string[] time = Time.Split(':');
-                RecurringJob.AddOrUpdate("Рассылка новостей", () => Services.SendMessage("test", "text", "aleksandr.st.novikov@gmail.com"), time[1] + " " + time[0] + " * * *", TimeZoneInfo.Local);
-                BackgroundJob.Schedule(() => Services.SendMessage(Guid.NewGuid().ToString(), "text", "aleksandr.st.novikov@gmail.com"), TimeSpan.FromMinutes(50));
+                string[] _params = ConstantContext.GetConstant("Рассылки: настройки почтового ящика").Split(';');
+                foreach(string p in _params)
+                {
+                    if(String.IsNullOrEmpty(p))
+                    {
+                        return;
+                    }
+                }
+                RecurringJob.AddOrUpdate("Рассылка новостей",
+                    () => Services.SendMessage(_params, "test", "text", "novikov.it@bobruysk.korona.by"), time[1] + " " + time[0] + " * * *",
+                    TimeZoneInfo.FindSystemTimeZoneById("Belarus Standard Time"));
+                //BackgroundJob.Schedule(() => Services.SendMessage(_params, Guid.NewGuid().ToString(), "text", "novikov.it@bobruysk.korona.by"), TimeSpan.FromMinutes(10));
             }
         }
+
+        //[HttpPost]
+        //public void send()
+        //{
+        //    Services.SendMessage("test", "text", "novikov.it@bobruysk.korona.by");
+        //}
+
     }
 }

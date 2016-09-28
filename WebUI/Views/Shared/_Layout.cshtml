@@ -18,22 +18,33 @@
     </div>
     <div class="container body-content">
         <div class="row" style="background-color:#FFF;padding-top:15px;">
-            <div class="side-menu">
-                @Html.Action("SideMenu", "Home")
+            <div class="side-panel">
+                <div class="side-menu">
+                    @Html.Action("SideMenu", "Home")
+                </div>
             </div>
             <div class="container-fluid">
-                <div class="side-body" style="min-height:750px;">
+                <div class="side-body" style="min-height:760px;">
                     @RenderBody()
                 </div>
             </div>
         </div>
     </div>
     <div class="container">
-        <footer style="height:200px;background-color:#999;">
+        <footer style="height:100px;background-color:#999;">
             @*<p>&copy; @DateTime.Now.Year</p>*@
         </footer>
     </div>
 
     <script src="~/lib/js/site.min.js"></script>
+
+    @if (!@Request.Url.AbsoluteUri.Contains("editarticle"))
+    {
+        <script>
+            $(document).ready(function () {
+                $(".side-panel").sticky({ topSpacing: 15, zi: 1 });
+            });
+        </script>
+    }
 </body>
 </html>

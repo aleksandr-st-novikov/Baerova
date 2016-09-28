@@ -3,20 +3,25 @@
 @{
     ViewBag.Title = "Article";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    string datePublish = Model.DatePublish != null ? ((DateTime)Model.DatePublish).ToString("dd.MM.yyyy hh:mm") : ((DateTime)Model.DateCreate).ToString("dd.MM.yyyy hh:mm");
+    string views = ViewBag.CountView == null ? null : ", просмотров " + ViewBag.CountView;
 }
 
 <div class="col-lg-12 no-padding">
     <div class="col-lg-9">
-        <h1 class="span-title">@Model.Title</h1>
-        <br />
+        <div class="title-main-article">
+            <h1>@Model.Title</h1>
+        </div>
+        <div class="col-lg-12 no-padding" style="margin-left:15px;">
+            <div class="col-lg-5 pull-right date-main-article no-padding">
+                @datePublish@views
+            </div>
+        </div>
         @Html.Raw(HttpUtility.HtmlDecode(Model.TextArticle))
     </div>
+
     <div class="col-lg-3">
-        <div class="col-lg-12 no-padding" style="margin-bottom:20px;">
-            @Html.Partial("~/Views/Home/_Contacts.cshtml")
-        </div>
-        <div class="col-lg-12 no-padding">
-            @Html.Action("Subscriber", "Home")
-        </div>
+        @Html.Partial("~/Views/Home/_RightPanel.cshtml")
     </div>
 </div>
