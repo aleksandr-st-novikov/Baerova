@@ -52,6 +52,7 @@
     <Compile Include="Context\EFArticleContext.cs" />
     <Compile Include="Context\EFConstantContext.cs" />
     <Compile Include="Context\EFCountViewContext.cs" />
+    <Compile Include="Context\EFMailArticleContext.cs" />
     <Compile Include="Context\EFMenuSetContext.cs" />
     <Compile Include="Context\EFPartnerContext.cs" />
     <Compile Include="Context\EFSubscriberContext.cs" />
@@ -60,6 +61,7 @@
     <Compile Include="Entities\AspNetUser.cs" />
     <Compile Include="Entities\Constant.cs" />
     <Compile Include="Entities\CountView.cs" />
+    <Compile Include="Entities\MailArticle.cs" />
     <Compile Include="Entities\MenuSet.cs" />
     <Compile Include="Entities\Partner.cs" />
     <Compile Include="Entities\Subscriber.cs" />

@@ -220,6 +220,7 @@
     <Compile Include="Helpers\Hangfire\HangFireAuthorizationFilter.cs" />
     <Compile Include="Helpers\Hangfire\ApplicationPreload.cs" />
     <Compile Include="Helpers\Hangfire\HangfireBootstrapper.cs" />
+    <Compile Include="Helpers\Mailing.cs" />
     <Compile Include="Helpers\MultiButton.cs" />
     <Compile Include="Helpers\Paging.cs" />
     <Compile Include="Helpers\Services.cs" />

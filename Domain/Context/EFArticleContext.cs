@@ -113,5 +113,22 @@ namespace Domain.Context
         {
             return context.Articles.Where(a => a.IsVisible == true && !String.IsNullOrEmpty(a.TextMain) && a.DatePublish <= DateTime.UtcNow).Count();
         }
+
+        public async Task<List<Article>> ArticlesForMailing()
+        {
+            //List<Article> forMailing = await (from a in context.Articles
+            //                                  join ma in context.MailArticles on a.Id equals ma.ArticleId
+            //                                  where a.IsVisible == true && !String.IsNullOrEmpty(a.TextMain) && a.DatePublish <= DateTime.UtcNow
+            //                                  select a)
+            //                                  .ToListAsync();
+            List<Article> forMailing = await context.Articles
+                .Where(a => !context.MailArticles.Select(ma => ma.ArticleId).Contains(a.Id) && 
+                    a.IsVisible == true && 
+                    !String.IsNullOrEmpty(a.TextMain) && 
+                    a.DatePublish <= DateTime.UtcNow)
+                .ToListAsync();
+
+            return forMailing;
+        }
     }
 }
