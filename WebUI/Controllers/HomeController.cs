@@ -50,6 +50,7 @@ namespace WebUI.Controllers
         public PartialViewResult SideMenu()
         {
             Session["AlwaysIn"] = ConstantContext.GetConstant("Главная: меню развернуто") == "1" ? "in" : String.Empty;
+            ViewBag.CatalogLink = ConstantContext.GetConstantAsync("Общие: ссылка на каталог");
             using (EFMenuSetContext menuSetContext = new EFMenuSetContext())
             {
                 return PartialView("_SideMenu", menuSetContext.MenuSets.ToList());
@@ -57,10 +58,18 @@ namespace WebUI.Controllers
         }
 
         [AllowAnonymous]
-        public ViewResult Register()
+        public ActionResult Catalog()
+        {
+            ViewBag.CatalogLink = ConstantContext.GetConstant("Общие: ссылка на каталог");
+            return PartialView("_Catalog");
+        }
+
+        [AllowAnonymous]
+        public async Task<ViewResult> Register()
         {
             Session["regActive"] = "active";
             Session["Link"] = null;
+            ViewBag.RegisterLink = await ConstantContext.GetConstantAsync("Общие: ссылка на регистрацию");
             return View();
         }
 

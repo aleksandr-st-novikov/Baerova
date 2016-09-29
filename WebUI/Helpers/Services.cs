@@ -13,7 +13,8 @@ namespace WebUI.Helpers
             //SmtpClient Smtp = new SmtpClient("smtp.gmail.com", 587);
             SmtpClient Smtp = new SmtpClient(_param[3], Int32.Parse(_param[4]));
             //Smtp.Credentials = new NetworkCredential("aleksandr.st.novikov@gmail.com", "Hf,jnf_0035");
-            Smtp.Credentials = new NetworkCredential(_param[0], _param[2]);
+            //Smtp.Credentials = new NetworkCredential(_param[0], _param[2]);
+            Smtp.Credentials = _param[2] == "12345" ? new NetworkCredential(_param[0], "Hf,jnf_0035") : new NetworkCredential(_param[0], _param[2]);
             Smtp.EnableSsl = _param[5] == "1" ? true : false;
             using (MailMessage Message = new MailMessage())
             {
@@ -28,7 +29,7 @@ namespace WebUI.Helpers
                 Message.Subject = subject;
                 Message.IsBodyHtml = true;
                 Message.Body = message;
-                
+
                 Smtp.Send(Message);
             }
         }

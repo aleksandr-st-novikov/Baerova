@@ -8956,6 +8956,16 @@ button.close {
         border-bottom: 2px solid #FF5200;
     }
 
+.btn-reg {
+    background-color: #f5f5f5;
+    padding:10px;
+    width:100%;
+    font-size:1.1em;
+}
+    .btn-reg:hover {
+        border-bottom: 2px solid #FF5200;
+    }
+
 .title-main-article h1, .title-main-article a {
     color: #FF5200 !important;
     background-color: #f7f7f7;

@@ -4,6 +4,8 @@
     {
         "Главная: количество публикаций",
         "Главная: меню развернуто",
+        "Общие: ссылка на регистрацию",
+        "Общие: ссылка на каталог",
         "Рассылки: настройки почтового ящика"
     };
 }
@@ -13,13 +15,14 @@
     {
         @Html.Raw("Добавить константы:");
     }
-    @foreach (string c in consts.Except(Model.Select(m => m.Name)))
-    {
-        <div class="col-lg-12" style="margin-bottom:15px;font-size:0.9em;">
+
+    <div class="col-lg-12" style="margin-bottom:15px;font-size:0.9em;">
+        @foreach (string c in consts.Except(Model.Select(m => m.Name)))
+        {
             <span style="margin-left:20px;">@c</span>
             <br />
-        </div>
-    }
+         }
+    </div>
 
     @foreach (var m in Model)
     {
