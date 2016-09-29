@@ -376,6 +376,7 @@
     <Content Include="Views\Home\_RightPanel.cshtml" />
     <Content Include="Views\Shared\_ShareSocial.cshtml" />
     <Content Include="Views\Settings\_UserChangePassword.cshtml" />
+    <Content Include="Views\Home\UnSubscribe.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -190,6 +190,19 @@ namespace WebUI.Controllers
                 }
             }
         }
+
+        public async Task<ActionResult> UnSubscribe(Guid? id)
+        {
+            if (id != null)
+            {
+                using (EFSubscriberContext subscriberContext = new EFSubscriberContext())
+                {
+                    await subscriberContext.UnSubscribeAsync((Guid)id);
+                }
+            }
+            return View();
+        }
+
         #endregion
 
         public ActionResult MainArticles(int page = 1)

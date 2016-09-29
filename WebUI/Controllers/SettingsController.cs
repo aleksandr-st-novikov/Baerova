@@ -270,7 +270,6 @@ namespace WebUI.Controllers
                 {
                     string token = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
                     var result = await UserManager.ResetPasswordAsync(user.Id, token, model.Password);
-                    string ff = "";
                 }
             }
         }
