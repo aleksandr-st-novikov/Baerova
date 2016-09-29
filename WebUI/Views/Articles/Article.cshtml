@@ -6,19 +6,55 @@
 
     string datePublish = Model.DatePublish != null ? ((DateTime)Model.DatePublish).ToString("dd.MM.yyyy hh:mm") : ((DateTime)Model.DateCreate).ToString("dd.MM.yyyy hh:mm");
     string views = ViewBag.CountView == null ? null : ", просмотров " + ViewBag.CountView;
+
+    ViewBag.Title = Model.Title;
+    ViewBag.Description = !String.IsNullOrEmpty(Model.Descr) ? Model.Descr : Model.Title;
+
+    string imagePath = Model.PictShare == null ? "" : ViewBag.MyUrl + Model.PictShare;
+
+    ViewBag.OgImage = "<meta property=\"og:image\" content=\"" + imagePath + "\" />";
+    ViewBag.OgType = "<meta property=\"og:type\" content=\"article\" />";
+    ViewBag.OgUrl = "<meta property=\"og:url\" content=\"" + ViewBag.MyUrl + "/articles/article/" + Model.Link + "\" />";
+    ViewBag.OgPublishedTime = "<meta property=\"article:published_time\" content=\""
+        + Texts.ConvertDateToW3CTime(Model.DatePublish == null ? (DateTime)Model.DateCreate : (DateTime)Model.DatePublish) + "\" />";
+    ViewBag.OgTitle = "<meta property=\"og:title\" content=\"" + Model.Title + "\" />";
+    ViewBag.OgDescription = "<meta property=\"og:description\" content=\"" + ViewBag.Description + "\" />";
+
+    ViewBag.TwCard = "<meta name=\"twitter:card\" content=\"summary_large_image\" />";
+    ViewBag.TwTitle = "<meta name=\"twitter:title\" content=\"" + Model.Title + "\" />";
+    ViewBag.TwDescription = "<meta name=\"twitter:description\" content=\"" + ViewBag.Description + "\" />";
+    ViewBag.TwImage = "<meta name=\"twitter:image:src\" content=\"" + imagePath + "\" />";
+    ViewBag.TwDomain = "<meta name=\"twitter:domain\" content=\"" + ViewBag.MyDomain + "\" />";
+
 }
+
+<div itemscope itemtype="http://schema.org/Article">
+    <meta itemprop="headline" content="@Model.Title" />
+    <meta itemprop="description" content="@ViewBag.Description" />
+    <meta itemprop="image" content="@imagePath" />
+    <meta itemprop="articleBody" content="@System.Text.RegularExpressions.Regex.Replace(HttpUtility.HtmlDecode(Model.TextMain), "<[^>]+>", string.Empty)" />
+</div>
 
 <div class="col-lg-12 no-padding">
     <div class="col-lg-9">
-        <div class="title-main-article">
-            <h1>@Model.Title</h1>
-        </div>
-        <div class="col-lg-12 no-padding" style="margin-left:15px;">
-            <div class="col-lg-5 pull-right date-main-article no-padding">
-                @datePublish@views
+        <div class="col-lg-12 no-padding">
+            <div class="title-main-article">
+                <h1>@Model.Title</h1>
             </div>
+            <div class="col-lg-12 no-padding" style="margin-left:15px;">
+                <div class="col-lg-5 pull-right date-main-article no-padding">
+                    @datePublish@views
+                </div>
+            </div>
+            @Html.Raw(HttpUtility.HtmlDecode(Model.TextArticle))
         </div>
-        @Html.Raw(HttpUtility.HtmlDecode(Model.TextArticle))
+
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
+             style="font-size:1.1em; background:#f5f5f5; margin:15px 0; padding:10px;text-align:center;">
+            Понравилась статья? Сохраните у себя:
+            <br />
+            @Html.Partial("_ShareSocial")
+        </div>
     </div>
 
     <div class="col-lg-3">

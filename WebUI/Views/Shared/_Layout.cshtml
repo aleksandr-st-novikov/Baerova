@@ -11,6 +11,22 @@
         <script src="~/lib/js/jquery.min.js"></script>
     }
 
+    <meta property="og:site_name" content="Baeroff.com" />
+    <meta property="og:locale" content="ru_RU" />
+
+    @Html.Raw(ViewBag.OgImage)
+    @Html.Raw(ViewBag.OgType)
+    @Html.Raw(ViewBag.OgUrl)
+    @Html.Raw(ViewBag.OgPublishedTime)
+    @Html.Raw(ViewBag.OgTitle)
+    @Html.Raw(ViewBag.OgDescription)
+
+    @Html.Raw(ViewBag.TwCard)
+    @Html.Raw(ViewBag.TwTitle)
+    @Html.Raw(ViewBag.TwDescription)
+    @Html.Raw(ViewBag.TwImage)
+    @Html.Raw(ViewBag.TwDomain)
+
 </head>
 <body style="padding:0;background-color:#fefefe;">
     <div class="container">

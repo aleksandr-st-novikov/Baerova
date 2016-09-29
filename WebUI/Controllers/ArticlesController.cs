@@ -15,6 +15,28 @@ namespace WebUI.Controllers
     public class ArticlesController : Controller
     {
         private int PageSize = 20;
+        private EFConstantContext _constantContext;
+
+        public ArticlesController()
+        {
+        }
+
+        public ArticlesController(EFConstantContext constantContext)
+        {
+            ConstantContext = constantContext;
+        }
+
+        public EFConstantContext ConstantContext
+        {
+            get
+            {
+                return _constantContext ?? new EFConstantContext();
+            }
+            private set
+            {
+                _constantContext = value;
+            }
+        }
 
         [Authorize(Roles = "Администратор, Редактор")]
         public ActionResult Index(int page = 1)
@@ -39,7 +61,7 @@ namespace WebUI.Controllers
             {
                 model = new Domain.Entities.Article();
                 model.IsVisible = true;
-                model.DatePublish = DateTime.Now;
+                model.DatePublish = DateTime.UtcNow;
             }
             return View(model);
         }
@@ -107,6 +129,8 @@ namespace WebUI.Controllers
                     Session["Group"] = await menuSetContext.GetGroupByLinkAsync("/articles/article/" + model.Link);
                 }
             }
+            ViewBag.MyUrl = await ConstantContext.GetConstantAsync("Общие: URL сайта");
+            ViewBag.MyDomain = await ConstantContext.GetConstantAsync("Общие: имя домена");
             return View(model);
         }
 

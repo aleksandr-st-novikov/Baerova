@@ -47,7 +47,7 @@ namespace Domain.Context
 
         public async Task<Guid> SaveArticleAsync(Article article)
         {
-            article.DateCreate = DateTime.Now;
+            article.DateCreate = DateTime.UtcNow;
             if (article.Id == Guid.Empty)
             {
                 article.Id = Guid.NewGuid();
@@ -64,7 +64,7 @@ namespace Domain.Context
                 forChange.TextMain = article.TextMain;
                 forChange.Title = article.Title;
                 forChange.Link = article.Link;
-                forChange.DateCreate = DateTime.Now;
+                forChange.DateCreate = DateTime.UtcNow;
             }
             await context.SaveChangesAsync();
             return article.Id;
@@ -72,7 +72,7 @@ namespace Domain.Context
 
         public async Task<Article> FindByLinkAsync(string link)
         {
-            return await context.Articles.FirstOrDefaultAsync(a => (a.DatePublish == null || a.DatePublish <= DateTime.Now) && a.Link == link);
+            return await context.Articles.FirstOrDefaultAsync(a => (a.DatePublish == null || a.DatePublish <= DateTime.UtcNow) && a.Link == link);
         }
 
         public async Task DeleteArticleAsync(Guid id)
@@ -111,7 +111,7 @@ namespace Domain.Context
 
         public int GetArticlesCount()
         {
-            return context.Articles.Where(a => a.IsVisible == true && !String.IsNullOrEmpty(a.TextMain) && a.DatePublish <= DateTime.Now).Count();
+            return context.Articles.Where(a => a.IsVisible == true && !String.IsNullOrEmpty(a.TextMain) && a.DatePublish <= DateTime.UtcNow).Count();
         }
     }
 }
