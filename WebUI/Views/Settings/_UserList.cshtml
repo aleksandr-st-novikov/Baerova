@@ -93,18 +93,18 @@
                     </div>
                 </div>
                 <div class="col-lg-12">
-                    <button type="submit" name="action" value="UserSave" class="btn btn-info btn-sm" title="Сохранить">
-                        Восстановить пароль
-                    </button>
+                    <a class="btn btn-info btn-sm btnChange" title="Сменить пароль" data-toggle="modal" data-target="#mChangePass" data-id="@u.Id">
+                        Сменить пароль
+                    </a>
                     @if (u.LockoutEndDateUtc != null && u.LockoutEndDateUtc > DateTime.UtcNow)
                     {
-                        <button type="submit" name="action" value="UserUnLock" class="btn btn-primary btn-sm" title="Сохранить">
+                        <button type="submit" name="action" value="UserUnLock" class="btn btn-primary btn-sm" title="Разблокировать">
                             Разблокировать
                         </button>
                     }
                     else
                     {
-                        <button type="submit" name="action" value="UserLock" class="btn btn-primary btn-sm" title="Сохранить">
+                        <button type="submit" name="action" value="UserLock" class="btn btn-primary btn-sm" title="Заблокировать">
                             Заблокировать
                         </button>
                     }
@@ -121,8 +121,20 @@
     <div class="col-lg-12" style="border-top:1px solid #F3F3F3"></div>
 </div>
 
+@Html.Action("UserChangePassword","Settings")
+
+
 <script>
     $(".btn-edit").click(function () {
         $('#div' + this.id).toggle('fast');
+    });
+
+    function onSuccessChange() {
+        $('#FormChangePassword')[0].reset();
+        $('#mChangePass').modal('hide');
+    }
+
+    $('.btnChange').click(function () {
+        $('#UserId').val($(this).data('id'));
     });
 </script>

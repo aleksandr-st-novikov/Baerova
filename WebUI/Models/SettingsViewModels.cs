@@ -69,4 +69,20 @@ namespace WebUI.Models
 
         public IEnumerable<System.Web.Mvc.SelectListItem> RolesList { get; set; }
     }
+
+    public class UserChangePasswordView
+    {
+        public Guid UserId { get; set; }
+
+        [Required(ErrorMessage = "Требуется поле {0}.")]
+        [StringLength(100, ErrorMessage = "Длина {0} должна быть не меньше {2} символов.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name = "Пароль")]
+        public string Password { get; set; }
+
+        [DataType(DataType.Password)]
+        [Display(Name = "Подтвердите пароль")]
+        [Compare("Password", ErrorMessage = "Подтверждение пароля не совпадает.")]
+        public string ConfirmPassword { get; set; }
+    }
 }

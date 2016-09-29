@@ -375,6 +375,7 @@
     <Content Include="Views\Settings\AddSchedule.cshtml" />
     <Content Include="Views\Home\_RightPanel.cshtml" />
     <Content Include="Views\Shared\_ShareSocial.cshtml" />
+    <Content Include="Views\Settings\_UserChangePassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

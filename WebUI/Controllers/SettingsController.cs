@@ -253,6 +253,27 @@ namespace WebUI.Controllers
             }
             return PartialView("_UserList", GetUserList());
         }
+
+        public ActionResult UserChangePassword()
+        {
+            return PartialView("_UserChangePassword");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task UserChangePassword(UserChangePasswordView model)
+        {
+            if (ModelState.IsValid && Request.IsAjaxRequest())
+            {
+                var user = await UserManager.FindByIdAsync(model.UserId.ToString());
+                if (user != null)
+                {
+                    string token = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                    var result = await UserManager.ResetPasswordAsync(user.Id, token, model.Password);
+                    string ff = "";
+                }
+            }
+        }
         #endregion
 
         #region Роли
