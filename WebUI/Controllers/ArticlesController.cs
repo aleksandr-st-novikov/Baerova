@@ -129,6 +129,10 @@ namespace WebUI.Controllers
                     Session["Group"] = await menuSetContext.GetGroupByLinkAsync("/articles/article/" + model.Link);
                 }
             }
+            else
+            {
+                return HttpNotFound();
+            }
             ViewBag.MyUrl = await ConstantContext.GetConstantAsync("Общие: URL сайта");
             ViewBag.MyDomain = await ConstantContext.GetConstantAsync("Общие: имя домена");
             return View(model);

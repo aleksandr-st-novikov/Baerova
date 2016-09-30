@@ -4,6 +4,8 @@ using System.Web.Routing;
 using System.Text.RegularExpressions;
 using Hangfire;
 using WebUI.Helpers.Hangfire;
+using System.Web;
+using WebUI.Controllers;
 
 namespace WebUI
 {
@@ -15,6 +17,8 @@ namespace WebUI
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             //BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            MvcHandler.DisableMvcResponseHeader = true;
 
             GlobalConfiguration.Configuration.UseSqlServerStorage("mainDbContext");
             HangfireBootstrapper.Instance.Start();
@@ -38,5 +42,6 @@ namespace WebUI
                 Response.RedirectPermanent(url.ToLower(), true);
             }
         }
+
     }
 }

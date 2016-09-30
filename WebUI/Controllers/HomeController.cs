@@ -222,5 +222,7 @@ namespace WebUI.Controllers
                 return PartialView("_MainArticles", model);
             }
         }
+
+       
     }
 }

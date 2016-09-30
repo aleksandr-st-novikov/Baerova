@@ -38,7 +38,6 @@ namespace WebUI
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
 
-            
         }
     }
 }
