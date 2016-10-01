@@ -1,11 +1,11 @@
 ﻿@{
-    ViewBag.Title = "Ошибка 404: Страница не найдена.";
+    ViewBag.Title = "Страница не найдена (HTTP Error 404)";
 }
 
-<span class="span-title">Page not found (HTTP Error 404)</span>
+<h1>Страница не найдена (HTTP Error 404)</h1>
 <p>Запрашиваемая Вами страница @ViewBag.RequestedUrl не найдена.</p>
 @if (ViewBag.ReferrerUrl != null) {
-<p>Вернуться на <a href="@ViewBag.ReferrerUrl">предыдущую страницу</a>.</p>
+<p>Go back to the <a href="@ViewBag.ReferrerUrl">previous page</a>.</p>
 }
 
 @* Error page must be longer than 512 bytes for IE and Chrome to show it. 

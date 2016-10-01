@@ -5,6 +5,7 @@ using System.Web;
 using Domain.Context;
 using Domain.Entities;
 using System.Threading.Tasks;
+using System.Text;
 
 namespace WebUI.Helpers
 {
@@ -17,6 +18,12 @@ namespace WebUI.Helpers
             using (EFSubscriberContext subscriberContext = new EFSubscriberContext())
             {
                 List<Article> forMailing = await articleContext.ArticlesForMailing();
+
+                StringBuilder message = new StringBuilder();
+                foreach (Article a in forMailing)
+                {
+                    message.Append(a.TextMain);
+                }
             }
         }
 

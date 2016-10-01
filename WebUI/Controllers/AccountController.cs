@@ -55,9 +55,8 @@ namespace WebUI.Controllers
         //
         // GET: /Account/Login
         [AllowAnonymous]
-        public PartialViewResult Login(string returnUrl)
+        public PartialViewResult Login()
         {
-            ViewBag.ReturnUrl = returnUrl;
             return PartialView("~/views/shared/_LoginPartial.cshtml");
         }
 
