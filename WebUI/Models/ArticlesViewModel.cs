@@ -11,4 +11,12 @@ namespace WebUI.Models
         public List<Article> Articles { get; set; }
         public PagingInfo PagingInfo { get; set; }
     }
+
+    public class Carousel
+    {
+        //public int Id { get; set; }
+        public string Directory { get; set; }
+        public int NumSlides { get; set; }
+        public string Extension { get; set; }
+    }
 }

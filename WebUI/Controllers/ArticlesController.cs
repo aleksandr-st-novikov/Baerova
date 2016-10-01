@@ -125,7 +125,6 @@ namespace WebUI.Controllers
 
                 using (EFMenuSetContext menuSetContext = new EFMenuSetContext())
                 {
-
                     Session["Group"] = await menuSetContext.GetGroupByLinkAsync("/articles/article/" + model.Link);
                 }
             }

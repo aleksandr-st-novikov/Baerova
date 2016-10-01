@@ -26,6 +26,20 @@
     ViewBag.TwImage = "<meta name=\"twitter:image:src\" content=\"" + imagePath + "\" />";
     ViewBag.TwDomain = "<meta name=\"twitter:domain\" content=\"" + ViewBag.MyDomain + "\" />";
 
+    string carousel = System.Text.RegularExpressions.Regex.Match(HttpUtility.HtmlDecode(Model.TextArticle), "{carousel [^>]+}").ToString();
+    //string id = System.Text.RegularExpressions.Regex.Match(System.Text.RegularExpressions.Regex.Match(carousel, "id=\"\\d\"").ToString(), "(?<=\\\").+?(?=\\\")").ToString();
+    string directory = System.Text.RegularExpressions.Regex.Match(System.Text.RegularExpressions.Regex.Match(carousel, "directory=\".*\"").ToString(), "(?<=\\\").+?(?=\\\")").ToString();
+    string extension = System.Text.RegularExpressions.Regex.Match(System.Text.RegularExpressions.Regex.Match(carousel, "extension=\".*\"").ToString(), "(?<=\\\").+?(?=\\\")").ToString();
+    string numslides = System.Text.RegularExpressions.Regex.Match(System.Text.RegularExpressions.Regex.Match(carousel, "numslides=\"\\d\"").ToString(), "(?<=\\\").+?(?=\\\")").ToString();
+
+    WebUI.Models.Carousel carouselModel = new WebUI.Models.Carousel
+    {
+        //Id = Int16.Parse(id),
+        Directory = directory,
+        Extension = extension,
+        NumSlides = Int32.Parse(numslides)
+    };
+
 }
 
 <div itemscope itemtype="http://schema.org/Article">
@@ -36,7 +50,7 @@
 </div>
 
 <div class="col-lg-12 no-padding">
-    <div class="col-lg-9">
+    <div class="col-lg-9" style="z-index:3;">
         <div class="col-lg-12 no-padding">
             <div class="title-main-article">
                 <h1>@Model.Title</h1>
@@ -46,7 +60,7 @@
                     @datePublish@views
                 </div>
             </div>
-            @Html.Raw(HttpUtility.HtmlDecode(Model.TextArticle))
+            @Html.Raw(HttpUtility.HtmlDecode(Model.TextArticle).Replace(carousel, Html.Partial("_Carousel", carouselModel).ToHtmlString()))
         </div>
 
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"

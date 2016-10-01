@@ -111,31 +111,7 @@
               .FontSize()
               .FontColor()
               .Snippets(snippets => snippets
-                .Add("Карусель (3 картинки)",
-                "<div class=\"carousel slide\" id=\"carousel\">" +
-                "<ol class=\"carousel-indicators\" style=\"margin-bottom: -10px;\">" +
-                "<li data-target=\"#carousel\" data-slide-to=\"0\" class=\"active\"></li>" +
-                "<li data-target=\"#carousel\" data-slide-to=\"1\"></li>" +
-                "<li data-target=\"#carousel\" data-slide-to=\"2\"></li>" +
-                "</ol>" +
-                "<div class=\"carousel-inner\">" +
-                "<div class=\"item active\">" +
-                "<img src=\"...\" style=\"max-width:100%;\" alt=\"\" />" +
-                "</div>" +
-                "<div class=\"item\">" +
-                "<img src=\"...\" style=\"max-width:100%;\" alt=\"\" />" +
-                "</div>" +
-                "<div class=\"item\">" +
-                "<img src=\"...\" style=\"max-width:100%;\" alt=\"\" />" +
-                "</div>" +
-                "</div>" +
-                "<a class=\"leftCarousel carousel-control\" href=\"#carousel\" data-slide=\"prev\">" +
-                "<span class=\"fa fa-arrow-circle-o-left\" style=\"font-size: 1.3em;\"></span>" +
-                "</a>" +
-                "<a class=\"rightCarousel carousel-control\" href=\"#carousel\" data-slide=\"next\">" +
-                "<span class=\"fa fa-arrow-circle-o-right\" style=\"font-size: 1.3em;\"></span>" +
-                "</a>" +
-                "</div>"))
+                .Add("Карусель", "{carousel directory=\"/Content/UserFiles/Images/Publishing/...\" numslides=\"4\" extension=\"jpg\"}"))
               .CleanFormatting()
               )
           .ImageBrowser(imageBrowser => imageBrowser

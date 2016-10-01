@@ -1,0 +1,41 @@
+﻿@model WebUI.Models.Carousel
+
+<div class="carousel slide" id="carousel" data-ride="carousel" data-interval="60000">
+    <ol class="carousel-indicators" style="margin-bottom: -10px;">
+        @for (int i = 0; i <= Model.NumSlides - 1; i++)
+        {
+            string active = "";
+            if (i == 0)
+            {
+                active = "active";
+            }
+            <li data-target="#carousel" data-slide-to="@{@i}" class="@{@active}"></li>
+        }
+        </ol>
+
+    <div class="carousel-inner" role="listbox">
+        @for (int i = 1; i <= Model.NumSlides; i++)
+        {
+            string file = Model.Directory + "/slide_" + i.ToString() + "." + Model.Extension;
+            string active;
+            if (i == 1)
+            {
+                active = "item active";
+            }
+            else
+            {
+                active = "item";
+            }
+        <div class="@{@active}">
+            <img src="@{@file}" style="max-width:100%;" alt="" />
+        </div>
+        }
+    </div>
+
+    <a class="car-left car-control" href="#carousel" data-slide="prev">
+        <span class="fa fa-arrow-circle-o-left"></span>
+    </a>
+    <a class="car-right car-control" href="#carousel" data-slide="next">
+        <span class="fa fa-arrow-circle-o-right"></span>
+    </a>
+</div>
