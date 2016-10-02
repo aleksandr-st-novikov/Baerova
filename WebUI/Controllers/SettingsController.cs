@@ -484,14 +484,14 @@ namespace WebUI.Controllers
             }
         }
 
-        [HttpPost]
-        public void send()
-        {
-            //string[] _params = "noreply@e-tiande.by;Novikov;Djkmdjc60;smtp.yandex.ru;25;1".Split(';');
-            string[] _params = "a_nov@tut.by;Novikov;novik12345;smtp.yandex.ru;25;1".Split(';');
-            Mailing.Send(_params);
-            //Services.SendMessage("test", "text", "novikov.it@bobruysk.korona.by");
-        }
+        //[HttpPost]
+        //public void send()
+        //{
+        //    //string[] _params = "noreply@e-tiande.by;Novikov;Djkmdjc60;smtp.yandex.ru;25;1".Split(';');
+        //    string[] _params = "a_nov@tut.by;Novikov;novik12345;smtp.yandex.ru;25;1".Split(';');
+        //    Mailing.Send(_params);
+        //    //Services.SendMessage("test", "text", "novikov.it@bobruysk.korona.by");
+        //}
 
     }
 }

@@ -1,7 +1,6 @@
 ﻿@model Domain.Entities.Article
 
 @{
-    ViewBag.Title = "Article";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
     string datePublish = Model.DatePublish != null ? ((DateTime)Model.DatePublish).ToString("dd.MM.yyyy hh:mm") : ((DateTime)Model.DateCreate).ToString("dd.MM.yyyy hh:mm");
@@ -28,12 +27,15 @@
 
     WebUI.Models.Carousel carouselModel = null;
     string carousel = System.Text.RegularExpressions.Regex.Match(HttpUtility.HtmlDecode(Model.TextArticle), "{carousel [^>]+}").ToString();
+    string directory = String.Empty;
+    string extension = String.Empty;
+    string numslides = String.Empty;
     if (!String.IsNullOrEmpty(carousel))
     {
         //string id = System.Text.RegularExpressions.Regex.Match(System.Text.RegularExpressions.Regex.Match(carousel, "id=\"\\d\"").ToString(), "(?<=\\\").+?(?=\\\")").ToString();
-        string directory = System.Text.RegularExpressions.Regex.Match(System.Text.RegularExpressions.Regex.Match(carousel, "directory=\".*\"").ToString(), "(?<=\\\").+?(?=\\\")").ToString();
-        string extension = System.Text.RegularExpressions.Regex.Match(System.Text.RegularExpressions.Regex.Match(carousel, "extension=\".*\"").ToString(), "(?<=\\\").+?(?=\\\")").ToString();
-        string numslides = System.Text.RegularExpressions.Regex.Match(System.Text.RegularExpressions.Regex.Match(carousel, "numslides=\"\\d\"").ToString(), "(?<=\\\").+?(?=\\\")").ToString();
+        directory = System.Text.RegularExpressions.Regex.Match(System.Text.RegularExpressions.Regex.Match(carousel, "directory=\".*\"").ToString(), "(?<=\\\").+?(?=\\\")").ToString();
+        extension = System.Text.RegularExpressions.Regex.Match(System.Text.RegularExpressions.Regex.Match(carousel, "extension=\".*\"").ToString(), "(?<=\\\").+?(?=\\\")").ToString();
+        numslides = System.Text.RegularExpressions.Regex.Match(System.Text.RegularExpressions.Regex.Match(carousel, "numslides=\".*\"").ToString(), "(?<=\\\").+?(?=\\\")").ToString();
 
         carouselModel = new WebUI.Models.Carousel
         {
@@ -43,17 +45,22 @@
             NumSlides = Int32.Parse(numslides)
         };
     }
+
+    string col = ViewBag.RightPanel == "1" ? "col-lg-9" : "col-lg-12";
 }
 
 <div itemscope itemtype="http://schema.org/Article">
     <meta itemprop="headline" content="@Model.Title" />
     <meta itemprop="description" content="@ViewBag.Description" />
     <meta itemprop="image" content="@imagePath" />
-    <meta itemprop="articleBody" content="@System.Text.RegularExpressions.Regex.Replace(HttpUtility.HtmlDecode(Model.TextMain), "<[^>]+>", string.Empty)" />
+    @if (!String.IsNullOrEmpty(Model.TextMain))
+    {
+        <meta itemprop="articleBody" content="@System.Text.RegularExpressions.Regex.Replace(HttpUtility.HtmlDecode(Model.TextMain), "<[^>]+>", string.Empty)" />
+    }
 </div>
 
 <div class="col-lg-12 no-padding">
-    <div class="col-lg-9" style="z-index:3;">
+    <div class="@{@col}" style="z-index:3;">
         <div class="col-lg-12 no-padding">
             <div class="title-main-article">
                 <h1>@Model.Title</h1>
@@ -81,7 +88,10 @@
         </div>
     </div>
 
-    <div class="col-lg-3">
-        @Html.Partial("~/Views/Home/_RightPanel.cshtml")
-    </div>
+    @if (ViewBag.RightPanel == "1")
+    {
+        <div class="col-lg-3">
+            @Html.Partial("~/Views/Home/_RightPanel.cshtml")
+        </div>
+    }
 </div>

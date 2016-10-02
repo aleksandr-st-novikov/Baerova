@@ -131,6 +131,7 @@ namespace WebUI.Controllers
             }
             ViewBag.MyUrl = await ConstantContext.GetConstantAsync("Общие: URL сайта");
             ViewBag.MyDomain = await ConstantContext.GetConstantAsync("Общие: имя домена");
+            ViewBag.RightPanel = await ConstantContext.GetConstantAsync("Публикации: показывать правую панель");
             return View(model);
         }
 
