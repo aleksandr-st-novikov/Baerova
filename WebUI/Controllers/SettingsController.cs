@@ -467,25 +467,31 @@ namespace WebUI.Controllers
             {
                 string[] time = Time.Split(':');
                 string[] _params = ConstantContext.GetConstant("Рассылки: настройки почтового ящика").Split(';');
-                foreach(string p in _params)
+                foreach (string p in _params)
                 {
-                    if(String.IsNullOrEmpty(p))
+                    if (String.IsNullOrEmpty(p))
                     {
                         return;
                     }
                 }
-                RecurringJob.AddOrUpdate("Рассылка новостей",
-                    () => Services.SendMessage(_params, "test", "text", "novikov.it@bobruysk.korona.by"), time[1] + " " + time[0] + " * * *",
-                    TimeZoneInfo.FindSystemTimeZoneById("Belarus Standard Time"));
+
+                RecurringJob.AddOrUpdate("Рассылка новостей", () => Mailing.Send(_params), time[1] + " " + time[0] + " * * *", TimeZoneInfo.FindSystemTimeZoneById("Belarus Standard Time"));
+
+                //RecurringJob.AddOrUpdate("Рассылка новостей",
+                //    () => Services.SendMessage(_params, "test", "text", "novikov.it@bobruysk.korona.by"), time[1] + " " + time[0] + " * * *",
+                //    TimeZoneInfo.FindSystemTimeZoneById("Belarus Standard Time"));
                 //BackgroundJob.Schedule(() => Services.SendMessage(_params, Guid.NewGuid().ToString(), "text", "novikov.it@bobruysk.korona.by"), TimeSpan.FromMinutes(10));
             }
         }
 
-        //[HttpPost]
-        //public void send()
-        //{
-        //    Services.SendMessage("test", "text", "novikov.it@bobruysk.korona.by");
-        //}
+        [HttpPost]
+        public void send()
+        {
+            //string[] _params = "noreply@e-tiande.by;Novikov;Djkmdjc60;smtp.yandex.ru;25;1".Split(';');
+            string[] _params = "a_nov@tut.by;Novikov;novik12345;smtp.yandex.ru;25;1".Split(';');
+            Mailing.Send(_params);
+            //Services.SendMessage("test", "text", "novikov.it@bobruysk.korona.by");
+        }
 
     }
 }

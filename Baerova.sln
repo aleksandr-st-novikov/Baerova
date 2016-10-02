@@ -10,6 +10,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebUI", "WebUI\WebUI.csproj
 		{CB8E0386-75F9-4177-BB83-499CCAA806EB} = {CB8E0386-75F9-4177-BB83-499CCAA806EB}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{A14AEBCE-CCD6-48B4-893D-E2EE4A42A471}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3E41F364-F0C4-4156-84DF-6B7EC48D7103} = {3E41F364-F0C4-4156-84DF-6B7EC48D7103}
+		{CB8E0386-75F9-4177-BB83-499CCAA806EB} = {CB8E0386-75F9-4177-BB83-499CCAA806EB}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,6 +30,10 @@ Global
 		{3E41F364-F0C4-4156-84DF-6B7EC48D7103}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3E41F364-F0C4-4156-84DF-6B7EC48D7103}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3E41F364-F0C4-4156-84DF-6B7EC48D7103}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A14AEBCE-CCD6-48B4-893D-E2EE4A42A471}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A14AEBCE-CCD6-48B4-893D-E2EE4A42A471}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A14AEBCE-CCD6-48B4-893D-E2EE4A42A471}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A14AEBCE-CCD6-48B4-893D-E2EE4A42A471}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

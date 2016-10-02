@@ -113,12 +113,26 @@ namespace Domain.Context
             return context.Articles.Where(a => a.IsVisible == true && !String.IsNullOrEmpty(a.TextMain) && a.DatePublish <= DateTime.UtcNow).Count();
         }
 
-        public async Task<List<Article>> ArticlesForMailing()
+        public List<Article> ArticlesForMailing()
+        {
+            List<Article> forMailing = context.Articles
+                .Where(a => !context.MailArticles.Select(ma => ma.ArticleId).Contains(a.Id) &&
+                    a.IsVisible == true &&
+                    !String.IsNullOrEmpty(a.TextMain) &&
+                    a.DatePublish <= DateTime.Now)
+                .OrderBy(a => a.DatePublish)
+                .Take(3)
+                .ToList();
+
+            return forMailing;
+        }
+
+        public async Task<List<Article>> ArticlesForMailingAsync()
         {
             List<Article> forMailing = await context.Articles
-                .Where(a => !context.MailArticles.Select(ma => ma.ArticleId).Contains(a.Id) && 
-                    a.IsVisible == true && 
-                    !String.IsNullOrEmpty(a.TextMain) && 
+                .Where(a => !context.MailArticles.Select(ma => ma.ArticleId).Contains(a.Id) &&
+                    a.IsVisible == true &&
+                    !String.IsNullOrEmpty(a.TextMain) &&
                     a.DatePublish <= DateTime.UtcNow)
                 .OrderBy(a => a.DatePublish)
                 .Take(3)

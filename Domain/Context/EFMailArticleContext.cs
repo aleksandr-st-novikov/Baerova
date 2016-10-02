@@ -39,10 +39,16 @@ namespace Domain.Context
             get { return context.MailArticles.AsNoTracking(); }
         }
 
-        public async Task SaveMailArticle(MailArticle mailArticle)
+        public async Task SaveMailArticleAsync(MailArticle mailArticle)
         {
             context.MailArticles.Add(mailArticle);
             await context.SaveChangesAsync();
         }
+        public void SaveMailArticle(MailArticle mailArticle)
+        {
+            context.MailArticles.Add(mailArticle);
+            context.SaveChanges();
+        }
+
     }
 }
