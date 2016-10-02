@@ -8,7 +8,8 @@ namespace WebUI.Controllers
     {
         public ActionResult Globalization(string culture)
         {
-            Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = new CultureInfo(culture ?? "ru-RU");            return View();
+            Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = new CultureInfo(culture ?? "ru-RU");
+            return View();
         }
     }
 }
