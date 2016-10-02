@@ -177,7 +177,7 @@ namespace WebUI.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> AddUser(UserView model, params string[] selectedRole)
+        public async Task AddUser(UserView model, params string[] selectedRole)
         {
             if (ModelState.IsValid)
             {
@@ -189,13 +189,12 @@ namespace WebUI.Controllers
                 await UserManager.AddToRolesAsync(user.Id, selectedRole.Except(userRoles).ToArray<string>());
                 await UserManager.RemoveFromRolesAsync(user.Id, userRoles.Except(selectedRole).ToArray<string>());
             }
-            return PartialView("_UserList", GetUserList());
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         [MultiButton(MatchFormKey = "action", MatchFormValue = "UserSave")]
-        public async Task<ActionResult> UserSave([Bind(Prefix = "CS$<>8__locals1.u")]UserEdit model, params string[] selectedRole)
+        public async Task UserSave([Bind(Prefix = "CS$<>8__locals1.u")]UserEdit model, params string[] selectedRole)
         {
             if (ModelState.IsValid)
             {
@@ -210,13 +209,12 @@ namespace WebUI.Controllers
                 await UserManager.AddToRolesAsync(user.Id, selectedRole.Except(userRoles).ToArray<string>());
                 await UserManager.RemoveFromRolesAsync(user.Id, userRoles.Except(selectedRole).ToArray<string>());
             }
-            return PartialView("_UserList", GetUserList());
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         [MultiButton(MatchFormKey = "action", MatchFormValue = "UserUnLock")]
-        public async Task<ActionResult> UserUnLock([Bind(Prefix = "CS$<>8__locals1.u")]UserEdit model)
+        public async Task UserUnLock([Bind(Prefix = "CS$<>8__locals1.u")]UserEdit model)
         {
             if (ModelState.IsValid)
             {
@@ -224,13 +222,12 @@ namespace WebUI.Controllers
                 user.LockoutEndDateUtc = null;
                 await UserManager.UpdateAsync(user);
             }
-            return PartialView("_UserList", GetUserList());
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         [MultiButton(MatchFormKey = "action", MatchFormValue = "UserLock")]
-        public async Task<ActionResult> UserLock([Bind(Prefix = "CS$<>8__locals1.u")]UserEdit model)
+        public async Task UserLock([Bind(Prefix = "CS$<>8__locals1.u")]UserEdit model)
         {
             if (ModelState.IsValid)
             {
@@ -238,20 +235,18 @@ namespace WebUI.Controllers
                 user.LockoutEndDateUtc = DateTime.UtcNow.AddYears(100);
                 await UserManager.UpdateAsync(user);
             }
-            return PartialView("_UserList", GetUserList());
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         [MultiButton(MatchFormKey = "action", MatchFormValue = "UserDelete")]
-        public async Task<ActionResult> UserDelete([Bind(Prefix = "CS$<>8__locals1.u")]UserEdit model)
+        public async Task UserDelete([Bind(Prefix = "CS$<>8__locals1.u")]UserEdit model)
         {
             if (ModelState.IsValid)
             {
                 var user = await UserManager.FindByIdAsync(model.Id.ToString());
                 await UserManager.DeleteAsync(user);
             }
-            return PartialView("_UserList", GetUserList());
         }
 
         public ActionResult UserChangePassword()

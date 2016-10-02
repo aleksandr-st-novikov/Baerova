@@ -12,7 +12,7 @@
         {
             HttpMethod = "post",
             OnSuccess = "OnSuccess('FormUserAdd')",
-            UpdateTargetId = "UserList",
+            OnComplete = "onCompleteUpdate('settings', 'UserList')",
             InsertionMode = System.Web.Mvc.Ajax.InsertionMode.Replace,
             LoadingElementId = "progr"
         }, new { id = "FormUserAdd"} ))
