@@ -194,7 +194,7 @@ namespace WebUI.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [MultiButton(MatchFormKey = "action", MatchFormValue = "UserSave")]
-        public async Task UserSave([Bind(Prefix = "CS$<>8__locals1.u")]UserEdit model, params string[] selectedRole)
+        public async Task UserSave([Bind(Prefix = "u")]UserEdit model, params string[] selectedRole)
         {
             if (ModelState.IsValid)
             {
@@ -214,7 +214,7 @@ namespace WebUI.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [MultiButton(MatchFormKey = "action", MatchFormValue = "UserUnLock")]
-        public async Task UserUnLock([Bind(Prefix = "CS$<>8__locals1.u")]UserEdit model)
+        public async Task UserUnLock([Bind(Prefix = "u")]UserEdit model)
         {
             if (ModelState.IsValid)
             {
@@ -227,7 +227,8 @@ namespace WebUI.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [MultiButton(MatchFormKey = "action", MatchFormValue = "UserLock")]
-        public async Task UserLock([Bind(Prefix = "CS$<>8__locals1.u")]UserEdit model)
+        //CS$<>8__locals1.
+        public async Task UserLock([Bind(Prefix = "u")]UserEdit model)
         {
             if (ModelState.IsValid)
             {
@@ -240,7 +241,7 @@ namespace WebUI.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [MultiButton(MatchFormKey = "action", MatchFormValue = "UserDelete")]
-        public async Task UserDelete([Bind(Prefix = "CS$<>8__locals1.u")]UserEdit model)
+        public async Task UserDelete([Bind(Prefix = "u")]UserEdit model)
         {
             if (ModelState.IsValid)
             {
