@@ -372,6 +372,7 @@
     <Content Include="Views\Home\_Contacts.cshtml" />
     <Content Include="Views\Home\ManageSubscribers.cshtml" />
     <Content Include="Views\Home\_SubscribersList.cshtml" />
+    <None Include="Properties\PublishProfiles\hb.by.pubxml" />
     <None Include="Properties\PublishProfiles\user0036.pubxml" />
     <None Include="Properties\PublishProfiles\web-deploy.pubxml">
       <SubType>Designer</SubType>
