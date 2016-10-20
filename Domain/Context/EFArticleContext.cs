@@ -46,7 +46,7 @@ namespace Domain.Context
 
         public async Task<Guid> SaveArticleAsync(Article article)
         {
-            article.DateCreate = DateTime.UtcNow;
+            article.DateCreate = DateTime.Now;
             if (article.Id == Guid.Empty)
             {
                 article.Id = Guid.NewGuid();
@@ -63,7 +63,7 @@ namespace Domain.Context
                 forChange.TextMain = article.TextMain;
                 forChange.Title = article.Title;
                 forChange.Link = article.Link;
-                forChange.DateCreate = DateTime.UtcNow;
+                forChange.DateCreate = DateTime.Now;
             }
             await context.SaveChangesAsync();
             return article.Id;
@@ -71,7 +71,7 @@ namespace Domain.Context
 
         public async Task<Article> FindByLinkAsync(string link)
         {
-            return await context.Articles.FirstOrDefaultAsync(a => (a.DatePublish == null || a.DatePublish <= DateTime.UtcNow) && a.Link == link);
+            return await context.Articles.FirstOrDefaultAsync(a => (a.DatePublish == null || a.DatePublish <= DateTime.Now) && a.Link == link);
         }
 
         public async Task DeleteArticleAsync(Guid id)
@@ -110,7 +110,7 @@ namespace Domain.Context
 
         public int GetArticlesCount()
         {
-            return context.Articles.Where(a => a.IsVisible == true && !String.IsNullOrEmpty(a.TextMain) && a.DatePublish <= DateTime.UtcNow).Count();
+            return context.Articles.Where(a => a.IsVisible == true && !String.IsNullOrEmpty(a.TextMain) && a.DatePublish <= DateTime.Now).Count();
         }
 
         public List<Article> ArticlesForMailing()
@@ -133,7 +133,7 @@ namespace Domain.Context
                 .Where(a => !context.MailArticles.Select(ma => ma.ArticleId).Contains(a.Id) &&
                     a.IsVisible == true &&
                     !String.IsNullOrEmpty(a.TextMain) &&
-                    a.DatePublish <= DateTime.UtcNow)
+                    a.DatePublish <= DateTime.Now)
                 .OrderBy(a => a.DatePublish)
                 .Take(3)
                 .ToListAsync();

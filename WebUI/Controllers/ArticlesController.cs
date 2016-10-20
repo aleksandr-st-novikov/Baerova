@@ -58,7 +58,7 @@ namespace WebUI.Controllers
             {
                 model = new Domain.Entities.Article();
                 model.IsVisible = true;
-                model.DatePublish = DateTime.UtcNow;
+                model.DatePublish = DateTime.Now;
             }
             return View(model);
         }
