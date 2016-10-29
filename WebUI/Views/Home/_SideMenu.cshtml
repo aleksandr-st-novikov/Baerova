@@ -58,6 +58,10 @@
                 string Group = Session["Group"] == null ? null : Session["Group"].ToString();
             }
 
+            <li class="active" style="margin-bottom:5px;">
+                <a href="/">На главную</a>
+            </li>
+
             <li class="@{@regActive}"><a href="/home/register">Регистрация в компанию</a></li>
             @{
                 string active = String.Empty;

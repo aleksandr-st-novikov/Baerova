@@ -3,7 +3,7 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 
-    string datePublish = Model.DatePublish != null ? ((DateTime)Model.DatePublish).ToString("dd.MM.yyyy hh:mm") : ((DateTime)Model.DateCreate).ToString("dd.MM.yyyy hh:mm");
+    string datePublish = Model.DatePublish != null ? ((DateTime)Model.DatePublish).ToString("dd.MM.yyyy HH:mm") : ((DateTime)Model.DateCreate).ToString("dd.MM.yyyy HH:mm");
     string views = ViewBag.CountView == null ? null : ", просмотров " + ViewBag.CountView;
 
     ViewBag.Title = Model.Title;

@@ -84,6 +84,12 @@ module.exports = function (grunt) {
                     cwd: 'content/kendo/nova',
                     src: '**',
                     dest: 'lib/css/nova/'
+                },
+                images: {
+                    expand: true,
+                    flatten: true,
+                    src: 'content/userfiles/images/main/header.jpg',
+                    dest: 'lib/css/'
                 }
             }
     });
@@ -99,4 +105,5 @@ module.exports = function (grunt) {
 
     //grunt.registerTask("all", ['clean', 'concat', 'uglify', 'cssmin', 'imagemin']);
     grunt.registerTask("all", ['clean', 'concat', 'uglify', 'cssmin', 'imagemin', 'copy']);
+    grunt.registerTask("css", ['concat', 'cssmin']);
 };

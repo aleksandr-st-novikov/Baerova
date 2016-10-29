@@ -1,4 +1,42 @@
-﻿a.car-control:hover, a.car-control:focus {
+﻿footer .row {
+    background-color: #093458;
+    color: #ccc;
+}
+
+    footer .row ul {
+        font-size: 0.9em;
+        list-style-type: none;
+        padding-left: 15px;
+        line-height: 1.5em;
+    }
+
+    footer .row span {
+        color: #ddd;
+        padding: 7px;
+        display: block;
+        border-bottom: 1px solid #5d5d5d;
+        margin-bottom: 5px;
+    }
+
+.header-main {
+    height: 100px;
+    display: block;
+    position: relative;
+}
+
+    .header-main::after {
+        background: url(header.jpg);
+        content: "";
+        opacity: 0.5;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        position: absolute;
+        z-index: -1;
+    }
+
+a.car-control:hover, a.car-control:focus {
     color: #fff !important;
     opacity: 1;
 }
@@ -15,10 +53,10 @@
     .car-control .fa {
         position: absolute;
         top: 50%;
-        left:30%;
+        left: 30%;
         z-index: 5;
         display: inline-block;
-        padding:3px;
+        padding: 3px;
         font-size: 1.4em;
     }
 
