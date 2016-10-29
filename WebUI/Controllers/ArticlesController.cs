@@ -151,7 +151,7 @@ namespace WebUI.Controllers
                 ArticlesView model = new ArticlesView
                 {
                     Articles = articleContext.Articles.Count() == 0 ? articleContext.Articles.ToList() : 
-                        articleContext.Articles.OrderByDescending(a => a.DateCreate).Skip((page - 1) * PageSize).Take(PageSize).ToList(),
+                        articleContext.Articles.OrderByDescending(a => a.DatePublish).Skip((page - 1) * PageSize).Take(PageSize).ToList(),
                     PagingInfo = new PagingInfo
                     {
                         CurrentPage = page,
