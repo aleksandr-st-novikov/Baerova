@@ -8947,8 +8947,13 @@ button.close {
   clip: auto;
 }
 
+body {
+    padding: 0 !important;
+    background-color: #f7f7f7;
+}
+
 footer .row {
-    background-color: #093458;
+    background-color: #00556e;
     color: #ccc;
 }
 
@@ -8965,6 +8970,23 @@ footer .row {
         display: block;
         border-bottom: 1px solid #5d5d5d;
         margin-bottom: 5px;
+    }
+
+.btn-header {
+    display: block;
+    position: absolute;
+    bottom: 20px;
+    background-color: #fff;
+    padding: 5px 15px;
+    color: #005aa5;
+    text-decoration: none;
+}
+
+    .btn-header:hover {
+        text-decoration: none;
+        height: 30px;
+        border-bottom: 2px solid #005aa5;
+        opacity: 0.7;
     }
 
 .header-main {
@@ -9244,7 +9266,7 @@ textarea {
 
 .navbar-default .navbar-nav > li > a 
 {
-    color:#005aa5;
+    color:#00556e;
 }
 
 .container-fluid {
