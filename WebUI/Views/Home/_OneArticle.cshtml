@@ -1,6 +1,6 @@
 ﻿@model WebUI.Models.MainArticleView
 @{
-    string datePublish = Model.article.DatePublish != null ? ((DateTime)Model.article.DatePublish).ToString("dd.MM.yyyy hh:mm") : ((DateTime)Model.article.DateCreate).ToString("dd.MM.yyyy hh:mm");
+    string datePublish = Model.article.DatePublish != null ? ((DateTime)Model.article.DatePublish).ToString("dd.MM.yyyy HH:mm") : ((DateTime)Model.article.DateCreate).ToString("dd.MM.yyyy HH:mm");
     string views = Model.CountView == null ? null : ", просмотров " + Model.CountView;
 }
 
