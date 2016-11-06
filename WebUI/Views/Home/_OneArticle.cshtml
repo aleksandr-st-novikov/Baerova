@@ -2,16 +2,26 @@
 @{
     string datePublish = Model.article.DatePublish != null ? ((DateTime)Model.article.DatePublish).ToString("dd.MM.yyyy HH:mm") : ((DateTime)Model.article.DateCreate).ToString("dd.MM.yyyy HH:mm");
     string views = Model.CountView == null ? null : ", просмотров " + Model.CountView;
+    string margin = "";
+    if (!(User.IsInRole("Администратор") || User.IsInRole("Редактор")))
+    {
+        margin = "margin-bottom:15px;";
+    }
 }
 
-<div class="title-main-article">
-    @Html.ActionLink(Model.article.Title, "article", "articles", new { Model.article.Link }, new { target = "_blank"})
+<div class="title-main-article" style="@{@margin}">
+    @Html.ActionLink(Model.article.Title, "article", "articles", new { Model.article.Link }, new { target = "_blank" })
 </div>
-<div class="col-lg-12 no-padding" style="margin-left:15px;">
-    <div class="col-lg-5 pull-right date-main-article no-padding">
-        @datePublish@views
+
+@if (User.IsInRole("Администратор") || User.IsInRole("Редактор"))
+{
+    <div class="col-lg-12 no-padding" style="margin-left:15px;">
+        <div class="col-lg-5 pull-right date-main-article no-padding">
+            @datePublish@views
+        </div>
     </div>
-</div>
+}
+
 @Html.Raw(HttpUtility.HtmlDecode(Model.article.TextMain))
 <div class="col-lg-12" style="text-align:right;margin-top:10px;">
     @Html.ActionLink("Читать полностью", "article", "articles", new { Model.article.Link }, new { target = "_blank", @class = "btn-main-article" })
