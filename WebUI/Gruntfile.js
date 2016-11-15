@@ -5,7 +5,11 @@ Click here to learn more. http://go.microsoft.com/fwlink/?LinkID=513275&clcid=0x
 */
 module.exports = function (grunt) {
     grunt.initConfig({
-        clean: ["lib/*", "temp/*"],
+        clean: {
+            css: ["lib/*.css", "temp/*.css"],
+            js: ["lib/*.js", "temp/*.js"],
+            all: ["lib/*", "temp/*"]
+        },
         concat: {
             options: {
                 stripBanners: {
@@ -91,7 +95,23 @@ module.exports = function (grunt) {
                     src: 'content/userfiles/images/main/header.jpg',
                     dest: 'lib/css/'
                 }
+            },
+        watch: {
+            css: {
+                files: ['Content/bootstrap.css', 'Content/font-awesome.css', 'Content/site.css', 'Content/sidemenu.css', 'Content/bootstrap-datetimepicker.css',
+                        'Content/kendo/kendo.common-nova.min.css', 'Content/kendo/kendo.nova.min.css', 'Content/bootstrap-datepicker.min.css'],
+                tasks: ['css']
+            },
+            js: {
+                files: ['Scripts/bootstrap.js', 'Scripts/respond.js', 'Scripts/site.js', 'Scripts/jquery.maskedinput.js',
+                        'Scripts/jquery-?????.js', 'Scripts/jquery.validate.js', 'Scripts/jquery.validate.unobtrusive.js',
+                        'Scripts/modernizr-?????.js', 'Scripts/jquery.unobtrusive-ajax.js', 'Scripts/bootstrap-maxlength.js',
+                        'Scripts/bootstrap-datepicker.min.js', 'Scripts/locales/bootstrap-datepicker.ru.min.js',
+                        'Scripts/kendo/jquery.min.js', 'Scripts/kendo/kendo.all.min.js', 'Scripts/kendo/kendo.aspnetmvc.min.js',
+                        'Scripts/jquery.validate.js', 'Scripts/jquery.validate.unobtrusive.js', 'Scripts/bootstrap-maxlength.js'],
+                tasks: ['js']
             }
+        }
     });
 
     grunt.loadNpmTasks("grunt-contrib-clean");
@@ -101,9 +121,10 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-imagemin');
-    //grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-watch');
 
     //grunt.registerTask("all", ['clean', 'concat', 'uglify', 'cssmin', 'imagemin']);
-    grunt.registerTask("all", ['clean', 'concat', 'uglify', 'cssmin', 'imagemin', 'copy']);
-    grunt.registerTask("css", ['concat', 'cssmin']);
+    grunt.registerTask("all", ['clean:all', 'concat', 'uglify', 'cssmin', 'imagemin', 'copy']);
+    grunt.registerTask("css", ['clean:css', 'concat', 'cssmin']);
+    grunt.registerTask("js", ['clean:js', 'concat', 'uglify']);
 };

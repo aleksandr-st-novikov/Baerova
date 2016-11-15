@@ -8952,25 +8952,60 @@ body {
     background-color: #f7f7f7;
 }
 
-footer .row {
-    background-color: #00556e;
-    color: #ccc;
+footer {
+    display: none;
 }
 
-    footer .row ul {
-        font-size: 0.9em;
-        list-style-type: none;
-        padding-left: 15px;
-        line-height: 1.5em;
+    footer .row {
+        background-color: #00556e;
+        color: #ccc;
     }
 
-    footer .row span {
-        color: #ddd;
-        padding: 7px;
-        display: block;
-        border-bottom: 1px solid #5d5d5d;
-        margin-bottom: 5px;
+        footer .row ul {
+            font-size: 0.9em;
+            list-style-type: none;
+            padding-left: 15px;
+            line-height: 1.8em;
+        }
+
+        footer .row span {
+            color: #ddd;
+            padding: 7px;
+            display: block;
+            border-bottom: 1px solid #5d5d5d;
+            margin-bottom: 5px;
+        }
+
+    footer a {
+        text-decoration: none;
+        color: #ccc;
     }
+
+        footer a:hover {
+            text-decoration: none;
+            color: #aaa;
+        }
+
+    footer .cr {
+        background-color: #002D3A;
+        color: #aaa;
+        font-size: 0.9em;
+        text-align: center;
+        padding: 2px 20px;
+    }
+
+.contacts i {
+    font-size: 1.2em;
+    position: absolute;
+    margin-top: 4px;
+    color: #FF5200;
+}
+
+.contacts a {
+    text-decoration: none;
+    font-size: 1.1em;
+    margin-left: 35px;
+}
 
 .btn-header {
     display: block;
@@ -9016,7 +9051,7 @@ a.car-control:hover, a.car-control:focus {
     position: absolute;
     top: 0;
     bottom: 0;
-    opacity: 0.5;
+    opacity: 0.7;
     color: #fff;
     width: 10%;
 }
@@ -9028,7 +9063,8 @@ a.car-control:hover, a.car-control:focus {
         z-index: 5;
         display: inline-block;
         padding: 3px;
-        font-size: 1.4em;
+        font-size: 1.7em;
+        text-shadow: 0 0 5px #FF5200;
     }
 
     .car-control.car-right {
