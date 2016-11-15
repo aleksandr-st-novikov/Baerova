@@ -1,42 +1,35 @@
 ﻿<div class="col-lg-12 header-main">
-    <div class="col-lg-3 no-padding" style="height:100%;">
+    <div class="col-lg-3 col-md-3 col-sm-4 hidden-xs no-padding" style="height:100%;">
         <a href="/">
             <img src="~/Content/UserFiles/Images/Main/logsr.png" style="position:absolute;z-index:1;margin:15px 0 0 25px;" />
         </a>
     </div>
-    <div class="col-lg-7" style="height:100%;padding-left:0;color:#005aa5;">
-        <div class="col-lg-12" style="margin-top:15px;">
+
+    <div class="hidden-lg hidden-md hidden-sm col--xs-12 no-padding" style="text-align:right;">
+        @Html.Partial("_HeaderButtons")
+    </div>
+
+    <div class="col-lg-6 col-md-6 col-sm-8 col-xs-12 no-padding" style="height:100%;padding-left:0;color:#005aa5;">
+
+        <div class="hidden-lg hidden-md hidden-xs" style="text-align:right;">
+            @Html.Partial("_HeaderButtons")
+        </div>
+
+        <div class="col-lg-12 title-site">
+            <div class="col-lg-12 hidden-sm hidden-xs" style="height:15px;"></div>
             Командный сайт Рубиновых директоров корпорации TianDe
             <h4 style="margin:0;">Татьяны и Олега Баеровых</h4>
             структура Grand Diamond Director Ламары и Игоря Жабиных
         </div>
     </div>
-    <div class="col-lg-2 no-padding" style="height:100%;text-align:right;">
-        @if (User.IsInRole("Администратор"))
-            {
-            <a class="btn btn-link" href="/settings/menusetmanage" title="Настройки" style="padding:3px;">
-                <i class="fa fa-cogs"></i>
-            </a>
-            <a class="btn btn-link" href="/home/managepartners" title="Заявки на регистрацию" style="padding:3px;">
-                <i class="fa fa-users"></i>
-            </a>
-                    <a class="btn btn-link" href="/home/ManageSubscribers/1" title="Управление подписчиками" style="padding:3px;">
-                        <i class="fa fa-envelope"></i>
-                    </a>
-        }
-        @if (User.IsInRole("Администратор") || User.IsInRole("Редактор"))
-            {
-            <a class="btn btn-link" href="/articles" title="Управление публикациями" style="padding:3px;">
-                <i class="fa fa-file-text-o"></i>
-            </a>
-        }
-        <span style="text-align:right;">
-            @Html.Action("login", "account")
-        </span>
+    <div class="col-lg-3 col-md-3 hidden-sm hidden-xs no-padding" style="height:100%;text-align:right;">
+        @Html.Partial("_HeaderButtons")
 
-        <a href="/home/register" class="btn-header">
-            Стать дистрибьютором
-        </a>
+        <div class="hidden-sm hidden-xs">
+            <a href="/home/register" class="btn-header">
+                Стать дистрибьютором
+            </a>
+        </div>
     </div>
 </div>
 <div class="top-panel">

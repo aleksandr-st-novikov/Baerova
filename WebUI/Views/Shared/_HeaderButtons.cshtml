@@ -1,0 +1,21 @@
+﻿@if (User.IsInRole("Администратор"))
+            {
+    <a class="btn btn-link" href="/settings/menusetmanage" title="Настройки" style="padding:3px;">
+        <i class="fa fa-cogs"></i>
+    </a>
+    <a class="btn btn-link" href="/home/managepartners" title="Заявки на регистрацию" style="padding:3px;">
+        <i class="fa fa-users"></i>
+    </a>
+            <a class="btn btn-link" href="/home/ManageSubscribers/1" title="Управление подписчиками" style="padding:3px;">
+                <i class="fa fa-envelope"></i>
+            </a>
+}
+@if (User.IsInRole("Администратор") || User.IsInRole("Редактор"))
+            {
+    <a class="btn btn-link" href="/articles" title="Управление публикациями" style="padding:3px;">
+        <i class="fa fa-file-text-o"></i>
+    </a>
+}
+<span style="text-align:right;">
+    @Html.Action("login", "account")
+</span>
