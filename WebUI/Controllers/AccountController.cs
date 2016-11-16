@@ -53,7 +53,7 @@ namespace WebUI.Controllers
         [AllowAnonymous]
         public PartialViewResult Login()
         {
-            return PartialView("~/views/shared/_LoginPartial.cshtml");
+            return PartialView("~/views/shared/_LoginModal.cshtml");
         }
 
         //

@@ -27,6 +27,10 @@
     @Html.Raw(ViewBag.TwImage)
     @Html.Raw(ViewBag.TwDomain)
 
+    @{ 
+        string referral = "referral=@@779a6396bf1ef19fa17403fe5e9b872b";
+    }
+
 </head>
 <body>
     <div class="container">
@@ -54,8 +58,8 @@
                         Информация
                     </span>
                     <ul>
-                        <li>О нас</li>
-                        <li><a href="">О компании</a></li>
+                        @*<li>О нас</li>*@
+                        <li><a href="/articles/article/o-kompanii">О компании</a></li>
                         <li><a href="/home/register">Получить скидку</a></li>
                     </ul>
                 </div>
@@ -64,9 +68,9 @@
                         Продукция
                     </span>
                     <ul>
-                        <li><a href="">Каталог продукции</a></li>
-                        <li><a href="">Маркетинг-план компании</a></li>
-                        <li><a href="">Магазины TianDe</a></li>
+                        <li><a href="https://tiande.ru/web/catalog/?pny=by&@{@referral}">Каталог продукции</a></li>
+                        <li><a href="/articles/article/marketing-plan-kompanii-tiande">Маркетинг-план компании</a></li>
+                        <li><a href="/articles/article/magaziny-servisnye-tsentry-tiande">Магазины TianDe</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-4">
@@ -74,7 +78,7 @@
                         Компания TianDe
                     </span>
                     <ul>
-                        <li><a rel="nofollow" href="http://tiande.ru" target="_blank">Официальный сайт компании TianDe</a></li>
+                        <li><a rel="nofollow" href="https://tiande.ru/?@{@referral}" target="_blank">Официальный сайт компании TianDe</a></li>
                         <li><a href="http://www.tiande-online.ru" rel="nofollow" target="_blank">Командный сайт Ламары и Игоря Жабиных</a></li>
                         <li><a href="http://www.e-tiande.by" target="_blank">Интернет-магазин в Беларуси</a></li>
                     </ul>

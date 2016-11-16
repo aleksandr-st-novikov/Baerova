@@ -35,3 +35,8 @@
 <div class="top-panel">
     <div class="col-lg-12" style="background-color:#005aa5;height:7px;opacity:0.8;"></div>
 </div>
+
+@if (!Request.IsAuthenticated)
+{
+    @Html.Action("login", "account")
+}
