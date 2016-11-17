@@ -31,7 +31,7 @@ module.exports = function (grunt) {
             css: {
                 files:
                     {
-                        'temp/site.css': ['Content/bootstrap.css', 'Content/font-awesome.css', 'Content/site.css', 'Content/sidemenu.css', 'Content/bootstrap-datetimepicker.css'],
+                        'temp/site.css': ['Content/bootstrap.css', 'Content/font-awesome.css', 'Content/sidemenu.css', 'Content/site.css', 'Content/bootstrap-datetimepicker.css'],
                         'lib/css/kendo.min.css': ['Content/kendo/kendo.common-nova.min.css', 'Content/kendo/kendo.nova.min.css'],
                         'lib/css/bootstrap-datepicker.min.css': ['Content/bootstrap-datepicker.min.css']
                     }
