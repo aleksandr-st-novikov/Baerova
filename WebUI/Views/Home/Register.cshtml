@@ -12,7 +12,7 @@
     <h1 class="span-title">Регистрация в компанию</h1>
 
     <div class="col-lg-7">
-        <h4>Мы поможем Вам зарегистрироваться</h4>
+        <h4>Укажите свои данные:</h4>
         @using (Ajax.BeginForm("Register", new { controller = "Home" }, new AjaxOptions
         {
             HttpMethod = "post",
@@ -104,10 +104,10 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-5">
+    @*<div class="col-lg-5">
         <h4>Вы сами регистрируетесь</h4>
         <a href="@{@ViewBag.RegisterLink}" class="btn btn-reg">Перейти на сайт TianDe</a>
-    </div>
+    </div>*@
 </div>
 
 <script>

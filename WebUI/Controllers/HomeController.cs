@@ -7,6 +7,7 @@ using Domain.Entities;
 using System.Threading.Tasks;
 using WebUI.Models;
 using static WebUI.Helpers.MultiButton;
+using System.Text;
 
 namespace WebUI.Controllers
 {
@@ -82,6 +83,14 @@ namespace WebUI.Controllers
                 using (EFPartnerContext partnerContext = new EFPartnerContext())
                 {
                     await partnerContext.SavePartnerAsync(partner);
+                    //отправляем письмо
+                    StringBuilder mes = new StringBuilder();
+                    mes.Append("<p><strong>Заявка на регистриацию:</strong></p>");
+                    mes.Append("ФИО: " + partner.Surname + " " + partner.Name + " " + partner.Patronymic + "<br/>");
+                    mes.Append("Телефон: " + partner.Phone + "<br/>");
+                    mes.Append("E-mail: " + partner.EMail + "<br/>");
+                    string[] _params = ConstantContext.GetConstant("Общие: служебный почтовый ящик").Split(';');
+                    Helpers.Services.SendMessage(_params, partner.Surname + " " + partner.Name + " " + partner.Patronymic + ". Заявка на регистрацию.", mes.ToString(), ConstantContext.GetConstant("Общие: получатель"));
                 }
             }
         }
