@@ -14,6 +14,7 @@ using System.Data.Entity;
 using Domain.Entities;
 using WebUI.Helpers;
 using Hangfire;
+using System.Net.Mail;
 
 namespace WebUI.Controllers
 {
@@ -477,6 +478,39 @@ namespace WebUI.Controllers
                 //    () => Services.SendMessage(_params, "test", "text", "novikov.it@bobruysk.korona.by"), time[1] + " " + time[0] + " * * *",
                 //    TimeZoneInfo.FindSystemTimeZoneById("Belarus Standard Time"));
                 //BackgroundJob.Schedule(() => Services.SendMessage(_params, Guid.NewGuid().ToString(), "text", "novikov.it@bobruysk.korona.by"), TimeSpan.FromMinutes(10));
+            }
+        }
+
+        public async Task MailingArticle()
+        {
+            using (EFArticleContext articleContext = new EFArticleContext())
+            using (EFSubscriberContext subscriberContext = new EFSubscriberContext())
+            {
+                List<Article> forMailing = await articleContext.ArticlesForMailingAsync();
+                List<Subscriber> subscribers = await subscriberContext.Subscribers.Where(s => s.IsActive == true).ToListAsync();
+
+                int count = 1;
+                //foreach (Subscriber s in subscribers)
+                //{
+                //    if (count == 1 || count % 21 == 0)
+                //    {
+                //        MailMessage mes = new MailMessage();
+                //        mes.To.Add("aleksandr.st.novikov@gmail.com");
+
+
+                //    }
+                //    else
+                //    {
+                //        mes.CC.Add(s.EMail);
+                //    }
+
+                //    mes.Subject = "Baeroff.com – Новостная рассылка от " + DateTime.Now.ToShortDateString();
+
+                //    if (count % 20 == 0)
+                //    {
+                //    }
+                //    count++;
+                //}
             }
         }
 

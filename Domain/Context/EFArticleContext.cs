@@ -115,29 +115,28 @@ namespace Domain.Context
 
         public List<Article> ArticlesForMailing()
         {
-            List<Article> forMailing = context.Articles
-                .Where(a => !context.MailArticles.Select(ma => ma.ArticleId).Contains(a.Id) &&
-                    a.IsVisible == true &&
-                    !String.IsNullOrEmpty(a.TextMain) &&
-                    a.DatePublish <= DateTime.Now)
-                .OrderBy(a => a.DatePublish)
-                .Take(3)
-                .ToList();
+            List<Article> forMailing = (from a in context.Articles
+                                        where a.IsVisible == true &&
+                                        !String.IsNullOrEmpty(a.TextMain) &&
+                                        a.DatePublish <= DateTime.Now &&
+                                        !(from ma in context.MailArticles select ma.ArticleId).Contains(a.Id)
+                                        orderby a.DatePublish
+                                        select a)
+                                        .ToList();
 
             return forMailing;
         }
 
         public async Task<List<Article>> ArticlesForMailingAsync()
         {
-            List<Article> forMailing = await context.Articles
-                .Where(a => !context.MailArticles.Select(ma => ma.ArticleId).Contains(a.Id) &&
-                    a.IsVisible == true &&
-                    !String.IsNullOrEmpty(a.TextMain) &&
-                    a.DatePublish <= DateTime.Now)
-                .OrderBy(a => a.DatePublish)
-                .Take(3)
-                .ToListAsync();
-
+            List<Article> forMailing = await (from a in context.Articles
+                                              where a.IsVisible == true &&
+                                              !String.IsNullOrEmpty(a.TextMain) &&
+                                              a.DatePublish <= DateTime.Now &&
+                                              !(from ma in context.MailArticles select ma.ArticleId).Contains(a.Id)
+                                              orderby a.DatePublish
+                                              select a)
+                                              .ToListAsync();
             return forMailing;
         }
     }

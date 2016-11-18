@@ -2,6 +2,7 @@
 using System.Net;
 using System.Net.Mail;
 using System.Net.Mime;
+using System.Threading.Tasks;
 
 namespace WebUI.Helpers
 {
@@ -11,6 +12,8 @@ namespace WebUI.Helpers
         {
             try
             {
+                Task.Delay(3000);
+
                 //SmtpClient Smtp = new SmtpClient("smtp.yandex.ru", 25);
                 //SmtpClient Smtp = new SmtpClient("smtp.gmail.com", 587);
                 SmtpClient Smtp = new SmtpClient(_param[3], Int32.Parse(_param[4]));
