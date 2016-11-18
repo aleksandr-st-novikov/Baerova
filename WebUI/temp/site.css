@@ -9148,7 +9148,7 @@ button.close {
                 }
 /* Main body section */
 .side-body {
-    margin-left: 260px;
+    margin-left: 250px;
     position: relative;
 }
 /* small screen */
@@ -9169,7 +9169,7 @@ button.close {
     /* Slide in animation */
     @-moz-keyframes slidein {
         0% {
-            left: -250px;
+            left: -500px;
         }
 
         100% {
@@ -9179,7 +9179,7 @@ button.close {
 
     @-webkit-keyframes slidein {
         0% {
-            left: -250px;
+            left: -500px;
         }
 
         100% {
@@ -9189,7 +9189,7 @@ button.close {
 
     @keyframes slidein {
         0% {
-            left: -250px;
+            left: -500px;
         }
 
         100% {
@@ -9203,7 +9203,7 @@ button.close {
         }
 
         100% {
-            left: -250px;
+            left: -500px;
         }
     }
 
@@ -9213,7 +9213,7 @@ button.close {
         }
 
         100% {
-            left: -250px;
+            left: -500px;
         }
     }
 
@@ -9223,7 +9223,7 @@ button.close {
         }
 
         100% {
-            left: -250px;
+            left: -500px;
         }
     }
     /* Slide side menu*/
@@ -9326,7 +9326,7 @@ button.close {
     /* Slide side body*/
     .side-body {
         margin-left: 0;
-        margin-top: 60px;
+        margin-top: 40px;
         /*margin-top: 70px;*/
         position: relative;
         -moz-animation: bodyslideout 300ms forwards;
@@ -9338,7 +9338,7 @@ button.close {
     }
 
     .body-slide-in {
-        margin-left: 10px;
+        margin-left: 0px;
         position: relative;
         -moz-animation: bodyslidein 300ms forwards;
         -o-animation: bodyslidein 300ms forwards;
@@ -9351,7 +9351,7 @@ button.close {
     .navbar-toggle {
         border: 0;
         float: left;
-        padding: 18px;
+        padding: 9px;
         margin: 0;
         border-radius: 0;
         background-color: #f3f3f3;
@@ -9759,6 +9759,14 @@ textarea {
     line-height: 0.9em;
 }
 
+.navbar-default {
+    background-color: transparent;
+}
+
+.label-reg {
+    padding: 7px 10px;
+    text-align: right;
+}
 
 @media (max-width:767px) {
     .empty-row {
@@ -9804,7 +9812,7 @@ textarea {
 
     .navbar-nav {
         float: none !important;
-        margin-top: 7.5px;
+        margin: 7.5px -15px;
     }
 
         .navbar-nav > li {
@@ -9818,6 +9826,11 @@ textarea {
 
     .collapse.in {
         display: block !important;
+    }
+
+    .label-reg {
+        padding: 7px 10px 0 10px;
+        text-align: left;
     }
 }
 

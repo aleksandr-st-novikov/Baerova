@@ -380,6 +380,14 @@ textarea {
     line-height: 0.9em;
 }
 
+.navbar-default {
+    background-color: transparent;
+}
+
+.label-reg {
+    padding: 7px 10px;
+    text-align: right;
+}
 
 @media (max-width:767px) {
     .empty-row {
@@ -425,7 +433,7 @@ textarea {
 
     .navbar-nav {
         float: none !important;
-        margin-top: 7.5px;
+        margin: 7.5px -15px;
     }
 
         .navbar-nav > li {
@@ -439,5 +447,10 @@ textarea {
 
     .collapse.in {
         display: block !important;
+    }
+
+    .label-reg {
+        padding: 7px 10px 0 10px;
+        text-align: left;
     }
 }

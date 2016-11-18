@@ -23,7 +23,7 @@
         }, new { @Id = "PartnerForm" }))
         {
             @Html.AntiForgeryToken()
-            <div class="col-lg-3" style="padding:7px 10px;text-align:right;">
+            <div class="col-lg-3 label-reg">
                 @Html.LabelFor(m => m.Surname, new { @class = "label-normal label-sm" })
             </div>
             <div class="col-lg-9 no-padding" style="margin-bottom:10px;">
@@ -32,7 +32,7 @@
                     @Html.ValidationMessageFor(m => m.Surname)
                 </span>
             </div>
-            <div class="col-lg-3" style="padding:7px 10px;text-align:right;">
+            <div class="col-lg-3 label-reg">
                 @Html.LabelFor(m => m.Name, new { @class = "label-normal label-sm" })
             </div>
             <div class="col-lg-9 no-padding" style="margin-bottom:10px;">
@@ -41,7 +41,7 @@
                     @Html.ValidationMessageFor(m => m.Name)
                 </span>
             </div>
-            <div class="col-lg-3" style="padding:7px 10px;text-align:right;">
+            <div class="col-lg-3 label-reg">
                 @Html.LabelFor(m => m.Patronymic, new { @class = "label-normal label-sm" })
             </div>
             <div class="col-lg-9 no-padding" style="margin-bottom:10px;">
@@ -50,7 +50,7 @@
                     @Html.ValidationMessageFor(m => m.Patronymic)
                 </span>
             </div>
-            <div class="col-lg-3" style="padding:7px 10px;text-align:right;">
+            <div class="col-lg-3 label-reg">
                 @Html.LabelFor(m => m.Phone, new { @class = "label-normal label-sm" })
             </div>
             <div class="col-lg-9 no-padding" style="margin-bottom:10px;">
@@ -59,7 +59,7 @@
                     @Html.ValidationMessageFor(m => m.Phone)
                 </span>
             </div>
-            <div class="col-lg-3" style="padding:7px 10px;text-align:right;">
+            <div class="col-lg-3 label-reg">
                 @Html.LabelFor(m => m.EMail, new { @class = "label-normal label-sm" })
             </div>
             <div class="col-lg-9 no-padding" style="margin-bottom:10px;">
@@ -68,7 +68,7 @@
                     @Html.ValidationMessageFor(m => m.EMail)
                 </span>
             </div>
-            <div class="col-lg-3" style="padding:7px 10px;text-align:right;">
+            <div class="col-lg-3 label-reg">
                 @Html.LabelFor(m => m.DOB, new { @class = "label-normal label-sm" })
             </div>
             <div class="col-lg-5 no-padding" style="margin-bottom:20px;">
