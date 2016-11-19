@@ -389,6 +389,14 @@ textarea {
     text-align: right;
 }
 
+@media (min-width:768px) {
+    .article iframe {
+        width: 100% !important;
+        height: 500px !important;
+        border: none !important;
+    }
+}
+
 @media (max-width:767px) {
     .empty-row {
         height: 5px;
@@ -453,4 +461,10 @@ textarea {
         padding: 7px 10px 0 10px;
         text-align: left;
     }
+}
+
+article.main-article img {
+    width: 90% !important;
+    display: block;
+    margin: 0 auto;
 }

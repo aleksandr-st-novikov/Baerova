@@ -21,8 +21,10 @@
         </div>
     </div>
 }
+<article class="main-article">
+    @Html.Raw(HttpUtility.HtmlDecode(Model.article.TextMain))
+</article>
 
-@Html.Raw(HttpUtility.HtmlDecode(Model.article.TextMain))
 <div class="col-lg-12" style="text-align:right;margin-top:10px;">
     @Html.ActionLink("Читать полностью", "article", "articles", new { Model.article.Link }, new { target = "_blank", @class = "btn-main-article" })
 </div>
