@@ -71,7 +71,8 @@ namespace Domain.Context
 
         public async Task<Article> FindByLinkAsync(string link)
         {
-            return await context.Articles.FirstOrDefaultAsync(a => (a.DatePublish == null || a.DatePublish <= DateTime.Now) && a.Link == link);
+            //return await context.Articles.FirstOrDefaultAsync(a => (a.DatePublish == null || a.DatePublish <= DateTime.Now) && a.Link == link);
+            return await context.Articles.FirstOrDefaultAsync(a => a.Link == link);
         }
 
         public async Task DeleteArticleAsync(Guid id)

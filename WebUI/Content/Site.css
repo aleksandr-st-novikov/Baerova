@@ -468,3 +468,7 @@ article.main-article img {
     display: block;
     margin: 0 auto;
 }
+
+.article img {
+    max-width: 100%;
+}

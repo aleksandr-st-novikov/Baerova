@@ -9848,6 +9848,10 @@ article.main-article img {
     margin: 0 auto;
 }
 
+.article img {
+    max-width: 100%;
+}
+
 .bootstrap-datetimepicker-widget {
   top: 0;
   left: 0;
