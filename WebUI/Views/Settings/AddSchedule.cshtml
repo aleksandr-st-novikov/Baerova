@@ -3,7 +3,7 @@
     Layout = "~/Views/Shared/_LayoutSettings.cshtml";
 }
 
-<div class="container-body">
+<div class="container-body col-lg-12 col-md-12 col-sm-12 col-xs-12">
     <h2 class="span-title">Добавить задание</h2>
 
     @using (Ajax.BeginForm("addschedule", new { controller = "settings" }, new AjaxOptions
@@ -65,3 +65,16 @@
         $('#messsage-error').removeClass('in').addClass('hide');
     }
 </script>
+
+
+@*@using (Ajax.BeginForm("SendMail", new { controller = "settings" }, new AjaxOptions
+{
+    HttpMethod = "post",
+    OnSuccess = "OnSuccessSchedule",
+    OnFailure = "OnFailure",
+    LoadingElementId = "progr"
+}, new { id = "FormSendMail" }))
+{
+    @Html.AntiForgeryToken()
+    <input type="submit" value="Добавить" class="btn btn-danger" />
+}*@

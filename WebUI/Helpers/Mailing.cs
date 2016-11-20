@@ -12,14 +12,14 @@ namespace WebUI.Helpers
 {
     public static class Mailing
     {
-        public static void Send(string[] _params)
+        public static async Task SendNews(string[] _params)
         {
             using (EFArticleContext articleContext = new EFArticleContext())
             using (EFMailArticleContext mailArticleContext = new EFMailArticleContext())
             using (EFSubscriberContext subscriberContext = new EFSubscriberContext())
             using (EFConstantContext constantContext = new EFConstantContext())
             {
-                List<Article> forMailing = articleContext.ArticlesForMailing();
+                List<Article> forMailing = await articleContext.ArticlesForMailingAsync();
                 string siteUrl = constantContext.GetConstant("Общие: URL сайта");
 
                 StringBuilder news = new StringBuilder();
@@ -36,6 +36,7 @@ namespace WebUI.Helpers
 
                 string file = "~/Content/Delivery/LetterNews.html";
                 string path = HostingEnvironment.MapPath(file);
+                //string path = "e:\\VS\\Baerova\\WebUI\\Content\\Delivery\\LetterNews.html";
 
                 if (System.IO.File.Exists(path))
                 {
@@ -45,24 +46,36 @@ namespace WebUI.Helpers
 
                 //отбираем получателей и отправляем письмо пачками по 20 получателей и что останется
                 string messageTo = String.Empty;
+                string messageCC = String.Empty;
                 int count = 1;
                 int countSubscribers = subscriberContext.Subscribers.Count();
                 foreach (var s in subscriberContext.Subscribers.Where(s => s.IsActive == true))
                 {
-                    messageTo += s.EMail + (count == countSubscribers && count % 20 == 0 ? "" : ",");
+                    if (count == 1 || count % 21 == 0)
+                    {
+                        messageTo = s.EMail;
+                    }
+                    else
+                    {
+                        messageCC += s.EMail + (count == countSubscribers && count % 20 == 0 ? "" : ",");
+                    }
                     if (count % 20 == 0)
                     {
-                        Services.SendMessage(_params, "Рассылка новостей от " + DateTime.Now.ToShortDateString(), message.ToString(), messageTo);
-                        messageTo = "";
+                        Services.SendMessage(_params, "Baeroff.com – Рассылка новостей от " + DateTime.Now.ToShortDateString(), message.ToString(), messageTo, messageCC);
+                        messageTo = messageCC = "";
                     }
                     count++;
                 }
-                Services.SendMessage(_params, "Рассылка новостей от " + DateTime.Now.ToShortDateString(), message.ToString(), messageTo);
+                if (count % 20 != 0)
+                {
+                    Services.SendMessage(_params, "Baeroff.com – Рассылка новостей от " + DateTime.Now.ToShortDateString(), message.ToString(), messageTo, messageCC);
+                    messageTo = messageCC = "";
+                }
 
                 //сохраняем в отправленных
                 foreach (Article a in forMailing)
                 {
-                    mailArticleContext.SaveMailArticle(new MailArticle { Id = Guid.NewGuid(), ArticleId = a.Id, DateMailing = DateTime.Now, CountRecipient = count });
+                    mailArticleContext.SaveMailArticle(new MailArticle { Id = Guid.NewGuid(), ArticleId = a.Id, DateMailing = DateTime.Now, CountRecipient = count - 1 });
                 }
 
                 //return message;

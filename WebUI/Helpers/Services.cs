@@ -8,7 +8,7 @@ namespace WebUI.Helpers
 {
     public class Services
     {
-        public static void SendMessage(string[] _param, string subject, string message, string messageTo)
+        public static void SendMessage(string[] _param, string subject, string message, string messageTo, string messageCC = "")
         {
             try
             {
@@ -30,6 +30,15 @@ namespace WebUI.Helpers
                     foreach (string lt in listTo)
                     {
                         Message.To.Add(new MailAddress(lt.Trim()));
+                    }
+
+                    if (messageCC != "")
+                    {
+                        string[] listCC = messageCC.Split(',');
+                        foreach (string lcc in listCC)
+                        {
+                            Message.CC.Add(new MailAddress(lcc.Trim()));
+                        }
                     }
 
                     Message.Subject = subject;

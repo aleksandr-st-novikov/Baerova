@@ -390,7 +390,7 @@ textarea {
 }
 
 @media (min-width:768px) {
-    .article iframe {
+    .article iframe:not([class="map"]) {
         width: 100% !important;
         height: 500px !important;
         border: none !important;

@@ -5,9 +5,9 @@
     Layout = "~/Views/Shared/_LayoutSettings.cshtml";
 }
 
-<div class="container-body">
+<div class="container-body col-lg-12 col-md-12 col-sm-12 col-xs-12">
     <span class="span-title">Пользователи</span>
-    <div class="col-lg-12">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         @using (Ajax.BeginForm("adduser", new { controller = "settings" }, new AjaxOptions
         {
             HttpMethod = "post",

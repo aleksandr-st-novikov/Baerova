@@ -5,40 +5,42 @@
     Layout = "~/Views/Shared/_LayoutSettings.cshtml";
 }
 
-<h1 class="span-title">Константы</h1>
-<div class="row" style="min-height:700px;">
-    @using (Ajax.BeginForm("constantadd", new { controller = "settings" }, new AjaxOptions
-    {
-        HttpMethod = "post",
-        OnSuccess = "OnSuccess('FormAddConstant')",
-        OnComplete = "onCompleteUpdate('Settings','ConstantList')",
-        InsertionMode = System.Web.Mvc.Ajax.InsertionMode.Replace,
-        LoadingElementId = "progr"
-    },
-    new { id = "FormAddConstant"}))
-    {
-        <div class="col-lg-12 no-padding" style="margin-top:20px;">
-            <div class="col-lg-4">
-                @Html.TextBoxFor(m => m.Name, new { @class = "form-control", maxlength = "250" })
-                @Html.ValidationMessageFor(m => m.Name)
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <h1 class="span-title">Константы</h1>
+    <div class="row" style="min-height:700px;">
+        @using (Ajax.BeginForm("constantadd", new { controller = "settings" }, new AjaxOptions
+        {
+            HttpMethod = "post",
+            OnSuccess = "OnSuccess('FormAddConstant')",
+            OnComplete = "onCompleteUpdate('Settings','ConstantList')",
+            InsertionMode = System.Web.Mvc.Ajax.InsertionMode.Replace,
+            LoadingElementId = "progr"
+        },
+        new { id = "FormAddConstant" }))
+        {
+            <div class="col-lg-12 no-padding" style="margin-top:20px;">
+                <div class="col-lg-4">
+                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control", maxlength = "250" })
+                    @Html.ValidationMessageFor(m => m.Name)
+                </div>
+                <div class="col-lg-5">
+                    @Html.TextBoxFor(m => m.Value, new { @class = "form-control", maxlength = "250" })
+                    @Html.ValidationMessageFor(m => m.Value)
+                </div>
+                <div class="col-lg-2">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn btn-danger">
+                        Добавить
+                    </button>
+                </div>
+                <div class="col-lg-1">
+                    <i class="fa fa-spinner fa-pulse" id="progr" style="display:none;padding:10px;"></i>
+                </div>
             </div>
-            <div class="col-lg-5">
-                @Html.TextBoxFor(m => m.Value, new { @class = "form-control", maxlength = "250" })
-                @Html.ValidationMessageFor(m => m.Value)
-            </div>
-            <div class="col-lg-2">
-                @Html.AntiForgeryToken()
-                <button type="submit" class="btn btn-danger">
-                    Добавить
-                </button>
-            </div>
-            <div class="col-lg-1">
-                <i class="fa fa-spinner fa-pulse" id="progr" style="display:none;padding:10px;"></i>
-            </div>
+        }
+        <div class="col-lg-12">
+            <hr />
         </div>
-    }
-    <div class="col-lg-12">
-        <hr />
+        @Html.Action("ConstantList", "settings")
     </div>
-    @Html.Action("ConstantList", "settings")
 </div>

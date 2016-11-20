@@ -472,7 +472,7 @@ namespace WebUI.Controllers
                     }
                 }
 
-                RecurringJob.AddOrUpdate("Рассылка новостей", () => Mailing.Send(_params), time[1] + " " + time[0] + " * * *", TimeZoneInfo.FindSystemTimeZoneById("Belarus Standard Time"));
+                RecurringJob.AddOrUpdate("Рассылка новостей", () => Mailing.SendNews(_params), time[1] + " " + time[0] + " * * *", TimeZoneInfo.FindSystemTimeZoneById("Belarus Standard Time"));
 
                 //RecurringJob.AddOrUpdate("Рассылка новостей",
                 //    () => Services.SendMessage(_params, "test", "text", "novikov.it@bobruysk.korona.by"), time[1] + " " + time[0] + " * * *",
@@ -481,47 +481,21 @@ namespace WebUI.Controllers
             }
         }
 
-        public async Task MailingArticle()
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async void SendMail()
         {
-            using (EFArticleContext articleContext = new EFArticleContext())
-            using (EFSubscriberContext subscriberContext = new EFSubscriberContext())
+            string[] _params = ConstantContext.GetConstant("Рассылки: настройки почтового ящика").Split(';');
+            foreach (string p in _params)
             {
-                List<Article> forMailing = await articleContext.ArticlesForMailingAsync();
-                List<Subscriber> subscribers = await subscriberContext.Subscribers.Where(s => s.IsActive == true).ToListAsync();
-
-                int count = 1;
-                //foreach (Subscriber s in subscribers)
-                //{
-                //    if (count == 1 || count % 21 == 0)
-                //    {
-                //        MailMessage mes = new MailMessage();
-                //        mes.To.Add("aleksandr.st.novikov@gmail.com");
-
-
-                //    }
-                //    else
-                //    {
-                //        mes.CC.Add(s.EMail);
-                //    }
-
-                //    mes.Subject = "Baeroff.com – Новостная рассылка от " + DateTime.Now.ToShortDateString();
-
-                //    if (count % 20 == 0)
-                //    {
-                //    }
-                //    count++;
-                //}
+                if (String.IsNullOrEmpty(p))
+                {
+                    return;
+                }
             }
+
+            await Mailing.SendNews(_params);
         }
-
-        //[HttpPost]
-        //public void send()
-        //{
-        //    //string[] _params = "noreply@e-tiande.by;Novikov;Djkmdjc60;smtp.yandex.ru;25;1".Split(';');
-        //    string[] _params = "a_nov@tut.by;Novikov;novik12345;smtp.yandex.ru;25;1".Split(';');
-        //    Mailing.Send(_params);
-        //    //Services.SendMessage("test", "text", "novikov.it@bobruysk.korona.by");
-        //}
-
     }
 }

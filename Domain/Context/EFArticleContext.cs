@@ -132,7 +132,7 @@ namespace Domain.Context
         {
             List<Article> forMailing = await (from a in context.Articles
                                               where a.IsVisible == true &&
-                                              !String.IsNullOrEmpty(a.TextMain) &&
+                                              !(String.IsNullOrEmpty(a.TextMain)) &&
                                               a.DatePublish <= DateTime.Now &&
                                               !(from ma in context.MailArticles select ma.ArticleId).Contains(a.Id)
                                               orderby a.DatePublish
