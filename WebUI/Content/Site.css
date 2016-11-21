@@ -467,8 +467,10 @@ article.main-article img {
     width: 90% !important;
     display: block;
     margin: 0 auto;
+    padding: 7px;
 }
 
 .article img {
     max-width: 100%;
+    padding: 7px;
 }

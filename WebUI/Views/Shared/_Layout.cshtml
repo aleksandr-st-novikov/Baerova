@@ -8,9 +8,8 @@
 
     @if (!@Request.Url.AbsoluteUri.Contains("editarticle"))
     {
-        <script src="~/lib/js/jquery.min.js"></script>
+        	<script src="@Url.Content("~/lib/js/jquery.min.js")"></script>
     }
-
     <meta property="og:site_name" content="Baeroff.com" />
     <meta property="og:locale" content="ru_RU" />
 
@@ -31,6 +30,7 @@
         string referral = "referral=@@779a6396bf1ef19fa17403fe5e9b872b";
     }
 
+	@*<script src="@Url.Content("~/Scripts/kendo/2016.3.1028/jszip.min.js")"></script>*@
 </head>
 <body>
     <div class="container">
