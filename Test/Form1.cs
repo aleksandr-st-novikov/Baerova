@@ -20,7 +20,7 @@ namespace Test
 
         private async void button1_Click(object sender, EventArgs e)
         {
-            string[] _params = new string[] { "noreply@baeroff.com", "Baeroff.com", "Az_1234", "mail.baeroff.com", "587", "0"};
+            string[] _params = new string[] { "subscribe@baeroff.com", "Baeroff.com", "Az_1234", "smtp.yandex.ru", "25", "1"};
             await WebUI.Helpers.Mailing.SendNews(_params);
         }
     }

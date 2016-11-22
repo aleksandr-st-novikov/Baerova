@@ -20,6 +20,8 @@ namespace WebUI.Helpers
             using (EFConstantContext constantContext = new EFConstantContext())
             {
                 List<Article> forMailing = await articleContext.ArticlesForMailingAsync();
+                if (forMailing.Count() == 0) return;
+
                 string siteUrl = constantContext.GetConstant("Общие: URL сайта");
 
                 StringBuilder news = new StringBuilder();
@@ -34,9 +36,9 @@ namespace WebUI.Helpers
 
                 //string path = "e:\\vs\\baerova\\WebUI\\Content\\Delivery\\LetterNews.html";
 
-                string file = "~/Content/Delivery/LetterNews.html";
-                string path = HostingEnvironment.MapPath(file);
-                //string path = "e:\\VS\\Baerova\\WebUI\\Content\\Delivery\\LetterNews.html";
+                //string file = "~/Content/Delivery/LetterNews.html";
+                //string path = HostingEnvironment.MapPath(file);
+                string path = "e:\\VS\\Baerova\\WebUI\\Content\\Delivery\\LetterNews.html";
 
                 if (System.IO.File.Exists(path))
                 {
@@ -45,6 +47,8 @@ namespace WebUI.Helpers
                 }
 
                 //отбираем получателей и отправляем письмо пачками по 20 получателей и что останется
+                if (subscriberContext.Subscribers.Count() == 0) return;
+
                 string messageTo = String.Empty;
                 string messageCC = String.Empty;
                 int count = 1;
@@ -77,8 +81,6 @@ namespace WebUI.Helpers
                 {
                     mailArticleContext.SaveMailArticle(new MailArticle { Id = Guid.NewGuid(), ArticleId = a.Id, DateMailing = DateTime.Now, CountRecipient = count - 1 });
                 }
-
-                //return message;
             }
         }
 
