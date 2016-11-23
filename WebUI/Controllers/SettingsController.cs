@@ -482,20 +482,20 @@ namespace WebUI.Controllers
         }
 
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async void SendMail()
-        {
-            string[] _params = ConstantContext.GetConstant("Рассылки: настройки почтового ящика").Split(';');
-            foreach (string p in _params)
-            {
-                if (String.IsNullOrEmpty(p))
-                {
-                    return;
-                }
-            }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async void SendMail()
+        //{
+        //    string[] _params = ConstantContext.GetConstant("Рассылки: настройки почтового ящика").Split(';');
+        //    foreach (string p in _params)
+        //    {
+        //        if (String.IsNullOrEmpty(p))
+        //        {
+        //            return;
+        //        }
+        //    }
 
-            await Mailing.SendNews(_params);
-        }
+        //    await Mailing.SendNews(_params);
+        //}
     }
 }

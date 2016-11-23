@@ -12,7 +12,8 @@ namespace WebUI.Helpers
         {
             try
             {
-                Task.Delay(3000);
+                System.Threading.Thread.Sleep(3000);
+                //Task.Delay(3000);
 
                 //SmtpClient Smtp = new SmtpClient("smtp.yandex.ru", 25);
                 //SmtpClient Smtp = new SmtpClient("smtp.gmail.com", 587);

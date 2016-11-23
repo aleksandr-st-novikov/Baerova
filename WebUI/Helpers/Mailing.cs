@@ -28,17 +28,18 @@ namespace WebUI.Helpers
                 string message = String.Empty;
                 foreach (Article a in forMailing)
                 {
-                    news.Append("<a class=\"title-main-article\" href=" + siteUrl + "/articles/article/" + a.Link + ">" + a.Title + "</a>");
+                    news.Append("<a style=\"color: #FF5200 !important; border-bottom: 2px solid #FF5200; display: block; padding: 10px; font-size: 18px; background-color: #f7f7f7; text-decoration: none; margin-top: 15px;\" href=" + siteUrl + "/articles/article/" + a.Link + ">" + a.Title + "</a>");
                     news.Append(System.Net.WebUtility.HtmlDecode(a.TextMain));
-                    news.Append("<span style=\"display:block;text-align:right;\"><a class=\"btn-main-article\" href=" + siteUrl + "/articles/article/" + a.Link + ">Читать полностью</a></span>");
+                    news.Append("<span style=\"display:block;text-align:right;\"><a style=\"display: inline-block; padding: 5px 10px; background-color: #f3f3f3; text-decoration: none !important; font-size: 12px;\" href=" + siteUrl + "/articles/article/" + a.Link + ">Читать полностью</a></span>");
                 };
                 news.Append("<hr/>");
 
                 //string path = "e:\\vs\\baerova\\WebUI\\Content\\Delivery\\LetterNews.html";
 
                 //string file = "~/Content/Delivery/LetterNews.html";
-                //string path = HostingEnvironment.MapPath(file);
-                string path = "e:\\VS\\Baerova\\WebUI\\Content\\Delivery\\LetterNews.html";
+                string file = constantContext.GetConstant("Рассылки: шаблон для новостей");
+                string path = HostingEnvironment.MapPath(file);
+                //string path = "e:\\VS\\Baerova\\WebUI\\Content\\Delivery\\LetterNews.html";
 
                 if (System.IO.File.Exists(path))
                 {
@@ -49,32 +50,41 @@ namespace WebUI.Helpers
                 //отбираем получателей и отправляем письмо пачками по 20 получателей и что останется
                 if (subscriberContext.Subscribers.Count() == 0) return;
 
-                string messageTo = String.Empty;
-                string messageCC = String.Empty;
+                //string messageTo = String.Empty;
+                //string messageCC = String.Empty;
                 int count = 1;
                 int countSubscribers = subscriberContext.Subscribers.Count();
                 foreach (var s in subscriberContext.Subscribers.Where(s => s.IsActive == true))
                 {
-                    if (count == 1 || count % 21 == 0)
-                    {
-                        messageTo = s.EMail;
-                    }
-                    else
-                    {
-                        messageCC += s.EMail + (count == countSubscribers && count % 20 == 0 ? "" : ",");
-                    }
-                    if (count % 20 == 0)
-                    {
-                        Services.SendMessage(_params, "Baeroff.com – Рассылка новостей от " + DateTime.Now.ToShortDateString(), message.ToString(), messageTo, messageCC);
-                        messageTo = messageCC = "";
-                    }
+                    //отправляем письмо каждому по-отдельности
+
+                    string unsubscr = siteUrl + "/home/unsubscribe/" + s.Id.ToString();
+                    //Команда tianDe™ Баеровых Татьяны и Олега
+                    Services.SendMessage(_params, "Команда tianDe™ Баеровых Татьяны и Олега – Рассылка новостей от " + DateTime.Now.ToShortDateString(),
+                            message.ToString().Replace("/Content", siteUrl + "/Content").Replace("{1}",unsubscr), s.EMail);
+
+                    //if (count == 1 || count % 21 == 0)
+                    //{
+                    //    messageTo = s.EMail;
+                    //}
+                    //else
+                    //{
+                    //    messageCC += s.EMail + (count == countSubscribers || count % 20 == 0 ? "" : ",");
+                    //}
+                    //if (count % 20 == 0)
+                    //{
+                    //    Services.SendMessage(_params, "Baeroff.com – Рассылка новостей от " + DateTime.Now.ToShortDateString(), 
+                    //        message.ToString().Replace("/Content", siteUrl + "/Content"), messageTo, messageCC);
+                    //    messageTo = messageCC = "";
+                    //}
                     count++;
                 }
-                if (count % 20 != 0)
-                {
-                    Services.SendMessage(_params, "Baeroff.com – Рассылка новостей от " + DateTime.Now.ToShortDateString(), message.ToString(), messageTo, messageCC);
-                    messageTo = messageCC = "";
-                }
+                //if (count % 20 != 0)
+                //{
+                //    Services.SendMessage(_params, "Baeroff.com – Рассылка новостей от " + DateTime.Now.ToShortDateString(), 
+                //        message.ToString().Replace("/Content", siteUrl + "/Content"), messageTo, messageCC);
+                //    messageTo = messageCC = "";
+                //}
 
                 //сохраняем в отправленных
                 foreach (Article a in forMailing)
