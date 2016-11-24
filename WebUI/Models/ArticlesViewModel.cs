@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Xml.Serialization;
 
 namespace WebUI.Models
 {
@@ -18,5 +19,21 @@ namespace WebUI.Models
         public string Directory { get; set; }
         public int NumSlides { get; set; }
         public string Extension { get; set; }
+    }
+
+    [Serializable]
+    [XmlRoot("urlset", Namespace = "http://www.sitemaps.org/schemas/sitemap/0.9")]
+    public class urlset
+    {
+        [XmlElement("url")]
+        public List<url> urls;
+    }
+
+    public class url
+    {
+        public string lastmod { get; set; }
+        public string changefreq { get; set; }
+        public Double priority { get; set; }
+        public string loc { get; set; }
     }
 }

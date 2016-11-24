@@ -6,6 +6,10 @@ using System.Web.Mvc;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using WebUI.Models;
+using System.IO;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Xml.Serialization;
 
 namespace WebUI.Controllers
 {
@@ -74,6 +78,9 @@ namespace WebUI.Controllers
                 {
                     article.Link = Regex.Replace(Regex.Replace(Helpers.Texts.Translit(article.Title).ToLower(), @"[^\d\w]", "-").Trim('-'), @"-+", "-");
                     id = await articleContext.SaveArticleAsync(article);
+
+                    //обновляем sitemap
+                    await CreateFileSitemapAsync();
                 }
                 return RedirectToAction("EditArticle/" + id.ToString());
             }
@@ -90,10 +97,68 @@ namespace WebUI.Controllers
                 using (EFArticleContext articleContext = new EFArticleContext())
                 {
                     await articleContext.DeleteArticleAsync(ArticleId);
+
+                    //обновляем sitemap
+                    await CreateFileSitemapAsync();
                 }
             }
             return PartialView("_ListArticle", GetListArticlesModel(page).Articles);
         }
+
+        public async Task CreateFileSitemapAsync()
+        {
+            TextWriter writer = new StreamWriter(Server.MapPath("~/sitemap.xml"));
+            try
+            {
+                List<url> listUrl = new List<url>();
+                //заполняем статическимим ссылками
+
+                listUrl.Add(new url
+                {
+                    changefreq = "daily",
+                    loc = "http://baeroff.com",
+                    priority = 1.0
+                });
+
+                listUrl.Add(new url
+                {
+                    changefreq = "monthly",
+                    lastmod = Helpers.Services.ConvertDateToW3CTime(new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1)),
+                    loc = "http://baeroff.com/home/register",
+                    priority = 1.0
+                });
+
+                //заполняем статьями
+                using (EFArticleContext articleContext = new EFArticleContext())
+                {
+                    List<url> listArticle = await (from article in articleContext.Articles.AsQueryable()
+                                                   where article.IsVisible == true
+                                                   select new url
+                                                   {
+                                                       changefreq = "monthly",
+                                                       lastmod = article.DatePublish.ToString(),
+                                                       loc = "http://baeroff.com/articles/article/" + article.Link,
+                                                       priority = 0.8
+                                                   }).ToListAsync();
+                    foreach (var la in listArticle)
+                    {
+                        la.lastmod = Helpers.Services.ConvertDateToW3CTime(DateTime.Parse(la.lastmod));
+                    }
+                    listUrl.AddRange(listArticle);
+                }
+
+                urlset data = new urlset();
+                data.urls = listUrl;
+
+                XmlSerializer serializer = new XmlSerializer(typeof(urlset));
+                serializer.Serialize(writer, data);
+            }
+            finally
+            {
+                writer.Close();
+            }
+        }
+
 
         [AllowAnonymous]
         //[OutputCache(Duration = 600, VaryByParam = "none", Location = OutputCacheLocation.Downstream)]
@@ -150,7 +215,7 @@ namespace WebUI.Controllers
 
                 ArticlesView model = new ArticlesView
                 {
-                    Articles = articleContext.Articles.Count() == 0 ? articleContext.Articles.ToList() : 
+                    Articles = articleContext.Articles.Count() == 0 ? articleContext.Articles.ToList() :
                         articleContext.Articles.OrderByDescending(a => a.DatePublish).Skip((page - 1) * PageSize).Take(PageSize).ToList(),
                     PagingInfo = new PagingInfo
                     {

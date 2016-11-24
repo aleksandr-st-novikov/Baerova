@@ -52,5 +52,24 @@ namespace WebUI.Helpers
             catch(Exception ex)
             { }
         }
+
+
+        /// <summary>
+        /// Converts a datetime value to w3c format
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        public static string ConvertDateToW3CTime(DateTime date)
+        {
+            //Get the utc offset from the date value
+            var utcOffset = TimeZone.CurrentTimeZone.GetUtcOffset(date);
+            string w3CTime = date.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss");
+            //append the offset e.g. z=0, add 1 hour is +01:00
+            w3CTime += utcOffset == TimeSpan.Zero ? "Z" :
+                String.Format("{0}{1:00}:{2:00}", (utcOffset > TimeSpan.Zero ? "+" : "-")
+                , utcOffset.Hours, utcOffset.Minutes);
+
+            return w3CTime;
+        }
     }
 }
