@@ -3,8 +3,24 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title</title>
     <link rel="stylesheet" type="text/css" href="~/lib/css/site.min.css">
+
+    @if (String.IsNullOrEmpty(@ViewBag.Description))
+    {
+        <meta name="description" content="Baeroff.com - командный сайт Рубиновых директоров корпорации TianDe Татьяны и Олега Баеровых." />
+    }
+    else
+    {
+        <meta name="description" content="@{@ViewBag.Description;}" />
+    }
+    @if (String.IsNullOrEmpty(@ViewBag.Title))
+    {
+        <title>Baeroff.com - командный сайт Рубиновых директоров корпорации TianDe Татьяны и Олега Баеровых</title>
+    }
+    else
+    {
+        <title>@ViewBag.Title :: Baeroff.com - командный сайт Рубиновых директоров корпорации TianDe Татьяны и Олега Баеровых</title>
+    }
 
     @if (!@Request.Url.AbsoluteUri.Contains("editarticle"))
     {
@@ -30,7 +46,6 @@
         string referral = "referral=@@779a6396bf1ef19fa17403fe5e9b872b";
     }
 
-	@*<script src="@Url.Content("~/Scripts/kendo/2016.3.1028/jszip.min.js")"></script>*@
 </head>
 <body>
     <div class="container">
