@@ -30,53 +30,53 @@ namespace WebUI.Migrations
             //
 
             context.MenuSets.AddOrUpdate(
-                new Domain.Entities.MenuSet { Id = context.MenuSets.FirstOrDefault(m => m.Name == "О компании") == null ? 
-                    Guid.NewGuid() : context.MenuSets.FirstOrDefault(m => m.Name == "О компании").Id,
-                    Group = Domain.Entities.Groups.Главная, IsActive = true, Order = 1, Name = "О компании",
-                    Link = context.MenuSets.FirstOrDefault(m => m.Name == "О компании") == null ?
-                    "/" : context.MenuSets.FirstOrDefault(m => m.Name == "О компании").Link
+                new Domain.Entities.MenuSet { Id = context.MenuSets.FirstOrDefault(m => m.Name == "О компании TianDe") == null ? 
+                    Guid.NewGuid() : context.MenuSets.FirstOrDefault(m => m.Name == "О компании TianDe").Id,
+                    Group = Domain.Entities.Groups.Главная, IsActive = true, Order = 1, Name = "О компании TianDe",
+                    Link = context.MenuSets.FirstOrDefault(m => m.Name == "О компании TianDe") == null ?
+                    "/" : context.MenuSets.FirstOrDefault(m => m.Name == "О компании TianDe").Link
                 },
                 new Domain.Entities.MenuSet { Id = context.MenuSets.FirstOrDefault(m => m.Name == "Выгодный старт") == null ? 
                     Guid.NewGuid() : context.MenuSets.FirstOrDefault(m => m.Name == "Выгодный старт").Id,
                     Group = Domain.Entities.Groups.Дистрибьюторам_TianDe, IsActive = true, Order = 1, Name = "Выгодный старт",
-                    Link = context.MenuSets.FirstOrDefault(m => m.Name == "О компании") == null ?
-                    "/" : context.MenuSets.FirstOrDefault(m => m.Name == "О компании").Link
+                    Link = context.MenuSets.FirstOrDefault(m => m.Name == "О компании TianDe") == null ?
+                    "/" : context.MenuSets.FirstOrDefault(m => m.Name == "О компании TianDe").Link
                 },
                 new Domain.Entities.MenuSet { Id = context.MenuSets.FirstOrDefault(m => m.Name == "Стабильные продажи") == null ? 
                     Guid.NewGuid() : context.MenuSets.FirstOrDefault(m => m.Name == "Стабильные продажи").Id,
                     Group = Domain.Entities.Groups.Дистрибьюторам_TianDe, IsActive = true, Order = 2, Name = "Стабильные продажи",
-                    Link = context.MenuSets.FirstOrDefault(m => m.Name == "О компании") == null ?
-                    "/" : context.MenuSets.FirstOrDefault(m => m.Name == "О компании").Link
+                    Link = context.MenuSets.FirstOrDefault(m => m.Name == "О компании TianDe") == null ?
+                    "/" : context.MenuSets.FirstOrDefault(m => m.Name == "О компании TianDe").Link
                 },
                 new Domain.Entities.MenuSet { Id = context.MenuSets.FirstOrDefault(m => m.Name == "Маркетинг-план компании") == null ? 
                     Guid.NewGuid() : context.MenuSets.FirstOrDefault(m => m.Name == "Маркетинг-план компании").Id,
                     Group = Domain.Entities.Groups.Бизнес_с_TianDe, IsActive = true, Order = 1, Name = "Маркетинг-план компании",
-                    Link = context.MenuSets.FirstOrDefault(m => m.Name == "О компании") == null ?
-                    "/" : context.MenuSets.FirstOrDefault(m => m.Name == "О компании").Link
+                    Link = context.MenuSets.FirstOrDefault(m => m.Name == "О компании TianDe") == null ?
+                    "/" : context.MenuSets.FirstOrDefault(m => m.Name == "О компании TianDe").Link
                 },
                 new Domain.Entities.MenuSet { Id = context.MenuSets.FirstOrDefault(m => m.Name == "Звездный маркетинг") == null ? 
                     Guid.NewGuid() : context.MenuSets.FirstOrDefault(m => m.Name == "Звездный маркетинг").Id,
                     Group = Domain.Entities.Groups.Бизнес_с_TianDe, IsActive = true, Order = 2, Name = "Звездный маркетинг",
-                    Link = context.MenuSets.FirstOrDefault(m => m.Name == "О компании") == null ?
-                    "/" : context.MenuSets.FirstOrDefault(m => m.Name == "О компании").Link
+                    Link = context.MenuSets.FirstOrDefault(m => m.Name == "О компании TianDe") == null ?
+                    "/" : context.MenuSets.FirstOrDefault(m => m.Name == "О компании TianDe").Link
                 },
                 new Domain.Entities.MenuSet { Id = context.MenuSets.FirstOrDefault(m => m.Name == "Премиум-курс") == null ? 
                     Guid.NewGuid() : context.MenuSets.FirstOrDefault(m => m.Name == "Премиум-курс").Id,
                     Group = Domain.Entities.Groups.Бизнес_с_TianDe, IsActive = true, Order = 3, Name = "Премиум-курс",
-                    Link = context.MenuSets.FirstOrDefault(m => m.Name == "О компании") == null ?
-                    "/" : context.MenuSets.FirstOrDefault(m => m.Name == "О компании").Link
+                    Link = context.MenuSets.FirstOrDefault(m => m.Name == "О компании TianDe") == null ?
+                    "/" : context.MenuSets.FirstOrDefault(m => m.Name == "О компании TianDe").Link
                 },
                 new Domain.Entities.MenuSet { Id = context.MenuSets.FirstOrDefault(m => m.Name == "Магистр TianDe") == null ? 
                     Guid.NewGuid() : context.MenuSets.FirstOrDefault(m => m.Name == "Магистр TianDe").Id,
                     Group = Domain.Entities.Groups.Бизнес_с_TianDe, IsActive = true, Order = 4, Name = "Магистр TianDe",
-                    Link = context.MenuSets.FirstOrDefault(m => m.Name == "О компании") == null ?
-                    "/" : context.MenuSets.FirstOrDefault(m => m.Name == "О компании").Link
+                    Link = context.MenuSets.FirstOrDefault(m => m.Name == "О компании TianDe") == null ?
+                    "/" : context.MenuSets.FirstOrDefault(m => m.Name == "О компании TianDe").Link
                 },
                 new Domain.Entities.MenuSet { Id = context.MenuSets.FirstOrDefault(m => m.Name == "Архитектор. Создай свой доход") == null ? 
                     Guid.NewGuid() : context.MenuSets.FirstOrDefault(m => m.Name == "Архитектор. Создай свой доход").Id,
                     Group = Domain.Entities.Groups.Бизнес_с_TianDe, IsActive = true, Order = 5, Name = "Архитектор. Создай свой доход",
-                    Link = context.MenuSets.FirstOrDefault(m => m.Name == "О компании") == null ?
-                    "/" : context.MenuSets.FirstOrDefault(m => m.Name == "О компании").Link
+                    Link = context.MenuSets.FirstOrDefault(m => m.Name == "О компании TianDe") == null ?
+                    "/" : context.MenuSets.FirstOrDefault(m => m.Name == "О компании TianDe").Link
                 },
                 new Domain.Entities.MenuSet { Id = context.MenuSets.FirstOrDefault(m => m.Name == "О нас") == null ? 
                     Guid.NewGuid() : context.MenuSets.FirstOrDefault(m => m.Name == "О нас").Id,

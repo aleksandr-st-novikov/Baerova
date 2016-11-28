@@ -62,10 +62,10 @@
                 <a href="/">На главную</a>
             </li>
 
-            <li class="@{@regActive}"><a href="/home/register">Регистрация в компанию</a></li>
+            <li class="@{@regActive}"><a href="/home/register">Регистрация в компанию TianDe</a></li>
             @{
                 string active = String.Empty;
-                var ok = Model.Where(m => m.Name == "О компании").FirstOrDefault();
+                var ok = Model.Where(m => m.Name == "О компании TianDe").FirstOrDefault();
                 if (ok != null)
                 {
                     if (Link == ok.Link)
@@ -75,7 +75,7 @@
                 }
             }
             <li class="@{@active}">
-                <a href="@{@Model.Where(m => m.Name == "О компании").FirstOrDefault().Link}">О компании</a>
+                <a href="@{@Model.Where(m => m.Name == "О компании TianDe").FirstOrDefault().Link}">О компании TianDe</a>
             </li>
 
             @foreach (var g in Model.Where(d => d.Group != Domain.Entities.Groups.Главная).OrderBy(d => d.Group).GroupBy(d => d.Group))
