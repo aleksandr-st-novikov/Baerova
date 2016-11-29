@@ -72,16 +72,45 @@
             <div class="col-lg-3 label-reg">
                 @Html.LabelFor(m => m.DOB, new { @class = "label-normal label-sm" })
             </div>
-            <div class="col-lg-5 no-padding" style="margin-bottom:20px;">
-                <div class="input-group date">
-                    @Html.TextBoxFor(m => m.DOB, new { @class = "form-control" })
-                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+            <div class="col-lg-9 no-padding">
+                <div class="col-lg-7 no-padding">
+                    <div class="input-group date">
+                        @Html.TextBoxFor(m => m.DOB, new { @class = "form-control" })
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                    <span class="error-text">
+                        @Html.ValidationMessageFor(m => m.DOB)
+                    </span>
                 </div>
-                <span class="error-text">
-                    @Html.ValidationMessageFor(m => m.DOB)
-                </span>
             </div>
-            <div class="col-lg-12">
+            <div class="col-lg-3"></div>
+            <div class="col-lg-9 no-padding">
+                <div class="funkyradio">
+                    <div class="funkyradio-default">
+                        @Html.CheckBoxFor(m => m.IsDiscount)
+                        @Html.LabelFor(m => m.IsDiscount, new { @class = "label-normal label-sm" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3"></div>
+            <div class="col-lg-9 no-padding">
+                <div class="funkyradio">
+                    <div class="funkyradio-warning">
+                        @Html.CheckBoxFor(m => m.IsDistributor)
+                        @Html.LabelFor(m => m.IsDistributor, new { @class = "label-normal label-sm" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3"></div>
+            <div class="col-lg-9 no-padding">
+                <div class="funkyradio">
+                    <div class="funkyradio-danger">
+                        @Html.CheckBoxFor(m => m.IsShopkeeper)
+                        @Html.LabelFor(m => m.IsShopkeeper, new { @class = "label-normal label-sm" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12" style="margin-top:20px;">
                 <button class="btn btn-success pull-right" type="submit">
                     Отправить
                 </button>

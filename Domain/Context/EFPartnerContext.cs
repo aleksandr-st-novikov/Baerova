@@ -56,6 +56,9 @@ namespace Domain.Context
                 forChange.Patronymic = partner.Patronymic;
                 forChange.Phone = partner.Phone;
                 forChange.Surname = partner.Surname;
+                forChange.IsDiscount = partner.IsDiscount;
+                forChange.IsDistributor = partner.IsDistributor;
+                forChange.IsShopkeeper = partner.IsShopkeeper;
             }
             await context.SaveChangesAsync();
         }

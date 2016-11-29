@@ -88,7 +88,20 @@ namespace WebUI.Controllers
                     mes.Append("<p><strong>Заявка на регистриацию:</strong></p>");
                     mes.Append("ФИО: " + partner.Surname + " " + partner.Name + " " + partner.Patronymic + "<br/>");
                     mes.Append("Телефон: " + partner.Phone + "<br/>");
-                    mes.Append("E-mail: " + partner.EMail + "<br/>");
+                    mes.Append("E-mail: " + partner.EMail + "<br/><br/>");
+                    mes.Append("Цель регистрации:<br/>");
+                    if (partner.IsDiscount)
+                    {
+                        mes.Append("- Получать скидку.<br/>");
+                    }
+                    if (partner.IsDistributor)
+                    {
+                        mes.Append("- Стать дистрибьютором.<br/>");
+                    }
+                    if (partner.IsShopkeeper)
+                    {
+                        mes.Append("- Открыть свой магазин.<br/>");
+                    }
                     string[] _params = ConstantContext.GetConstant("Общие: служебный почтовый ящик").Split(';');
                     Helpers.Services.SendMessage(_params, partner.Surname + " " + partner.Name + " " + partner.Patronymic + ". Заявка на регистрацию.", mes.ToString(), ConstantContext.GetConstant("Общие: получатель"));
                 }

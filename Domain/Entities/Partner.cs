@@ -27,7 +27,7 @@ namespace Domain.Entities
 
         [Required(ErrorMessage = "Вы не заполнили поле {0}.")]
         [Display(Name = "Дата рождения")]
-        //[DataType(DataType.DateTime, ErrorMessage = "Введенное значение должно быть датой.")]
+        [DataType(DataType.Date, ErrorMessage = "Введенное значение должно быть датой.")]
         public DateTime? DOB { get; set; }
 
         [Display(Name = "Email")]
@@ -40,5 +40,14 @@ namespace Domain.Entities
         public string Phone { get; set; }
 
         public DateTime DateCreate { get; set; }
+
+        [Display(Name = "Хочу получать скидку")]
+        public bool IsDiscount { get; set; }
+
+        [Display(Name = "Хочу стать дистрибьютором")]
+        public bool IsDistributor { get; set; }
+
+        [Display(Name = "Хочу открыть свой магазин")]
+        public bool IsShopkeeper { get; set; }
     }
 }
