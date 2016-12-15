@@ -26,15 +26,36 @@
                     @Html.LabelFor(m => m.IsVisible, new { @class = "label-normal" })
                 </div>
             </div>
-            <div class="col-lg-6">
-                <div class="col-lg-5" style="padding:7px 10px;text-align:right;">
+            <div class="col-lg-9">
+                <div class="col-lg-4" style="padding:7px 10px;text-align:right;">
                     @Html.LabelFor(m => m.DatePublish, new { @class = "label-normal label-sm" })
                 </div>
-                <div class="col-lg-7 no-padding" style="margin-bottom:7px;">
+                <div class="col-lg-5 no-padding" style="margin-bottom:7px;">
                     @Html.TextBox("DatePublish", Model != null ? Model.DatePublish != null ? ((DateTime)Model.DatePublish).ToString("yyyy-MM-ddTHH:mm") : null : null, new { @class = "form-control", type = "datetime-local" })
                     <span class="error-text">
                         @Html.ValidationMessageFor(m => m.DatePublish)
                     </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12 no-padding">
+            <div class="col-lg-3">
+                <div class="checkbox">
+                    @Html.CheckBoxFor(m => m.IsFixed)
+                    @Html.LabelFor(m => m.IsFixed, new { @class = "label-normal" })
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <div class="col-lg-4" style="padding:7px 10px;text-align:right;">
+                    @Html.LabelFor(m => m.Category, new { @class = "label-normal" })
+                </div>
+                <div class="col-lg-5 no-padding">
+                    @Html.DropDownListFor(m => m.Category,
+                  new List<SelectListItem> {
+                       new SelectListItem { Value = "main" , Text = "На главной" },
+                       new SelectListItem { Value = "aboutUs" , Text = "О нас" },
+                       new SelectListItem { Value = "aboutCompany" , Text = "О компании" }
+                    }, new { @class = "form-control" })
                 </div>
             </div>
         </div>

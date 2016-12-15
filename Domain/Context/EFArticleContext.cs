@@ -64,6 +64,8 @@ namespace Domain.Context
                 forChange.Title = article.Title;
                 forChange.Link = article.Link;
                 forChange.DateCreate = DateTime.Now;
+                forChange.Category = article.Category;
+                forChange.IsFixed = article.IsFixed;
             }
             await context.SaveChangesAsync();
             return article.Id;
@@ -97,16 +99,31 @@ namespace Domain.Context
                     .ToListAsync();
         }
 
-        public List<Article> GetMainArticles(int pageArticle)
+        public List<Article> GetArticles(int pageArticle, string category)
         {
             Constant constant = context.Constants.Where(c => c.Name == "Главная: количество публикаций").FirstOrDefault();
             int PageSize = constant == null ? 3 : Int32.Parse(constant.Value.ToString());
             return context.Articles
-                    .Where(a => a.IsVisible == true && !String.IsNullOrEmpty(a.TextMain) && a.DatePublish <= DateTime.Now)
+                    .Where(a => a.IsVisible == true && !String.IsNullOrEmpty(a.TextMain) && a.DatePublish <= DateTime.Now && a.Category == category)
                     .OrderByDescending(a => a.DatePublish)
                     .Skip((pageArticle - 1) * PageSize)
                     .Take(PageSize)
                     .ToList();
+        }
+
+
+        public Article GetFixedArticle(string category)
+        {
+            if (!String.IsNullOrEmpty(category))
+            {
+                return context.Articles
+                        .Where(a => a.IsVisible == true && !String.IsNullOrEmpty(a.TextMain) && a.DatePublish <= DateTime.Now && a.IsFixed == true && a.Category == category)
+                        .FirstOrDefault();
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public int GetArticlesCount()

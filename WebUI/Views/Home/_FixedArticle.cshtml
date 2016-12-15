@@ -1,0 +1,8 @@
+﻿@model WebUI.Models.MainArticleView
+
+@if (Model != null)
+{
+    <div class="col-lg-12" style="margin-bottom:20px;">
+        @Html.Partial("_OneArticle", Model)
+    </div>
+}

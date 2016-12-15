@@ -159,7 +159,6 @@ namespace WebUI.Controllers
             }
         }
 
-
         [AllowAnonymous]
         //[OutputCache(Duration = 600, VaryByParam = "none", Location = OutputCacheLocation.Downstream)]
         public async Task<ActionResult> Article(String link)

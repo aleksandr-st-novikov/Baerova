@@ -231,7 +231,7 @@ namespace WebUI.Controllers
             using (EFArticleContext articleContext = new EFArticleContext())
             using (EFCountViewContext countViewContext = new EFCountViewContext())
             {
-                List<Article> articles = articleContext.GetMainArticles(page);
+                List<Article> articles = articleContext.GetArticles(page, "main");
                 List<MainArticleView> model = new List<MainArticleView>();
                 foreach(Article a in articles)
                 {
@@ -244,6 +244,46 @@ namespace WebUI.Controllers
             }
         }
 
-       
+        public ActionResult AboutUs(int page = 1)
+        {
+            using (EFArticleContext articleContext = new EFArticleContext())
+            using (EFCountViewContext countViewContext = new EFCountViewContext())
+            {
+                List<Article> articles = articleContext.GetArticles(page, "aboutUs");
+                List<MainArticleView> model = new List<MainArticleView>();
+                foreach (Article a in articles)
+                {
+                    model.Add(new MainArticleView { article = a, CountView = countViewContext.GetCountView(a.Id, Domain.Entities.ViewType.Article) });
+                }
+                Session["ArticlesCount"] = articleContext.GetArticlesCount();
+                Session["ArticleOnPage"] = ConstantContext.GetConstant("Главная: количество публикаций") ?? "3";
+                Session["ArticleMainPage"] = page;
+                return PartialView("_MainArticles", model);
+            }
+        }
+
+        public ActionResult FixedArticle(string category)
+        {
+            using (EFArticleContext articleContext = new EFArticleContext())
+            using (EFCountViewContext countViewContext = new EFCountViewContext())
+            {
+                category = category == "index" ? "main" : category;
+                Article a = articleContext.GetFixedArticle(category);
+                if (a != null)
+                {
+                    MainArticleView model = new MainArticleView()
+                    {
+                        article = a,
+                        CountView = countViewContext.GetCountView(a.Id, Domain.Entities.ViewType.Article)
+                    };
+                    return PartialView("_FixedArticle", model);
+                }
+                else
+                {
+                    return PartialView("_FixedArticle", null);
+                }
+            }
+        }
+
     }
 }

@@ -28,7 +28,7 @@ namespace Domain.Entities
         public string PictShare { get; set; }
 
         [UIHint("Boolean")]
-        [Display(Name = "Показывать статью")]
+        [Display(Name = "Показывать публикацию")]
         public Boolean IsVisible { get; set; }
 
         [Required(ErrorMessage = "Вы не заполнили поле {0}.")]
@@ -45,5 +45,11 @@ namespace Domain.Entities
 
         [StringLength(500, ErrorMessage = "Длина должна быть от {2} до {1} символов!", MinimumLength = 2)]
         public string Link { get; set; }
+
+        [Display(Name = "Категория публикации")]
+        public string Category { get; set; }
+
+        [Display(Name = "Закрепить публикацию")]
+        public bool IsFixed { get; set; }
     }
 }
