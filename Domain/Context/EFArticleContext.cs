@@ -46,6 +46,11 @@ namespace Domain.Context
 
         public async Task<Guid> SaveArticleAsync(Article article)
         {
+            if(article.IsFixed)
+            {
+                await ClearFixedAsync(article.Category);
+            }
+
             article.DateCreate = DateTime.Now;
             if (article.Id == Guid.Empty)
             {
@@ -69,6 +74,19 @@ namespace Domain.Context
             }
             await context.SaveChangesAsync();
             return article.Id;
+        }
+
+        public async Task ClearFixedAsync(string category)
+        {
+            List<Article> forChange = await context.Articles.Where(a => a.IsFixed == true && a.Category == category).ToListAsync();
+            if(forChange != null)
+            {
+                foreach(Article a in forChange)
+                {
+                    a.IsFixed = false;
+                }
+                await context.SaveChangesAsync();
+            }
         }
 
         public async Task<Article> FindByLinkAsync(string link)
@@ -104,7 +122,7 @@ namespace Domain.Context
             Constant constant = context.Constants.Where(c => c.Name == "Главная: количество публикаций").FirstOrDefault();
             int PageSize = constant == null ? 3 : Int32.Parse(constant.Value.ToString());
             return context.Articles
-                    .Where(a => a.IsVisible == true && !String.IsNullOrEmpty(a.TextMain) && a.DatePublish <= DateTime.Now && a.Category == category)
+                    .Where(a => a.IsVisible == true && !String.IsNullOrEmpty(a.TextMain) && a.DatePublish <= DateTime.Now && a.Category == category && a.IsFixed != true)
                     .OrderByDescending(a => a.DatePublish)
                     .Skip((pageArticle - 1) * PageSize)
                     .Take(PageSize)
@@ -126,9 +144,9 @@ namespace Domain.Context
             }
         }
 
-        public int GetArticlesCount()
+        public int GetArticlesCount(string category)
         {
-            return context.Articles.Where(a => a.IsVisible == true && !String.IsNullOrEmpty(a.TextMain) && a.DatePublish <= DateTime.Now).Count();
+            return context.Articles.Where(a => a.IsVisible == true && !String.IsNullOrEmpty(a.TextMain) && a.DatePublish <= DateTime.Now && a.IsFixed == false && a.Category == category).Count();
         }
 
         public List<Article> ArticlesForMailing()

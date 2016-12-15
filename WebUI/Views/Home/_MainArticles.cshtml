@@ -33,7 +33,7 @@
 <script>
     $('#btnMore').click(function () {
         $.ajax({
-            url: '/home/mainarticles/' + @{@NextPage},
+            url: '/home/@{@Session["CategoryArticles"]}/' + @{@NextPage},
             cache: false,
             success: function (html) {
                 $('#more').replaceWith(html);

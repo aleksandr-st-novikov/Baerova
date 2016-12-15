@@ -1,5 +1,5 @@
 ﻿@model List<Domain.Entities.MenuSet>
-    
+
 <nav class="navbar navbar-default" role="navigation">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -46,16 +46,19 @@
             @{
                 if (Session["Link"] != null)
                 {
-                    Session["regActive"] = null;
+                    Session["regActive"] = Session["AboutCompany"] = Session["AboutUs"] = null;
                 }
-                if (Session["regActive"] != null)
+                if (Session["regActive"] != null || Session["AboutUs"] != null || Session["AboutCompany"] != null)
                 {
                     Session["Link"] = null;
                     Session["Group"] = null;
                 }
                 string Link = Session["Link"] == null ? null : Session["Link"].ToString();
                 string regActive = Session["regActive"] == null ? null : Session["regActive"].ToString();
+                string AboutUsActive = Session["AboutUs"] == null ? null : Session["AboutUs"].ToString();
+                string AboutCompanyActive = Session["AboutCompany"] == null ? null : Session["AboutCompany"].ToString();
                 string Group = Session["Group"] == null ? null : Session["Group"].ToString();
+                string active = String.Empty;
             }
 
             <li class="active" style="margin-bottom:5px;">
@@ -63,7 +66,7 @@
             </li>
 
             <li class="@{@regActive}"><a href="/home/register">Регистрация в компанию TianDe</a></li>
-            @{
+            @*@{
                 string active = String.Empty;
                 var ok = Model.Where(m => m.Name == "О компании TianDe").FirstOrDefault();
                 if (ok != null)
@@ -73,8 +76,8 @@
                         active = "active";
                     }
                 }
-            }
-            <li class="@{@active}">
+            }*@
+            <li class="@{@AboutCompanyActive}">
                 <a href="@{@Model.Where(m => m.Name == "О компании TianDe").FirstOrDefault().Link}">О компании TianDe</a>
             </li>
 
@@ -92,20 +95,29 @@
                             <ul class="nav navbar-nav">
                                 @foreach (var l in g.Where(s => s.IsActive == true).OrderBy(s => s.Order))
                                 {
-                                    active = String.Empty;
-                                    if (Link == l.Link)
+                                    if (l.Name == "О нас")
                                     {
-                                        active = "active";
+                                        <li class="@{@AboutUsActive}">
+                                            <a href="@{@l.Link}">@l.Name</a>
+                                        </li>
                                     }
-                                    <li class="@{@active}">
-                                        <a href="@{@l.Link}">@l.Name</a>
-                                    </li>
-    }
+                                    else
+                                    {
+                                        active = String.Empty;
+                                        if (Link == l.Link)
+                                        {
+                                            active = "active";
+                                        }
+                                        <li class="@{@active}">
+                                            <a href="@{@l.Link}">@l.Name</a>
+                                        </li>
+                                        }
+                                    }
                             </ul>
                         </div>
                     </div>
                 </li>
-    }
+             }
         </ul>
     </div><!-- /.navbar-collapse -->
 </nav>

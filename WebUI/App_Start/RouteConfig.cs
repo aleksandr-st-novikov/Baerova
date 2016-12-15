@@ -33,7 +33,7 @@ namespace WebUI
 
             routes.MapRoute(null,
                 "{controller}/{action}/{page}",
-                new { controller = "home,articles", action = "managepartners,listarticle,subscribers,MainArticles", page = UrlParameter.Optional },
+                new { controller = "home,articles", action = "managepartners,listarticle,subscribers,MainArticles,AboutUsArticles,AboutCompanyArticles", page = UrlParameter.Optional },
                 new { page = @"\d+" }
             );
 

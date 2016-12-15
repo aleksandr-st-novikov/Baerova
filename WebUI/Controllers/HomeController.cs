@@ -40,9 +40,10 @@ namespace WebUI.Controllers
         [AllowAnonymous]
         public ActionResult Index()
         {
-            Session["regActive"] = null;
+            Session["regActive"] = Session["AboutUs"] = Session["AboutCompany"] = null;
             Session["Link"] = null;
             Session["Group"] = null;
+            Session["CategoryArticles"] = "MainArticles";
             return View();
         }
 
@@ -237,14 +238,24 @@ namespace WebUI.Controllers
                 {
                     model.Add(new MainArticleView { article = a, CountView = countViewContext.GetCountView(a.Id, Domain.Entities.ViewType.Article) });
                 }
-                Session["ArticlesCount"] = articleContext.GetArticlesCount();
+                Session["ArticlesCount"] = articleContext.GetArticlesCount("main");
                 Session["ArticleOnPage"] = ConstantContext.GetConstant("Главная: количество публикаций") ?? "3";
                 Session["ArticleMainPage"] = page;
                 return PartialView("_MainArticles", model);
             }
         }
 
-        public ActionResult AboutUs(int page = 1)
+        public ActionResult AboutUs()
+        {
+            Session["regActive"] = Session["AboutCompany"] = null;
+            Session["Link"] = null;
+            Session["Group"] = null;
+            Session["AboutUs"] = "active";
+            Session["CategoryArticles"] = "AboutUsArticles";
+            return View();
+        }
+
+        public ActionResult AboutUsArticles(int page = 1)
         {
             using (EFArticleContext articleContext = new EFArticleContext())
             using (EFCountViewContext countViewContext = new EFCountViewContext())
@@ -255,7 +266,35 @@ namespace WebUI.Controllers
                 {
                     model.Add(new MainArticleView { article = a, CountView = countViewContext.GetCountView(a.Id, Domain.Entities.ViewType.Article) });
                 }
-                Session["ArticlesCount"] = articleContext.GetArticlesCount();
+                Session["ArticlesCount"] = articleContext.GetArticlesCount("aboutUs");
+                Session["ArticleOnPage"] = ConstantContext.GetConstant("Главная: количество публикаций") ?? "3";
+                Session["ArticleMainPage"] = page;
+                return PartialView("_MainArticles", model);
+            }
+        }
+
+        public ActionResult AboutCompany()
+        {
+            Session["regActive"] = Session["AboutUs"] = null;
+            Session["Link"] = null;
+            Session["Group"] = null;
+            Session["AboutCompany"] = "active";
+            Session["CategoryArticles"] = "AboutCompanyArticles";
+            return View();
+        }
+
+        public ActionResult AboutCompanyArticles(int page = 1)
+        {
+            using (EFArticleContext articleContext = new EFArticleContext())
+            using (EFCountViewContext countViewContext = new EFCountViewContext())
+            {
+                List<Article> articles = articleContext.GetArticles(page, "aboutCompany");
+                List<MainArticleView> model = new List<MainArticleView>();
+                foreach (Article a in articles)
+                {
+                    model.Add(new MainArticleView { article = a, CountView = countViewContext.GetCountView(a.Id, Domain.Entities.ViewType.Article) });
+                }
+                Session["ArticlesCount"] = articleContext.GetArticlesCount("aboutCompany");
                 Session["ArticleOnPage"] = ConstantContext.GetConstant("Главная: количество публикаций") ?? "3";
                 Session["ArticleMainPage"] = page;
                 return PartialView("_MainArticles", model);
@@ -267,7 +306,6 @@ namespace WebUI.Controllers
             using (EFArticleContext articleContext = new EFArticleContext())
             using (EFCountViewContext countViewContext = new EFCountViewContext())
             {
-                category = category == "index" ? "main" : category;
                 Article a = articleContext.GetFixedArticle(category);
                 if (a != null)
                 {

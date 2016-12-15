@@ -397,6 +397,7 @@
     <Content Include="Views\Shared\_ScriptYaM.cshtml" />
     <Content Include="Views\Home\_FixedArticle.cshtml" />
     <Content Include="Views\Home\AboutUs.cshtml" />
+    <Content Include="Views\Home\AboutCompany.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
