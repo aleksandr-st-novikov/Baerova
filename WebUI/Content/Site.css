@@ -463,11 +463,18 @@ textarea {
     }
 }
 
-article.main-article img {
+article.main-article img, article.main-article iframe {
     width: 90% !important;
     display: block;
     margin: 0 auto;
     padding: 7px;
+}
+
+.article-text iframe {
+    max-width: 100% !important;
+    /*display: block;*/
+    margin: 0 auto;
+    /*padding: 7px;*/
 }
 
 .article img {
