@@ -65,6 +65,8 @@ namespace WebUI.Controllers
         {
             try
             {
+                returnUrl = "/";
+
                 if (!ModelState.IsValid)
                 {
                     //return View(model);
@@ -398,7 +400,8 @@ namespace WebUI.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToLocal("/");
+            //return RedirectToAction("Index", "Home");
         }
 
         //

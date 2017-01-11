@@ -69,7 +69,7 @@ namespace WebUI.Controllers
         public async Task<ViewResult> Register()
         {
             Session["regActive"] = "active";
-            Session["Link"] = null;
+            Session["Link"] = Session["AboutCompany"] = Session["AboutUs"] = Session["Group"] = null;
             ViewBag.RegisterLink = await ConstantContext.GetConstantAsync("Общие: ссылка на регистрацию");
             return View();
         }
