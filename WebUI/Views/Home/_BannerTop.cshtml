@@ -1,0 +1,18 @@
+﻿@model Domain.Entities.BannerLink
+
+<style type="text/css">
+    .banner-top {
+        margin: 5px 0;
+    }
+
+        .banner-top img {
+            width: 100%;
+            height: auto;
+        }
+</style>
+
+<div class="col-lg-12 no-padding banner-top">
+    <a href="@{@Model.Link}" target="_blank">
+        <img src="~/content/userfiles/images/banner/top/@{@Model.NumSlide}.jpg" />
+    </a>
+</div>

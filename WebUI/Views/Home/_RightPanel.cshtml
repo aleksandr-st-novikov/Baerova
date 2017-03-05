@@ -1,16 +1,19 @@
-﻿<div class="side-panel">
+﻿<div id="right-panel-sticky">
     <div class="col-lg-12 col-md-12 col-sm-12 no-padding hidden-xs" style="margin-bottom:20px;">
         @Html.Partial("~/Views/Home/_Contacts.cshtml")
     </div>
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding" style="margin-bottom:10px;">
         @Html.Action("Subscriber", "Home")
     </div>
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding" style="margin-bottom:20px;">
+    <div class="col-lg-12 col-md-12 col-sm-12 hidden-xs no-padding" style="margin-bottom:20px;">
         @Html.Action("Catalog", "Home")
     </div>
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding" style="margin-bottom:10px;">
+    <div class="col-lg-12 col-md-12 col-sm-12 hidden-xs no-padding" style="margin-bottom:10px;">
         <a href="/home/register" class="btn btn-reg-right">
             Получить скидку
         </a>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 no-padding hidden-xs" style="margin-bottom:20px;">
+        @Html.Partial("~/Views/Home/_Opt.cshtml")
     </div>
 </div>

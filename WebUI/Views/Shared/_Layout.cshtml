@@ -4,10 +4,10 @@
 
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <script>
-      (adsbygoogle = window.adsbygoogle || []).push({
-        google_ad_client: "ca-pub-5886303956221839",
-        enable_page_level_ads: true
-      });
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-5886303956221839",
+            enable_page_level_ads: true
+        });
     </script>
 
     <meta charset="utf-8" />
@@ -33,7 +33,7 @@
 
     @if (!@Request.Url.AbsoluteUri.Contains("editarticle"))
     {
-        	<script src="@Url.Content("~/lib/js/jquery.min.js")"></script>
+        <script src="@Url.Content("~/lib/js/jquery.min.js")"></script>
     }
     <meta property="og:site_name" content="Baeroff.com" />
     <meta property="og:locale" content="ru_RU" />
@@ -51,7 +51,7 @@
     @Html.Raw(ViewBag.TwImage)
     @Html.Raw(ViewBag.TwDomain)
 
-    @{ 
+    @{
         string referral = "referral=@@779a6396bf1ef19fa17403fe5e9b872b";
     }
 
@@ -62,13 +62,13 @@
     </div>
     <div class="container body-content">
         <div class="row" style="background-color:#FFF;padding-top:15px;">
-            <div class="side-panel">
+            <div id="left-panel-sticky">
                 <div class="side-menu">
                     @Html.Action("SideMenu", "Home")
                 </div>
             </div>
             <div class="container-fluid">
-                <div class="side-body" style="min-height:760px;">
+                <div class="side-body" style="min-height:760px;" id="parent-for-sticky">
                     @RenderBody()
                 </div>
             </div>
@@ -110,22 +110,37 @@
             </div>
             <div class="col-lg-12 cr">
                 &copy; Copyright @DateTime.Now.Year <a href="mailto:aleksandr.st.novikov@gmail.com" title="E-mail: aleksandr.st.novikov@gmail.com">Novikov</a>
-</div>
+            </div>
         </footer>
     </div>
 
     <script src="~/lib/js/site.min.js"></script>
 
-    @*@if (!@Request.Url.AbsoluteUri.Contains("editarticle"))
+    @if (!@Request.Url.AbsoluteUri.Contains("editarticle"))
     {
         <script>
             $(document).ready(function () {
-                $(".side-panel").sticky({ topSpacing: 15, zi: 1 });
+                if ($(window).width() >= 1024) {
+                    var fHeight = $("footer").outerHeight() + 50;
+                    $("#right-panel-sticky").sticky({ topSpacing: 15, bottomSpacing: fHeight, zIndex: 10 });
+                    $("#left-panel-sticky").sticky({ topSpacing: 15, bottomSpacing: fHeight, zIndex: 10 });
+                }
             });
         </script>
-    }*@
+    }
 
     @Html.Partial("_ScriptYaM")
+
+    <script>
+        //$(".side-panel1").stick_in_parent({
+        //    parent: '#parent-for-sticky',
+        //    offset_top: 10,
+        //    recalc_every: 1
+        //});
+        //$(window).on('load', function () {
+        //    $(".side-panel").sticky({ topSpacing: 10 });
+        //});
+    </script>
 
 </body>
 </html>

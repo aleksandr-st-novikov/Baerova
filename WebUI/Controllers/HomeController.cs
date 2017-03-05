@@ -323,5 +323,29 @@ namespace WebUI.Controllers
             }
         }
 
+        public ActionResult Banner()
+        {
+            if (ConstantContext.GetConstant("Главная: показывать баннер") == "0") return null;
+
+            int filesCount = (new System.IO.DirectoryInfo(Server.MapPath(@"/Content/UserFiles/Images/Banner/Top"))).GetFiles().Length;
+            if (filesCount == 0) return null;
+
+            using (EFBannerLinkContext bannerLinkContext = new EFBannerLinkContext())
+            {
+                Random r = new Random();
+                int f = r.Next(1, filesCount + 1);
+                BannerLink model = bannerLinkContext.BannerLinks.FirstOrDefault(b => b.NumSlide == f);
+
+                if (model == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    return PartialView("_BannerTop", model);
+                }
+            }
+        }
+
     }
 }

@@ -22,7 +22,7 @@ module.exports = function (grunt) {
                     {
                         'temp/site.js': ['Scripts/bootstrap.js', 'Scripts/respond.js', 'Scripts/site.js', 'Scripts/jquery.maskedinput.js'],
                         'temp/jquery.js': ['Scripts/jquery-?????.js', 'Scripts/jquery.validate.js', 'Scripts/jquery.validate.unobtrusive.js',
-                            'Scripts/modernizr-?????.js', 'Scripts/jquery.unobtrusive-ajax.js', 'Scripts/bootstrap-maxlength.js'],
+                            'Scripts/modernizr-?????.js', 'Scripts/jquery.unobtrusive-ajax.js', 'Scripts/bootstrap-maxlength.js', 'Scripts/jquery.sticky.js'],
                         'lib/js/bootstrap-datepicker.min.js': ['Scripts/bootstrap-datepicker.min.js', 'Scripts/locales/bootstrap-datepicker.ru.min.js'],
                         'lib/js/kendo.all.min.js': ['Scripts/kendo/jquery.min.js', 'Scripts/kendo/kendo.all.min.js', 'Scripts/kendo/kendo.aspnetmvc.min.js'],
                         'temp/kendo.js': ['Scripts/jquery.validate.js', 'Scripts/jquery.validate.unobtrusive.js', 'Scripts/bootstrap-maxlength.js']

@@ -107,7 +107,8 @@ namespace WebUI.Controllers
                 "sConst",
                 "sUser",
                 "sRole",
-                "sScheduleCreate"
+                "sScheduleCreate",
+                "sBanner"
             };
             allSubMenu.Remove(subMenu);
             foreach (string s in allSubMenu)
@@ -333,6 +334,63 @@ namespace WebUI.Controllers
             }
 
             return PartialView("_RoleList", RoleManager.Roles.AsEnumerable().OrderBy(r => r.Name).Select(r => new RoleView { Id = new Guid(r.Id), Name = r.Name }).ToList());
+        }
+        #endregion
+
+        #region Баннер
+        public ViewResult Banner()
+        {
+            IsActiveMenu("sAll", "sBanner");
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task BannerAdd(BannerLink bannerLink)
+        {
+            using (EFBannerLinkContext bannerLinkContext = new EFBannerLinkContext())
+            {
+                if (ModelState.IsValid && Request.IsAjaxRequest())
+                {
+                    await bannerLinkContext.SaveBannerLinkAsync(bannerLink);
+                }
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [MultiButton(MatchFormKey = "action", MatchFormValue = "BannerSave")]
+        public async Task BannerSave([Bind(Prefix = "m")]BannerLink bannerLink)
+        {
+            using (EFBannerLinkContext bannerLinkContext = new EFBannerLinkContext())
+            {
+                if (ModelState.IsValid && Request.IsAjaxRequest())
+                {
+                    await bannerLinkContext.SaveBannerLinkAsync(bannerLink);
+                }
+            }
+        }
+
+        public PartialViewResult BannerList()
+        {
+            using (EFBannerLinkContext bannerLinkContext = new EFBannerLinkContext())
+            {
+                return PartialView("_BannerList", bannerLinkContext.BannerLinks.OrderBy(c => c.NumSlide).ToList());
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [MultiButton(MatchFormKey = "action", MatchFormValue = "BannerDelete")]
+        public async Task BannerDelete([Bind(Prefix = "m")]BannerLink bannerLink)
+        {
+            using (EFBannerLinkContext bannerLinkContext = new EFBannerLinkContext())
+            {
+                if (Request.IsAjaxRequest())
+                {
+                    await bannerLinkContext.DeleteBannerLinkAsync(bannerLink.Id);
+                }
+            }
         }
         #endregion
 

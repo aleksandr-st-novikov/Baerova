@@ -22,6 +22,7 @@ namespace Domain.Context
         public DbSet<Constant> Constants { get; set; }
         public DbSet<MenuSet> MenuSets { get; set; }
         public DbSet<MailArticle> MailArticles { get; set; }
+        public DbSet<BannerLink> BannerLinks { get; set; }
         //public DbSet<AspNetUser> AspNetUsers { get; set; }
     }
 }
