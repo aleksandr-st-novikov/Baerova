@@ -279,7 +279,6 @@
     <Content Include="Content\sidemenu - Copy.css" />
     <Content Include="Content\sidemenu.css" />
     <Content Include="Content\Site.css" />
-    <Content Include="Content\UserFiles\Images\Main\catalog.jpg" />
     <Content Include="Content\UserFiles\Images\Main\logsR.png" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />

@@ -62,13 +62,13 @@
     </div>
     <div class="container body-content">
         <div class="row" style="background-color:#FFF;padding-top:15px;">
-            <div id="left-panel-sticky">
-                <div class="side-menu">
+            <div class="col-lg-3" style="padding-left:0;" id="left-panel">
+                <div id="left-panel-sticky">
                     @Html.Action("SideMenu", "Home")
                 </div>
             </div>
-            <div class="container-fluid">
-                <div class="side-body" style="min-height:760px;" id="parent-for-sticky">
+            <div class="col-lg-9 padding-side" id="body-fluid">
+                <div style="min-height:760px;" id="body-fluid-inner">
                     @RenderBody()
                 </div>
             </div>
@@ -119,28 +119,46 @@
     @if (!@Request.Url.AbsoluteUri.Contains("editarticle"))
     {
         <script>
+            var tClass = function (param) {
+                if(param)
+                {
+                    $("#left-panel").removeClass("col-lg-3").addClass("side-menu");
+                    $("#body-fluid").removeClass("col-lg-9").removeClass("padding-side").addClass("container-fluid");
+                    $("#body-fluid-inner").addClass("side-body");
+                    $("#index-main").css("padding-left", "15");
+                } else {
+                    $("#left-panel").removeClass("side-menu").addClass("col-lg-3");
+                    $("#body-fluid").removeClass("container-fluid").addClass("col-lg-9").addClass("padding-side");
+                    $("#body-fluid-inner").removeClass("side-body");
+                    $("#index-main").css("padding-left","0");
+                }
+            };
             $(document).ready(function () {
-                if ($(window).width() >= 1024) {
+
+                if ($(window).width() >= 1200) {
+                    tClass(false);
                     var fHeight = $("footer").outerHeight() + 50;
                     $("#right-panel-sticky").sticky({ topSpacing: 15, bottomSpacing: fHeight, zIndex: 10 });
                     $("#left-panel-sticky").sticky({ topSpacing: 15, bottomSpacing: fHeight, zIndex: 10 });
+                } else {
+                    tClass(true);
                 }
             });
+            $(window).resize(function () {
+                if ($(window).width() >= 1200) {
+                    tClass(false);
+                    var fHeight = $("footer").outerHeight() + 50;
+                    $("#right-panel-sticky").sticky({ topSpacing: 15, bottomSpacing: fHeight, zIndex: 10 });
+                    $("#left-panel-sticky").sticky({ topSpacing: 15, bottomSpacing: fHeight, zIndex: 10 });
+                } else {
+                    tClass(true);
+                }
+            })
         </script>
     }
 
     @Html.Partial("_ScriptYaM")
 
-    <script>
-        //$(".side-panel1").stick_in_parent({
-        //    parent: '#parent-for-sticky',
-        //    offset_top: 10,
-        //    recalc_every: 1
-        //});
-        //$(window).on('load', function () {
-        //    $(".side-panel").sticky({ topSpacing: 10 });
-        //});
-    </script>
-
 </body>
 </html>
+
