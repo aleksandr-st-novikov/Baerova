@@ -1,29 +1,87 @@
-﻿@model WebUI.Models.SubscribersView
-
+﻿
 @{
     ViewBag.Title = "Управление подписчиками";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="col-lg-6">
+<div class="col-lg-12 col-md-12 col-sm-12" style="padding-left:0;">
     <h1 class="span-title">Управление подписчиками</h1>
-</div>
-<div class="col-lg-6">
-    <div class="pagination pull-right" style="margin-top:5px;">
-        @{
-            @Html.PageLinks(Model.PagingInfo, x => Url.Action("managesubscribers", new { page = x }))
-        }
-    </div>
-</div>
+    <div class="row">
+        <div ng-controller="homeSubscribersController" ng-cloak
+             data-ng-model="antiForgeryToken" data-ng-init="antiForgeryToken='@Html.RequestVerificationToken()'">
 
-<div class="col-lg-12">
-    @Html.Action("SubscribersList", "home")
-</div>
-
-<div class="col-lg-offset-6 col-lg-6">
-    <div class="pagination pull-right" style="margin-top:0;">
-        @{
-            @Html.PageLinks(Model.PagingInfo, x => Url.Action("managesubscribers", new { page = x }))
-        }
+            <div class="col-lg-12 no-padding">
+                <div class="col-lg-6">
+                    <input type="text" class="form-control" ng-model="searchString" placeholder="поиск..." />
+                </div>
+                <div class="col-lg-6">
+                    <div align="right">
+                        <ul uib-pagination
+                            items-per-page="ItemsPerPage"
+                            max-size="maxSize"
+                            ng-model="page"
+                            total-items="filterData.length"
+                            ng-change="pageChanged()"
+                            boundary-link-numbers="false" boundary-links="true" force-ellipses="true"
+                            first-text="<<" previous-text="<" next-text=">" last-text=">>"
+                            class="pagination-sm" style="margin:0 0 10px 0;"></ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-10">
+                <table class="table table-responsive table-hover table-condensed">
+                    <thead>
+                        <tr>
+                            <th width="25%">Дата подписки</th>
+                            <th width="50%">Адрес E-Mail</th>
+                            <th width="10%">Активный</th>
+                            <th width="15%">
+                                <div ng-show="isBusy" style="text-align:right;">
+                                    <i class="fa fa-circle-o-notch fa-spin fa-fw" style="color:dodgerblue;"></i>
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in filterData = (items | filter : {eMail: searchString}) | limitTo:ItemsPerPage:ItemsPerPage*(page-1)">
+                            <td style="padding-top:11px;">{{item.dateCreate | date:'dd.MM.yyyy HH:mm:ss'}}</td>
+                            <td><input type="email" ng-model="item.eMail" class="form-control" ng-maxlength="100" ng-pattern="EMAIL_REGEXP"/></td>
+                            <td align="center" style="padding-top:11px;">
+                                <checkbox class="btn-default"
+                                    ng-model="item.isActive"
+                                    name="isActive"
+                                    ng-change="onChange()"
+                                ></checkbox>
+                            </td>
+                            <td align="right">
+                                <button type="submit" data-ng-click="saveSubscriber(item, antiForgeryToken)" class="btn btn-sm btn-success" title="Сохранить"
+                                        ng-disabled="email.$error.pattern">
+                                    <i class="fa fa-save"></i>
+                                </button>
+                                <button type="submit" class="btn btn-sm btn-link" title="Удалить" ng-click="deleteSubscriber(item, antiForgeryToken)">
+                                    <i class="fa fa-trash-o"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <div class="col-lg-6 col-lg-offset-6">
+                    <div align="right">
+                        <ul uib-pagination
+                            items-per-page="ItemsPerPage"
+                            max-size="maxSize"
+                            ng-model="page"
+                            total-items="filterData.length"
+                            ng-change="pageChanged()"
+                            boundary-link-numbers="false" boundary-links="true" force-ellipses="true"
+                            first-text="<<" previous-text="<" next-text=">" last-text=">>"
+                            class="pagination-sm" style="margin:0 0 10px 0;"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

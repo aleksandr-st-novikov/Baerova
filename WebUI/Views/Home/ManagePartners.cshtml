@@ -1,71 +1,69 @@
-﻿@model WebUI.Models.PartnersView
-
+﻿
 @{
     ViewBag.Title = "Заявки на регистрацию";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="col-lg-6">
+<div class="col-lg-12 col-md-12 col-sm-12" style="padding-left:0;">
     <h1 class="span-title">Заявки на регистрацию</h1>
-</div>
-<div class="col-lg-6">
-    <div class="pagination pull-right" style="margin-top:0;">
-        @{
-            @Html.PageLinks(Model.PagingInfo, x => Url.Action("managepartners", new { page = x }))
-        }
-    </div>
-</div>
+    <div class="row">
+        <div ng-controller="homeManagePartnersController" ng-cloak>
 
-<div class="col-lg-12">
-    <table class="table table-striped" style="font-size:0.9em;">
-        <thead>
-            <tr>
-                <th>
-                    Дата заявки
-                </th>
-                <th>
-                    ФИО
-                </th>
-                <th>
-                    Телефон
-                </th>
-                <th>
-                    E-Mail
-                </th>
-                <th style="text-align:center;">
-                    Дата рождения
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var p in Model.Partners)
-            {
-                <tr>
-                    <td width="15%" style="font-size:0.9em;">
-                        @p.DateCreate.ToString("G")
-                    </td>
-                    <td width="35%">
-                        @p.Surname @p.Name @p.Patronymic
-                    </td>
-                    <td width="15%">
-                        @p.Phone
-                    </td>
-                    <td width="25%">
-                        @p.EMail
-                    </td>
-                    <td width="10%">
-                        @(((DateTime)p.DOB).ToString("dd.MM.yyyy"))
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
-
-<div class="col-lg-offset-6 col-lg-6">
-    <div class="pagination pull-right" style="margin-top:0;">
-        @{
-            @Html.PageLinks(Model.PagingInfo, x => Url.Action("managepartners", new { page = x }))
-        }
+            <div class="col-lg-12 no-padding">
+                <div class="col-lg-6">
+                    <input type="text" class="form-control" ng-model="searchString" placeholder="поиск..." />
+                </div>
+                <div class="col-lg-6">
+                    <div align="right">
+                        <ul uib-pagination
+                            items-per-page="ItemsPerPage"
+                            max-size="maxSize"
+                            ng-model="page"
+                            total-items="filterData.length"
+                            ng-change="pageChanged()"
+                            boundary-link-numbers="false" boundary-links="true" force-ellipses="true"
+                            first-text="<<" previous-text="<" next-text=">" last-text=">>"
+                            class="pagination-sm" style="margin:0 0 10px 0;"></ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <table class="table table-responsive table-hover table-condensed"  style="font-size:0.9em;">
+                    <thead>
+                        <tr>
+                            <th width="20%">Дата подписки</th>
+                            <th width="35%">ФИО</th>
+                            <th width="15%">Телефон</th>
+                            <th width="20%">E-Mail</th>
+                            <th width="10%">Дата рождения</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in filterData = (items | filter : {fio: searchString}) | limitTo:ItemsPerPage:ItemsPerPage*(page-1)">
+                            <td>{{item.dateCreate | date:'dd.MM.yyyy HH:mm:ss'}}</td>
+                            <td>{{item.fio}}</td>
+                            <td>{{item.phone}}</td>
+                            <td>{{item.eMail}}</td>
+                            <td>{{item.dob | date:'dd.MM.yyyy'}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <div class="col-lg-6 col-lg-offset-6">
+                    <div align="right">
+                        <ul uib-pagination
+                            items-per-page="ItemsPerPage"
+                            max-size="maxSize"
+                            ng-model="page"
+                            total-items="filterData.length"
+                            ng-change="pageChanged()"
+                            boundary-link-numbers="false" boundary-links="true" force-ellipses="true"
+                            first-text="<<" previous-text="<" next-text=">" last-text=">>"
+                            class="pagination-sm" style="margin:0 0 10px 0;"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

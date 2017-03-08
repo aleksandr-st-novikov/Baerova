@@ -1,55 +1,20 @@
-﻿@model Domain.Entities.Subscriber
+﻿<div ng-controller="homeSubscribersController" ng-cloak
+     data-ng-model="antiForgeryToken" data-ng-init="antiForgeryToken='@Html.RequestVerificationToken()'">
 
-<span class="span-title" style="font-size:1.1em;">Подписаться на новости</span>
+    <span class="span-title" style="font-size:1.1em;">Подписаться на новости</span>
 
-@using (Ajax.BeginForm("AddSubscriber", new { controller = "Home" }, new AjaxOptions
-{
-    HttpMethod = "post",
-    OnSuccess = "OnSuccessSubscriber",
-    OnFailure = "OnFailure",
-    //InsertionMode = System.Web.Mvc.Ajax.InsertionMode.Replace,
-    LoadingElementId = "progr"
-}, new { @Id = "SubscriberForm" }))
-{
-    @Html.AntiForgeryToken()
-    @Html.TextBoxFor(m => m.EMail, new { @class = "form-control", maxlength = "100", @style = "min-height:40px;", placeholder = "Ваш E-Mail" })
-    <span class="error-text">
-        @Html.ValidationMessageFor(m => m.EMail)
-    </span>
+    <ng-form name="AddSubscriberForm" id="AddSubscriberForm" novalidate>
+        <input type="email" id="email" name="email" class="form-control" ng-required="true" ng-model="email" ng-maxlength="100" maxlength="100" placeholder="Ваш E-Mail"
+               ng-pattern="EMAIL_REGEXP" style = "min-height:40px;"/>
+        <span ng-show="submitted && AddSubscriberForm.email.$error.required" class="small text-warning">Вы не указали e-mail</span>
+        <span ng-show="AddSubscriberForm.email.$error.pattern" class="small text-warning">Некорректный адрес e-mail</span>
 
-    <div class="col-lg-12 no-padding">
-        <input type="submit" style="width:100%;height:40px;margin:10px 0; background-color:#FF5200; color:#fff; border-color:#BF3D00;min-height:40px;" value="Отправить" class="btn" />
-        <i class="fa fa-spinner fa-pulse" id="progr" style="display:none;padding:10px;margin-top:-47px;margin-left:18px; position:absolute;color:#fff;"></i>
-    </div>
-}
-
-<div class="col-lg-12 no-padding">
-    <div class="alert alert-info alert-dismissible fade hide" role="alert" id="messsage-success" style="text-align:center;">
-        <button type="button" class="close" aria-label="Close" onclick="MSClose()">
-            <span aria-hidden="true">&times;</span>
-        </button>
-        Спасибо!
-    </div>
-    <div class="alert alert-danger alert-dismissible fade hide" role="alert" id="message-error">
-        <button type="button" class="close" aria-label="Close" onclick="MEClose()">
-            <span aria-hidden="true">&times;</span>
-        </button>
-        Ошибка при сохранении! Попробуйте еще раз.
-    </div>
+        <div class="col-lg-12 no-padding">
+            <input type="submit" style="width:100%;height:40px;margin:10px 0; background-color:#FF5200; color:#fff; border-color:#BF3D00;min-height:40px;" value="Отправить" class="btn" 
+                   ng-click="submitAddSubscriberForm(antiForgeryToken)"/>
+            <div style="padding:10px;margin-top:-50px;margin-left:18px; position:absolute;color:#fff;">
+                <i ng-show="isBusyF" class="fa fa-circle-o-notch fa-spin fa-fw"></i>
+            </div>
+        </div>
+    </ng-form>
 </div>
-
-<script>
-    function OnSuccessSubscriber() {
-        $('#SubscriberForm')[0].reset();
-        $('#messsage-success').removeClass('hide').addClass('in');
-    }
-    function OnFailure() {
-        $('#messsage-error').removeClass('hide').addClass('in');
-    }
-    function MSClose() {
-        $('#messsage-success').removeClass('in').addClass('hide');
-    }
-    function MEClose() {
-        $('#messsage-error').removeClass('in').addClass('hide');
-    }
-</script>

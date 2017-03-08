@@ -8,6 +8,10 @@ using System.Threading.Tasks;
 using WebUI.Models;
 using static WebUI.Helpers.MultiButton;
 using System.Text;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using System.Data.Entity;
+using System.Net;
 
 namespace WebUI.Controllers
 {
@@ -109,24 +113,30 @@ namespace WebUI.Controllers
             }
         }
 
-        [Authorize(Roles = "Администратор")]
-        public ActionResult ManagePartners(int page = 1)
-        {
-            using (EFPartnerContext partnerContext = new EFPartnerContext())
-            {
-                PartnersView model = new PartnersView
-                {
-                    Partners = partnerContext.Partners.OrderByDescending(p => p.DateCreate).Skip((page - 1) * PageSize).Take(PageSize).ToList(),
-                    PagingInfo = new PagingInfo
-                    {
-                        CurrentPage = page,
-                        ItemPerPage = PageSize,
-                        TotalItems = partnerContext.Partners.Count()
-                    }
-                };
-                return View(model);
-            }
+        //[Authorize(Roles = "Администратор")]
+        //public ActionResult ManagePartners(int page = 1)
+        //{
+        //    using (EFPartnerContext partnerContext = new EFPartnerContext())
+        //    {
+        //        PartnersView model = new PartnersView
+        //        {
+        //            Partners = partnerContext.Partners.OrderByDescending(p => p.DateCreate).Skip((page - 1) * PageSize).Take(PageSize).ToList(),
+        //            PagingInfo = new PagingInfo
+        //            {
+        //                CurrentPage = page,
+        //                ItemPerPage = PageSize,
+        //                TotalItems = partnerContext.Partners.Count()
+        //            }
+        //        };
+        //        return View(model);
+        //    }
 
+        //}
+
+        [Authorize(Roles = "Администратор")]
+        public ActionResult ManagePartners()
+        {
+            return View();
         }
 
         #region Подписчики
@@ -149,11 +159,11 @@ namespace WebUI.Controllers
             return PartialView("_Subscriber");
         }
 
-        [Authorize(Roles = "Администратор")]
-        public ActionResult ManageSubscribers(int page = 1)
-        {
-            return View(GetListSubscribersModel(page));
-        }
+        //[Authorize(Roles = "Администратор")]
+        //public ActionResult ManageSubscribers(int page = 1)
+        //{
+        //    return View(GetListSubscribersModel(page));
+        //}
 
         [Authorize(Roles = "Администратор")]
         public PartialViewResult SubscribersList(int page = 1)
@@ -234,7 +244,7 @@ namespace WebUI.Controllers
             {
                 List<Article> articles = articleContext.GetArticles(page, "main");
                 List<MainArticleView> model = new List<MainArticleView>();
-                foreach(Article a in articles)
+                foreach (Article a in articles)
                 {
                     model.Add(new MainArticleView { article = a, CountView = countViewContext.GetCountView(a.Id, Domain.Entities.ViewType.Article) });
                 }
@@ -346,6 +356,136 @@ namespace WebUI.Controllers
                 }
             }
         }
+
+        [Authorize(Roles = "Администратор")]
+        public ActionResult ManageSubscribers()
+        {
+            return View();
+        }
+
+        #region Api
+
+        [Authorize(Roles = "Администратор")]
+        public async Task<ActionResult> ApiGetSubscribers()
+        {
+            using (EFSubscriberContext subscriberContext = new EFSubscriberContext())
+            {
+                return GetJsonContentResult(await subscriberContext.Subscribers.OrderByDescending(s => s.DateCreate).ToListAsync());
+            }
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Администратор")]
+        [Helpers.ngValidateAntiForgeryToken]
+        public async Task<ActionResult> ApiSaveSubscriber(Subscriber subscriber)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    using (EFSubscriberContext subscriberContext = new EFSubscriberContext())
+                    {
+                        await subscriberContext.SaveSubscriberAsync(subscriber);
+                    }
+                    return new HttpStatusCodeResult(HttpStatusCode.OK);
+                }
+                else
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+                }
+            }
+            catch
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+            }
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Администратор")]
+        [Helpers.ngValidateAntiForgeryToken]
+        public async Task<ActionResult> ApiDeleteSubscriber(Subscriber subscriber)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    using (EFSubscriberContext subscriberContext = new EFSubscriberContext())
+                    {
+                        await subscriberContext.DeleteSubscriberAsync(subscriber.Id);
+                    }
+                    return new HttpStatusCodeResult(HttpStatusCode.OK);
+                }
+                else
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+                }
+            }
+            catch
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+            }
+        }
+
+        [HttpPost]
+        [Helpers.ngValidateAntiForgeryToken]
+        [AllowAnonymous]
+        public async Task<ActionResult> ApiAddSubscriber(string email)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    using (EFSubscriberContext subscriberContext = new EFSubscriberContext())
+                    {
+                        Subscriber subscriber = new Subscriber();
+                        subscriber.EMail = email;
+                        await subscriberContext.SaveSubscriberAsync(subscriber);
+                    }
+                    return new HttpStatusCodeResult(HttpStatusCode.OK);
+                }
+                else
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+                }
+            }
+            catch
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+            }
+        }
+
+
+        [Authorize(Roles = "Администратор")]
+        public async Task<ActionResult> ApiGetPartners()
+        {
+            using (EFPartnerContext partnerContext = new EFPartnerContext())
+            {
+                return GetJsonContentResult(await partnerContext.Partners.Select(p => new
+                {
+                    DateCreate = p.DateCreate,
+                    FIO = p.Surname + " " + p.Name + " " + p.Patronymic,
+                    Phone = p.Phone,
+                    EMail = p.EMail,
+                    DOB = p.DOB
+                }).OrderByDescending(p => p.DateCreate).ToListAsync());
+            }
+        }
+
+        #region Api-Helpers
+        public ContentResult GetJsonContentResult(object data)
+        {
+            var camelCaseFormatter = new JsonSerializerSettings();
+            camelCaseFormatter.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            var jsonResult = new ContentResult
+            {
+                Content = JsonConvert.SerializeObject(data, camelCaseFormatter),
+                ContentType = "application/json"
+            };
+            return jsonResult;
+        }
+
+        #endregion
+        #endregion
 
     }
 }

@@ -1,4 +1,5 @@
 ﻿/// <binding BeforeBuild='all' />
+/// <reference path="bower_components/angular-bootstrap-checkbox/angular-bootstrap-checkbox.js" />
 /*
 This file in the main entry point for defining grunt tasks and using grunt plugins.
 Click here to learn more. http://go.microsoft.com/fwlink/?LinkID=513275&clcid=0x409
@@ -25,13 +26,19 @@ module.exports = function (grunt) {
                             'Scripts/modernizr-?????.js', 'Scripts/jquery.unobtrusive-ajax.js', 'Scripts/bootstrap-maxlength.js', 'Scripts/jquery.sticky.js'],
                         'lib/js/bootstrap-datepicker.min.js': ['Scripts/bootstrap-datepicker.min.js', 'Scripts/locales/bootstrap-datepicker.ru.min.js'],
                         'lib/js/kendo.all.min.js': ['Scripts/kendo/jquery.min.js', 'Scripts/kendo/kendo.all.min.js', 'Scripts/kendo/kendo.aspnetmvc.min.js'],
-                        'temp/kendo.js': ['Scripts/jquery.validate.js', 'Scripts/jquery.validate.unobtrusive.js', 'Scripts/bootstrap-maxlength.js']
+                        'temp/kendo.js': ['Scripts/jquery.validate.js', 'Scripts/jquery.validate.unobtrusive.js', 'Scripts/bootstrap-maxlength.js'],
+                        'temp/angular.js': ['bower_components/angular/angular.js', 'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
+                            'bower_components/angular-ui-notification/dist/angular-ui-notification.js', 'bower_components/angular-bootstrap-checkbox/angular-bootstrap-checkbox.js',
+                            'ng-app/ngApp.js',
+                            'ng-app/Data/dataHomeSubscribers.js', 'ng-app/Controllers/homeSubscribersController.js',
+                            'ng-app/Data/dataHomePartners.js', 'ng-app/Controllers/homeManagePartnersController.js']
                     }
             },
             css: {
                 files:
                     {
-                        'temp/site.css': ['Content/bootstrap.css', 'Content/font-awesome.css', 'Content/sidemenu.css', 'Content/site.css', 'Content/bootstrap-datetimepicker.css'],
+                        'temp/site.css': ['Content/bootstrap.css', 'Content/font-awesome.css', 'Content/sidemenu.css', 'Content/site.css', 'Content/bootstrap-datetimepicker.css',
+                            'bower_components/angular-ui-notification/dist/angular-ui-notification.css'],
                         'lib/css/kendo.min.css': ['Content/kendo/kendo.common-nova.min.css', 'Content/kendo/kendo.nova.min.css'],
                         'lib/css/bootstrap-datepicker.min.css': ['Content/bootstrap-datepicker.min.css']
                     }
@@ -54,7 +61,8 @@ module.exports = function (grunt) {
                     {
                         'lib/js/site.min.js': ['temp/site.js'],
                         'lib/js/jquery.min.js': ['temp/jquery.js'],
-                        'lib/js/kendo.min.js': ['temp/kendo.js']
+                        'lib/js/kendo.min.js': ['temp/kendo.js'],
+                        'lib/js/angular.min.js': ['temp/angular.js']
                     }
             }
         },

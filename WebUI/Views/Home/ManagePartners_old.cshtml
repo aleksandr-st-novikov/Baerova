@@ -1,0 +1,71 @@
+﻿@model WebUI.Models.PartnersView
+
+@{
+    ViewBag.Title = "Заявки на регистрацию";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-lg-6">
+    <h1 class="span-title">Заявки на регистрацию</h1>
+</div>
+<div class="col-lg-6">
+    <div class="pagination pull-right" style="margin-top:0;">
+        @{
+            @Html.PageLinks(Model.PagingInfo, x => Url.Action("managepartners", new { page = x }))
+        }
+    </div>
+</div>
+
+<div class="col-lg-12">
+    <table class="table table-striped" style="font-size:0.9em;">
+        <thead>
+            <tr>
+                <th>
+                    Дата заявки
+                </th>
+                <th>
+                    ФИО
+                </th>
+                <th>
+                    Телефон
+                </th>
+                <th>
+                    E-Mail
+                </th>
+                <th style="text-align:center;">
+                    Дата рождения
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var p in Model.Partners)
+            {
+                <tr>
+                    <td width="15%" style="font-size:0.9em;">
+                        @p.DateCreate.ToString("G")
+                    </td>
+                    <td width="35%">
+                        @p.Surname @p.Name @p.Patronymic
+                    </td>
+                    <td width="15%">
+                        @p.Phone
+                    </td>
+                    <td width="25%">
+                        @p.EMail
+                    </td>
+                    <td width="10%">
+                        @(((DateTime)p.DOB).ToString("dd.MM.yyyy"))
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="col-lg-offset-6 col-lg-6">
+    <div class="pagination pull-right" style="margin-top:0;">
+        @{
+            @Html.PageLinks(Model.PagingInfo, x => Url.Action("managepartners", new { page = x }))
+        }
+    </div>
+</div>

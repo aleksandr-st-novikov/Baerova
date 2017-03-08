@@ -224,6 +224,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\AntiForgeryExtension.cs" />
     <Compile Include="Helpers\Hangfire\HangFireAuthorizationFilter.cs" />
     <Compile Include="Helpers\Hangfire\ApplicationPreload.cs" />
     <Compile Include="Helpers\Hangfire\HangfireBootstrapper.cs" />
@@ -232,6 +233,7 @@
     <Compile Include="Helpers\Paging.cs" />
     <Compile Include="Helpers\Services.cs" />
     <Compile Include="Helpers\Texts.cs" />
+    <Compile Include="Helpers\ValidateAntiForgeryTokenAttribute.cs" />
     <Compile Include="MigrationsApplicationDbContext\201609171437533_Initial.cs" />
     <Compile Include="MigrationsApplicationDbContext\201609171437533_Initial.Designer.cs">
       <DependentUpon>201609171437533_Initial.cs</DependentUpon>
@@ -311,6 +313,7 @@
     <Content Include="lib\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="lib\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="lib\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="lib\js\angular.min.js" />
     <Content Include="lib\js\bootstrap-datepicker.min.js" />
     <Content Include="lib\js\jquery.min.js" />
     <Content Include="lib\js\kendo.all.min.js" />
@@ -332,6 +335,8 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="bower.json" />
+    <Content Include="lib\js\angular.min.js.map" />
     <None Include="Properties\PublishProfiles\baerova.pubxml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

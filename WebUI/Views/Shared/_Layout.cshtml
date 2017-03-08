@@ -35,6 +35,9 @@
     {
         <script src="@Url.Content("~/lib/js/jquery.min.js")"></script>
     }
+
+    <script src="~/lib/js/angular.min.js"></script>
+
     <meta property="og:site_name" content="Baeroff.com" />
     <meta property="og:locale" content="ru_RU" />
 
@@ -56,7 +59,7 @@
     }
 
 </head>
-<body>
+<body ng-app="ngApp">
     <div class="container">
         @Html.Partial("_Header")
     </div>
