@@ -41308,15 +41308,12 @@ var ngApp = angular.module('ngApp', [
     controller.$inject = ['$scope', 'dataHomeSubscribers', 'Notification'];
 
     function controller($scope, dataHomeSubscribers, Notification) {
-        
+
         $scope.page = 1;
         $scope.ItemsPerPage = 20;
         $scope.maxSize = 3;
         $scope.items = [];
         $scope.isBusy = true;
-        $scope.isBusyF = false;
-        $scope.EMAIL_REGEXP = /^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,5})$/;
-        $scope.submitted = false;
 
         ($scope.getResultsPage = function () {
             dataHomeSubscribers.getData().then(
@@ -41353,6 +41350,20 @@ var ngApp = angular.module('ngApp', [
                 $scope.isBusy = false;
             });
         };
+    }
+})();
+(function () {
+    'use strict';
+
+    ngApp.controller('homeSubscriberController', controller);
+
+    controller.$inject = ['$scope', 'dataHomeSubscribers', 'Notification'];
+
+    function controller($scope, dataHomeSubscribers, Notification) {
+
+        $scope.isBusyF = false;
+        $scope.submitted = false;
+        $scope.EMAIL_REGEXP = /^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,5})$/;
 
         $scope.submitAddSubscriberForm = function (antiForgeryToken) {
             if ($scope.AddSubscriberForm.$invalid) {

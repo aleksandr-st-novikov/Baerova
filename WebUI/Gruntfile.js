@@ -30,7 +30,7 @@ module.exports = function (grunt) {
                         'temp/angular.js': ['bower_components/angular/angular.js', 'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
                             'bower_components/angular-ui-notification/dist/angular-ui-notification.js', 'bower_components/angular-bootstrap-checkbox/angular-bootstrap-checkbox.js',
                             'ng-app/ngApp.js',
-                            'ng-app/Data/dataHomeSubscribers.js', 'ng-app/Controllers/homeSubscribersController.js',
+                            'ng-app/Data/dataHomeSubscribers.js', 'ng-app/Controllers/homeSubscribersController.js', 'ng-app/Controllers/homeSubscriberController.js',
                             'ng-app/Data/dataHomePartners.js', 'ng-app/Controllers/homeManagePartnersController.js']
                     }
             },
