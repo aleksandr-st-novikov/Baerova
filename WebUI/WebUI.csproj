@@ -284,7 +284,6 @@
     <Content Include="Content\UserFiles\Images\Main\logsR.png" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Gruntfile.js" />
     <Content Include="lib\css\bootstrap-datepicker.min.css" />
     <Content Include="lib\css\kendo.min.css" />
     <Content Include="lib\css\nova\editor.png" />
@@ -411,6 +410,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Content\Pictures\" />
     <Folder Include="Content\UserFiles\Images\Publishing\" />
+    <Folder Include="ng-app\Controllers\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -450,7 +450,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>16251</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
