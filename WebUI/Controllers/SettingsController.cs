@@ -531,11 +531,6 @@ namespace WebUI.Controllers
                 }
 
                 RecurringJob.AddOrUpdate("Рассылка новостей", () => Mailing.SendNews(_params), time[1] + " " + time[0] + " * * *", TimeZoneInfo.FindSystemTimeZoneById("Belarus Standard Time"));
-
-                //RecurringJob.AddOrUpdate("Рассылка новостей",
-                //    () => Services.SendMessage(_params, "test", "text", "novikov.it@bobruysk.korona.by"), time[1] + " " + time[0] + " * * *",
-                //    TimeZoneInfo.FindSystemTimeZoneById("Belarus Standard Time"));
-                //BackgroundJob.Schedule(() => Services.SendMessage(_params, Guid.NewGuid().ToString(), "text", "novikov.it@bobruysk.korona.by"), TimeSpan.FromMinutes(10));
             }
         }
 

@@ -18,8 +18,6 @@ namespace WebUI
                 Authorization = new[] { new HangFireAuthorizationFilter() },
                 AppPath = "/settings/menusetmanage"
             });
-
-            //RecurringJob.AddOrUpdate("task-id1", () => Services.SendMessage("test","text","novikov.it@bobruysk.korona.by"), "39 15 * * *");
         }
     }
 }
